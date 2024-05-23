@@ -1,0 +1,11 @@
+{
+    "region": "us-east-1",
+    "lease_seconds": "3600",
+    "backend": "aws",
+    "role": "resources",
+    "repository_name": "test-public-ecr-repository",
+    "timeouts": {
+        "delete": "20m"
+    },
+    "objid": "632b86710df03c2f8a49ac89"
+}

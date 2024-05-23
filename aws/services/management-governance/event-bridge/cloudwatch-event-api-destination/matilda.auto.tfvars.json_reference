@@ -1,0 +1,11 @@
+{
+    "region": "us-east-2",
+    "lease_seconds": "3600",
+    "backend": "aws",
+    "role": "resources",
+    "name": "test-api-destination",
+    "invocation_endpoint": "https://sqs.us-east-2.amazonaws.com/046692759124/test",
+    "http_method": "POST",
+    "connection_arn": "arn:aws:events:us-east-2:046692759124:connection/test-eventt-connection/27e9260a-af4f-4a97-9a11-3c51cb79fddd",
+    "objid": "632b867377f52447b6c4b804"
+}

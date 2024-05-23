@@ -1,0 +1,7 @@
+{
+    "region": "us-east-2",
+    "bucket": "test-bucket-s3-new1",
+    "key": "testobject",
+    "source_id": "/home/sahithi/ttest.txt",
+    "objid": "632b86773548eff1c84f7f8a"
+}

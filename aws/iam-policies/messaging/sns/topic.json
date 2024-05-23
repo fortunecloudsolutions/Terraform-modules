@@ -1,0 +1,27 @@
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Sid": "VisualEditor0",
+            "Effect": "Allow",
+            "Action": [
+                "sns:TagResource",
+                "iam:GetRole",
+                "sns:GetTopicAttributes",
+                "sns:DeleteTopic",
+                "SNS:Publish",
+                "sns:CreateTopic",
+                "iam:ListRoles",
+                "sns:SetTopicAttributes",
+                "iam:AttachRolePolicy",
+                "sns:UntagResource",
+                "sns:GetSubscriptionAttributes",
+                "iam:PutRolePolicy",
+                "sns:List*",
+                "iam:PassRole",
+                "kms:DescribeKey"
+            ],
+            "Resource": "*"
+        }
+    ]
+}

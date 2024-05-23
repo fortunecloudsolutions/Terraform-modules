@@ -1,0 +1,25 @@
+{
+    "region": "us-east-2",
+    "bucket": "test-bucket-s3-new1",
+    "queue": [
+        {
+            "id": null,
+            "queue_arn": "arn:aws:sqs:us-east-2:046692759124:test",
+            "events": [
+                "s3:ObjectCreated:*"
+            ],
+            "filter_prefix": "images/",
+            "filter_suffix": null
+        },
+        {
+            "id": null,
+            "queue_arn": "arn:aws:sqs:us-east-2:046692759124:test2",
+            "events": [
+                "s3:ObjectRemoved:Delete"
+            ],
+            "filter_prefix": "videos/",
+            "filter_suffix": null
+        }
+    ],
+    "objid": "632b86777f57b4c175f27a8e"
+}

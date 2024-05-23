@@ -1,0 +1,22 @@
+{
+    "region"   :  "us-east-2",
+    "lease_seconds": "3600",
+    "backend"  : "aws",
+    "role" : "resources",
+    "name":"test-ecr-repository",
+    "image_tag_mutability":"MUTABLE",
+    "encryption_configuration":{
+       "encryption_type":"KMS",
+       "kms_key":"arn:aws:kms:us-east-2:046692759124:key/mrk-4c3e4610db634309b77f582f3fcb4c7c"
+    },
+    "image_scanning_configuration":{
+       "scan_on_push":true
+    },
+    "timeouts": { 
+      
+       "delete": "20m"
+     }
+    
+ }
+ 
+ 

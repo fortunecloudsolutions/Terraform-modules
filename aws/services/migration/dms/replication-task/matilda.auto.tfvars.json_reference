@@ -1,0 +1,13 @@
+{
+    "region": "us-east-2",
+    "lease_seconds": "3600",
+    "backend": "aws",
+    "role": "resources",
+    "migration_type": "full-load",
+    "replication_instance_arn": "arn:aws:dms:us-east-2:046692759124:rep:OXJOT2FHPXFTZ4PETKQUGLI5YIGZKI4OG2IW5QY",
+    "replication_task_id": "mydmstaskid",
+    "source_endpoint_arn": "arn:aws:dms:us-east-2:046692759124:endpoint:DU62Q6QYQ7F3TBRS6XPFHIFTHC4LLFHAVGSRHGA",
+    "table_mappings": "{\"rules\":[{\"rule-type\":\"selection\",\"rule-id\":\"1\",\"rule-name\":\"1\",\"object-locator\":{\"schema-name\":\"HR\",\"table-name\":\"%\"},\"rule-action\":\"include\"}]}",
+    "target_endpoint_arn": "arn:aws:dms:us-east-2:046692759124:endpoint:MRZBD24GH6EUXIIQW5LB2OTWSDBMTWCA3RUDDYA",
+    "objid": "632b8675535865d77d172b99"
+}

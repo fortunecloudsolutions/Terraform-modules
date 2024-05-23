@@ -1,0 +1,9 @@
+{
+    "region": "us-east-2",
+    "db_cluster_identifier": "test-cluster",
+    "db_cluster_snapshot_identifier": "test-snapshot",
+    "timeouts": {
+        "create": "20m"
+    },
+    "objid": "632b8672a695d9b43356b690"
+}

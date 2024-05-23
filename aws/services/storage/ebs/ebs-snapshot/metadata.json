@@ -1,0 +1,7 @@
+{
+    "costAPI":{
+        "tfRegion":"region",
+        "tfService":"ebs-snapshot",
+        "provider":"amazon"
+    }
+}

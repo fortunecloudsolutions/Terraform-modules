@@ -1,0 +1,6 @@
+{
+    "region": "us-east-2",
+    "name": "test-parameter-group",
+    "family": "neptune1",
+    "objid": "632b8672157a3b9c2c3108fe"
+}

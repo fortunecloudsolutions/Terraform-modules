@@ -1,0 +1,9 @@
+{
+    "region": "us-east-2",
+    "registry_arn": "arn:aws:glue:us-east-2:046692759124:registry/test-registry",
+    "schema_name": "test-schema",
+    "data_format": "AVRO",
+    "compatibility": "NONE",
+    "schema_definition": "{\"type\":\"record\",\"namespace\":\"ABC_Organization\",\"name\":\"Employee\",\"fields\":[{\"name\":\"Name\",\"type\":\"string\"},{\"name\":\"Age\",\"type\":\"int\"}]}",
+    "objid": "632b866f12117e7d2431e476"
+}

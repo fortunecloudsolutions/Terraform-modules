@@ -1,0 +1,7 @@
+{
+    "region": "us-east-2",
+    "bucket": "test-bucket-s3-new2",
+    "key": "testobject",
+    "source_bucket": "test-bucket-s3-new1/testobject",
+    "objid": "632b8677065692e21cf854e5"
+}

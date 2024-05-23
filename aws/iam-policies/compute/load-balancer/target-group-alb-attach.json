@@ -1,0 +1,21 @@
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Sid": "VisualEditor0",
+            "Effect": "Allow",
+            "Action": [
+                "elasticloadbalancing:RemoveTags",
+                "ec2:Describe*",
+                "elasticloadbalancing:RegisterTargets",
+                "elasticloadbalancing:AddTags",
+                "elasticloadbalancing:Describe*",
+                "elasticloadbalancing:DeregisterTargets",
+                "elasticloadbalancing:ModifyTargetGroupAttributes",
+                "globalaccelerator:ListListeners",
+                "elasticloadbalancing:ModifyTargetGroup"
+            ],
+            "Resource": "*"
+        }
+    ]
+}

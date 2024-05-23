@@ -1,0 +1,40 @@
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Sid": "VisualEditor0",
+            "Effect": "Allow",
+            "Action": [
+                "cloudwatch:PutMetricData",
+                "route53domains:ListTagsForDomain",
+                "cloudwatch:GetMetricData",
+                "sns:ListTopics",
+                "route53:UpdateHealthCheck",
+                "route53:DeleteHealthCheck",
+                "cloudwatch:ListMetrics",
+                "route53:CreateHealthCheck",
+                "route53domains:ListDomains",
+                "cloudwatch:ListDashboards",
+                "cloudwatch:ListTagsForResource",
+                "cloudwatch:GetMetricWidgetImage",
+                "route53:CreateHostedZone",
+                "sns:ListSubscriptionsByTopic",
+                "cloudwatch:GetDashboard",
+                "cloudwatch:GetInsightRuleReport",
+                "sns:ListSubscriptions",
+                "cloudwatch:GetMetricStatistics",
+                "cloudwatch:ListMetricStreams",
+                "ec2:DescribeVpcs",
+                "route53domains:ListOperations",
+                "kms:ListAliases",
+                "cloudwatch:GetMetricStream",
+                "sns:ListPlatformApplications",
+                "cloudwatch:Describe*",
+                "Route53:Get*",
+                "Route53:List*",
+                "route53:ChangeTagsForResource"
+            ],
+            "Resource": "*"
+        }
+    ]
+}

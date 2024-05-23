@@ -1,0 +1,22 @@
+{
+    "region": "us-east-2",
+    "lease_seconds": "3600",
+    "backend": "aws",
+    "role": "resources",
+    "asg_name": "MyFirstTerraformASG",
+    "max_size": 10,
+    "min_size": 3,
+    "desired_capacity": 5,
+    "subnet_ids": [
+        "subnet-3145b44b",
+        "subnet-3145b44b"
+    ],
+    "target_group_arns": [
+        "arn:aws:elasticloadbalancing:us-east-2:046692759124:targetgroup/MyTargetGroupforASG/2cb63f5dd12d9590"
+    ],
+    "launch_template": {
+        "id": "lt-06cbb3cc094a8a924",
+        "version": 2
+    },
+    "objid": "632b866fa7f76d5c5a33ddeb"
+}

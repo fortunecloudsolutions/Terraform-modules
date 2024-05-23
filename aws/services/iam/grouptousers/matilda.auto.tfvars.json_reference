@@ -1,0 +1,9 @@
+{
+    "region": "us-east-2",
+    "user_name": "matriuser2",
+    "group_list": [
+        "MatildaCost",
+        "EC2OnOregon"
+    ],
+    "objid": "632b8673bff4243d6a828b0f"
+}

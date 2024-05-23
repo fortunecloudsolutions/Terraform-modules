@@ -1,0 +1,6 @@
+{
+    "region": "us-east-2",
+    "name": "test-parameter-group",
+    "family": "redshift-1.0",
+    "objid": "632b866f43b6db5972b23a3d"
+}

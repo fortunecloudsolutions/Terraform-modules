@@ -1,0 +1,7 @@
+{
+    "costAPI":{
+        "tfRegion":"region",
+        "tfService":"crossaccount-vpc-to-local-route53-zone-associate",
+        "provider":"amazon"
+    }
+}

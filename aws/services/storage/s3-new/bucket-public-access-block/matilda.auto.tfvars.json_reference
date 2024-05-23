@@ -1,0 +1,6 @@
+{
+    "region": "us-east-2",
+    "bucket": "test-bucket-new",
+    "block_public_policy": true,
+    "objid": "632b8677c1d988ee1fd935d7"
+}

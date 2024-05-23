@@ -1,0 +1,15 @@
+{
+    "region": "us-east-2",
+    "name": "Myattach",
+    "policy_arn": "arn:aws:iam::aws:policy/AdministratorAccess",
+    "user_list": [
+        "matriuser2"
+    ],
+    "roles_list": [
+        "nodes.aiops.k8s.local"
+    ],
+    "group_list": [
+        "matrigroup2"
+    ],
+    "objid": "632b86735aae719f75a904fa"
+}

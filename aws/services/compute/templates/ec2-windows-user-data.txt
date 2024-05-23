@@ -1,0 +1,73 @@
+  <powershell>
+$LogFile = "$env:USERPROFILE\output.txt"
+function LogMessage
+{
+    param([string]$Message)
+
+    ((Get-Date).ToString() + " - " + $Message) >> $LogFile;
+}
+
+#Code starts executing here
+
+#Delete log file if it exists
+if(Test-Path $LogFile)
+{
+    Remove-Item $LogFile
+}
+
+function Download
+{
+    [CmdletBinding()]
+    Param
+    (
+        [string]$BucketName,
+        [string]$AccessKey,
+        [string]$SecretKey,
+        [string]$Region,
+        [Array]$FileNames,
+        [string]$DownloadDirectoryPath
+    )
+
+
+
+    # Get the command name
+    $CommandName = $PSCmdlet.MyInvocation.InvocationName;
+    # Get the list of parameters for the command
+    $ParameterList = (Get-Command -Name $CommandName).Parameters;
+
+
+
+    # Grab each parameter value, using Get-Variable
+    foreach ($Parameter in $ParameterList) {
+        Get-Variable -Name $Parameter.Values.Name -ErrorAction SilentlyContinue;
+        #Get-Variable -Name $ParameterList;
+    }
+
+    Write-Output $Param
+
+
+
+    # Create downloadable folder if does not exist
+    if (!(Test-Path -Path $DownloadDirectoryPath)) {
+        New-Item -ItemType Directory -Force -Path $DownloadDirectoryPath
+    }
+
+    #looping over keys to get specific files
+    foreach ($Key in $FileNames) {
+        Write-Output $Key
+        $File = Join-Path $DownloadDirectoryPath $Key
+        $objects = READ-S3Object -BucketName $BucketName -Key $Key -AccessKey $AccessKey -SecretKey $SecretKey -Region $Region -File $File
+        Write-Output $objects
+    }
+
+}
+LogMessage -Message "Starting download all files"
+Download -bucketname "${bucketname}" -accesskey "${accesskey}" -secretkey "${secretkey}" -region "${region}" -filenames ${filenames} -downloaddirectorypath "${downloaddirectorypath}"
+LogMessage -Message "dotnet install"
+cd ${downloaddirectorypath}
+
+.\auth-ansible-final.ps1 
+.\iis-final.ps1 -logfile "C:\\Users\\Administrator\\iis-final.log"
+
+</powershell>
+<persist>false</persist>

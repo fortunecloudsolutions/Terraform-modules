@@ -1,0 +1,32 @@
+{
+    "region": "us-east-2",
+    "lease_seconds": "3600",
+    "backend": "aws",
+    "role": "resources",
+    "nlb_name": "MyFirstTerraformNetworkLB",
+    "nlb_internal": "false",
+    "ip_address_type": "ipv4",
+    "tags": {
+        "Name": "MatildaMigration",
+        "Team": "Devops"
+    },
+    "enable_nlb_cross_zone_load_balancing": true,
+    "access_log_bucket_name": null,
+    "enable_access_logs": "false",
+    "attach_nlb_subnet_ids": [
+        "subnet-3145b44b",
+        "subnet-34c4ea79",
+        "subnet-e6932a8e"
+    ],
+    "eip_alloc_ids": [
+        null,
+        null,
+        null
+    ],
+    "private_ip4_for_internal_nlb": [
+        null,
+        null,
+        null
+    ],
+    "objid": "632b867117cb4789a652b1f5"
+}

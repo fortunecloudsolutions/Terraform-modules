@@ -1,0 +1,7 @@
+{
+    "region": "us-east-2",
+    "name": "test-cloudwatch-log-destination",
+    "role_arn": "arn:aws:iam::046692759124:role/kinesisrole",
+    "target_arn": "arn:aws:kinesis:us-east-2:046692759124:stream/test-stream",
+    "objid": "632b86732405759313aee2e9"
+}

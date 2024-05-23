@@ -1,0 +1,24 @@
+{
+    "region"   :  "us-east-2",
+    "lease_seconds": "3600",
+    "backend"  : "aws",
+    "role" : "resources",
+    "table_name":"test-table",
+    "hash_key":"TestTableHashKey",
+    "item": "{\n  \"TestTableHashKey\": {\n    \"S\": \"1\"\n  },\n  \"GameTitle\": {\n    \"S\": \"2\"\n  }\n}"
+ 
+   
+ }
+
+ {
+    "region"   :  "us-east-2",
+    "lease_seconds": "3600",
+    "backend"  : "aws",
+    "role" : "resources",
+    "table_name":"test-table",
+    "hash_key":"TestTableHashKey",
+    "range_key":"GameTitle",
+    "item": "{\n  \"TestTableHashKey\": {\n    \"S\": \"1\"\n  },\n  \"GameTitle\": {\n    \"S\": \"2\"\n  }\n}"
+ 
+   
+ }

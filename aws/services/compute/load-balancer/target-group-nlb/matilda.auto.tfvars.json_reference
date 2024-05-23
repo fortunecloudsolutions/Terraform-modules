@@ -1,0 +1,22 @@
+{
+    "region": "us-east-2",
+    "lease_seconds": "3600",
+    "backend": "aws",
+    "role": "resources",
+    "target_group_name": "MyFirstTerraformNLBTarget",
+    "target_port": "80",
+    "target_protocol": "TCP",
+    "target_vpc_id": "vpc-5a863f32",
+    "deregistration_delay": "300",
+    "target_type": "instance",
+    "tags": {
+        "Name": "MatildaMigrationDemo",
+        "Team": "Devops"
+    },
+    "health_check_enabled": "true",
+    "health_check_interval": "10",
+    "health_check_port": "80",
+    "health_check_protocol": "TCP",
+    "healthy_unhealthy_threshold": "2",
+    "objid": "632b867138349a65317e85da"
+}

@@ -1,0 +1,9 @@
+{
+    "region": "us-east-2",
+    "key_name": "Matri_test_new",
+    "algorithm": "RSA",
+    "rsa_bits": "4096",
+    "file_permission": "0400",
+    "filepath": "$HOME",
+    "objid": "632b86736388509e2b4e0b69"
+}

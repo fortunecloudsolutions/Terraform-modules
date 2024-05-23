@@ -1,0 +1,46 @@
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Sid": "VisualEditor0",
+            "Effect": "Allow",
+            "Action": [
+                "eks:DeleteFargateProfile",
+                "eks:UpdateClusterVersion",
+                "eks:UpdateAddon",
+                "iam:CreateRole",
+                "iam:AttachRolePolicy",
+                "eks:UpdateClusterConfig",
+                "iam:AddRoleToInstanceProfile",
+                "eks:UpdateNodegroupVersion",
+                "iam:PassRole",
+                "eks:AssociateEncryptionConfig",
+                "iam:ListAttachedRolePolicies",
+                "eks:Describe*",
+                "eks:List*",
+                "eks:CreateCluster",
+                "iam:ListPolicies",
+                "iam:GetRole",
+                "eks:DisassociateIdentityProviderConfig",
+                "iam:ListRoles",
+                "eks:CreateNodegroup",
+                "eks:DeleteCluster",
+                "eks:CreateFargateProfile",
+                "ec2:Describe*",
+                "sts:AssumeRole",
+                "iam:CreateServiceLinkedRole",
+                "eks:DeleteAddon",
+                "eks:DeleteNodegroup",
+                "eks:TagResource",
+                "eks:AccessKubernetesApi",
+                "kms:ListAliases",
+                "eks:CreateAddon",
+                "eks:UpdateNodegroupConfig",
+                "iam:GetRolePolicy",
+                "eks:AssociateIdentityProviderConfig",
+                "iam:ListRolePolicies"
+            ],
+            "Resource": "*"
+        }
+    ]
+}

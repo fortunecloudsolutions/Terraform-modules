@@ -1,0 +1,11 @@
+{
+    "region": "us-east-2",
+    "function_name": "test-lambda-function",
+    "provisioned_concurrent_executions": 1,
+    "qualifier": "testfunc1",
+    "timeouts": {
+        "create": "15m",
+        "update": "15m"
+    },
+    "objid": "632b86715c6f3eb8e1b7c331"
+}

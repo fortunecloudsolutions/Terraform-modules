@@ -1,0 +1,14 @@
+{
+    "costAPI":{
+        "tfRegion":"region",
+        "tfDeploymentType":"multi_az",
+        "instanceName":"instance",
+        "storagePerRdsType":"storage_type",
+        "license":"license_model",
+        "engineName":"engine_name",
+        "tfService":"oracle-rds",
+        "noOfInstances":"1",
+        "rdsStorage":"storage",
+        "provider":"amazon"
+        }
+}

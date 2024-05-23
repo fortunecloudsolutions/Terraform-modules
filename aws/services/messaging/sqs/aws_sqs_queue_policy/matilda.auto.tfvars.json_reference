@@ -1,0 +1,10 @@
+{
+    "region": "us-east-2",                                                                                                                                                                                
+    "lease_seconds": "3600",                                                                                                                                                                              
+    "backend": "aws",                                                                                                                                                                                     
+    "role": "resources", 
+    "name" :"sqs_queue_test",
+    "queue_url":"https://sqs.us-east-2.amazonaws.com/046692759124/sqs_queue_test",
+    "policy": "{\n\"Version\": \"2012-10-17\",\n\"Id\": \"UseCase1\",\n\"Statement\" : [{\n\"Sid\": \"1\", \n\"Effect\": \"Allow\",\n\"Principal\": {\n\"AWS\": [\n\"046692759124\"\n]\n},\n\"Action\": [ \n\"sqs:SendMessage\",\n\"sqs:ReceiveMessage\"\n], \n\"Resource\": \"https://sqs.us-east-2.amazonaws.com/046692759124/sqs_queue_test\"  \n}]\n}",
+     "objid":"6345e2eaed8aca9c8d96904a"
+}

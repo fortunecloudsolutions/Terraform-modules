@@ -1,0 +1,21 @@
+{                                                 
+    "region": "us-east-2",
+    "lease_seconds": "3600",                                             
+    "backend": "aws",                               
+    "role": "resources",
+    "name":"test-event-rule",
+    "event_bus_name":"test-event-bus",
+    "event_pattern":"{\"source\": [\"aws.mgn\"],\"detail-type\": [\"MGN Source Server Lifecycle State Change\", \"MGN Source Server Launch Result\", \"MGN Source Server Data Replication Stalled Change\"]}"
+  
+  }
+
+  {                                                 
+    "region": "us-east-2",
+    "lease_seconds": "3600",                                             
+    "backend": "aws",                               
+    "role": "resources",
+    "name":"test-event-rule",
+    "schedule_expression":"rate(5 minutes)"
+  
+  }
+  

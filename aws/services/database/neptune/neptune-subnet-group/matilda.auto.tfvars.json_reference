@@ -1,0 +1,8 @@
+{
+    "region": "us-east-2",
+    "subnet_ids": [
+        "subnet-e6932a8e",
+        "subnet-34c4ea79"
+    ],
+    "objid": "632b8672705f9cc539bf573c"
+}

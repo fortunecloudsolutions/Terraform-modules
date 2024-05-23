@@ -1,0 +1,3 @@
+{"region": "us-east-2",
+ "service": "s3api", 
+ "action": "delete-bucket"}

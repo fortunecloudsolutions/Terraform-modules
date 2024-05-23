@@ -1,0 +1,38 @@
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Sid": "VisualEditor0",
+            "Effect": "Allow",
+            "Action": [
+                "kms:UntagResource",
+                "kms:GenerateDataKeyWithoutPlaintext",
+                "ec2:DeleteVolume",
+                "cloudwatch:UntagResource",
+                "ec2:ModifyEbsDefaultKmsKeyId",
+                "ec2:CreateVolume",
+                "ec2:DetachVolume",
+                "ec2:ModifyVolume",
+                "ec2:EnableVolumeIO",
+                "cloudwatch:TagResource",
+                "ec2:CopySnapshot",
+                "ec2:DisableFastSnapshotRestores",
+                "ec2:DeleteTags",
+                "cloudwatch:GetMetricData",
+                "ec2:CreateTags",
+                "kms:ListResourceTags",
+                "cloudwatch:GetMetricStatistics",
+                "cloudwatch:ListMetrics",
+                "ec2:EnableFastSnapshotRestores",
+                "kms:TagResource",
+                "ec2:Describe*",
+                "kms:ListAliases",
+                "ec2:CreateSnapshot",
+                "ec2:DeleteSnapshot",
+                "cloudwatch:DescribeAlarms",
+                "kms:DescribeKey"
+            ],
+            "Resource": "*"
+        }
+    ]
+}

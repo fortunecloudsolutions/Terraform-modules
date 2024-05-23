@@ -1,0 +1,10 @@
+{
+    "region": "us-east-2",
+    "name": "catalog-test-connection",
+    "connection_properties": {
+        "JDBC_CONNECTION_URL": "jdbc:redshift://test-cluster.cjyxyez8b17f.us-east-2.redshift.amazonaws.com:5439/dev",
+        "USERNAME": "awsuser",
+        "PASSWORD": "Awsuser15"
+    },
+    "objid": "632b866e5f44d7fbe427fc85"
+}

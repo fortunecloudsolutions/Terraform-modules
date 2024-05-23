@@ -1,0 +1,7 @@
+{
+    "region": "us-east-2",
+    "resource_arn": "arn:aws:dynamodb:us-east-2:046692759124:table/test-table",
+    "key": "key1",
+    "value": "value1",
+    "objid": "632b8672b624dfb0c81b4c09"
+}

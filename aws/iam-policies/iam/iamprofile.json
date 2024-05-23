@@ -1,0 +1,44 @@
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Sid": "VisualEditor0",
+            "Effect": "Allow",
+            "Action": [
+                "IAM:ListAttachedRolePolicies",
+                "IAM:ListInstanceProfileTags",
+                "IAM:RemoveRoleFromInstanceProfile",
+                "IAM:ListRoleTags",
+                "ec2:ReplaceIamInstanceProfileAssociation",
+                "IAM:DeleteInstanceProfile",
+                "iam:PassRole",
+                "IAM:GetServiceLastAccessedDetails",
+                "IAM:CreateInstanceProfile",
+                "ec2:ModifyInstanceAttribute",
+                "IAM:ListInstanceProfilesForRole",
+                "IAM:GetPolicy",
+                "IAM:ListPolicies",
+                "IAM:GetAccountSummary",
+                "IAM:AttachRolePolicy",
+                "IAM:ListEntitiesForPolicy",
+                "IAM:ListAccountAliases",
+                "IAM:UntagInstanceProfile",
+                "ec2:Describe*",
+                "sts:AssumeRole",
+                "IAM:ListInstanceProfiles",
+                "IAM:GetRole",
+                "ec2:DisassociateIamInstanceProfile",
+                "IAM:GetInstanceProfile",
+                "cloudwatch:DescribeAlarms",
+                "compute-optimizer:GetEC2InstanceRecommendations",
+                "IAM:GenerateServiceLastAccessedDetails",
+                "compute-optimizer:GetEnrollmentStatus",
+                "IAM:ListRolePolicies",
+                "IAM:AddRoleToInstanceProfile",
+                "IAM:ListRoles",
+                "ec2:AssociateIamInstanceProfile"
+            ],
+            "Resource": "*"
+        }
+    ]
+}

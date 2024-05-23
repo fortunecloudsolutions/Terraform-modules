@@ -1,0 +1,9 @@
+{
+    "region": "us-east-2",
+    "lease_seconds": "3600",
+    "backend": "aws",
+    "role": "resources",
+    "asg_name": "MyFirstTerraformASG",
+    "target_group_arn": "arn:aws:elasticloadbalancing:us-east-2:046692759124:targetgroup/MyFirstTerraformALB/b57c92d81371676a",
+    "objid": "632b86703beea6c2cf0bb92c"
+}

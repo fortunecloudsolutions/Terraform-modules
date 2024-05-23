@@ -1,0 +1,6 @@
+{
+    "region": "us-east-2",
+    "function_name": "test-lambda-function",
+    "event_source_arn": "arn:aws:sqs:us-east-2:046692759124:test",
+    "objid": "632b86702329e14551029aac"
+}

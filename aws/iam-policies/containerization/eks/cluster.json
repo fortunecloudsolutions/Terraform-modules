@@ -1,0 +1,28 @@
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Sid": "VisualEditor0",
+            "Effect": "Allow",
+            "Action": [
+                "iam:ListPolicies",
+                "eks:UpdateClusterVersion",
+                "eks:UntagResource",
+                "ec2:Describe*",
+                "iam:ListRoles",
+                "eks:UpdateClusterConfig",
+                "eks:DeleteCluster",
+                "iam:PassRole",
+                "iam:ListAttachedRolePolicies",
+                "kms:ListAliases",
+                "eks:TagResource",
+                "eks:AccessKubernetesApi",
+                "eks:Describe*",
+                "eks:List*",
+                "eks:CreateCluster",
+                "eks:CreateAddon"
+            ],
+            "Resource": "*"
+        }
+    ]
+}

@@ -1,0 +1,8 @@
+{
+    "region": "us-east-2",
+    "max_lease_seconds": "3600",
+    "backend": "aws",
+    "role": "resources",
+    "instance_id": "i-08be21fb21d2bc99f",
+    "objid": "6362a2acd81d5aa6df1c98f8"
+}

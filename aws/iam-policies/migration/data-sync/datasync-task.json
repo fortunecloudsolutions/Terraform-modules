@@ -1,0 +1,53 @@
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Sid": "VisualEditor0",
+            "Effect": "Allow",
+            "Action": [
+                "fsx:DescribeAssociatedFileGateways",
+                "fsx:DescribeFileSystems",
+                "datasync:DeleteTask",
+                "datasync:ListLocations",
+                "iam:CreateRole",
+                "s3:ListBucket",
+                "iam:AttachRolePolicy",
+                "datasync:Describe*",
+                "cloudwatch:ListMetrics",
+                "datasync:CreateLocationNfs",
+                "datasync:StartTaskExecution",
+                "datasync:CreateLocationFsxWindows",
+                "iam:PassRole",
+                "ec2:DeleteNetworkInterfacePermission",
+                "datasync:CreateLocationEfs",
+                "ec2:CreateNetworkInterfacePermission",
+                "datasync:UpdateTask",
+                "datasync:ListTagsForResource",
+                "datasync:ListTasks",
+                "datasync:UpdateTaskExecution",
+                "datasync:CreateLocationS3",
+                "datasync:CreateTask",
+                "iam:GetRole",
+                "logs:DescribeLogGroups",
+                "elasticfilesystem:Describe*",
+                "datasync:ListAgents",
+                "ec2:ModifyNetworkInterfaceAttribute",
+                "datasync:ListTaskExecutions",
+                "ec2:DeleteNetworkInterface",
+                "iam:ListRoles",
+                "datasync:TagResource",
+                "ec2:CreateNetworkInterface",
+                "iam:CreatePolicy",
+                "sts:AssumeRole",
+                "ec2:Describe*",
+                "datasync:UntagResource",
+                "s3:ListAllMyBuckets",
+                "outposts:ListOutposts",
+                "datasync:CreateLocationSmb",
+                "cloudwatch:DescribeAlarms",
+                "datasync:CancelTaskExecution"
+            ],
+            "Resource": "*"
+        }
+    ]
+}

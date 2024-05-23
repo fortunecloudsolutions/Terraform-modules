@@ -1,0 +1,7 @@
+{
+    "region": "us-east-2",
+    "cluster_identifier": "test-cluster",
+    "cluster_endpoint_identifier": "test-endpoint",
+    "endpoint_type": "READER",
+    "objid": "632b8672321f60f23bb8c809"
+}

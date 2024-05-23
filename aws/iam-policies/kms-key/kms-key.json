@@ -1,0 +1,39 @@
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Sid": "VisualEditor0",
+            "Effect": "Allow",
+            "Action": [
+                "kms:EnableKey",
+                "kms:GetPublicKey",
+                "tag:GetResources",
+                "kms:UntagResource",
+                "kms:PutKeyPolicy",
+                "kms:ListResourceTags",
+                "kms:GetParametersForImport",
+                "kms:DescribeCustomKeyStores",
+                "kms:TagResource",
+                "kms:GetKeyRotationStatus",
+                "kms:DescribeKey",
+                "kms:CreateKey",
+                "kms:CreateGrant",
+                "kms:ListKeyPolicies",
+                "kms:ListRetirableGrants",
+                "kms:GetKeyPolicy",
+                "kms:DisableKey",
+                "kms:ListGrants",
+                "kms:UpdateAlias",
+                "kms:ListKeys",
+                "kms:ListAliases",
+                "kms:CreateAlias",
+                "kms:DeleteAlias",
+                "kms:UpdateKeyDescription",
+                "cloudhsm:DescribeClusters",
+                "iam:ListRoles",
+                "iam:ListUsers"
+            ],
+            "Resource": "*"
+        }
+    ]
+}

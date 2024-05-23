@@ -1,0 +1,18 @@
+{
+    "region"   :  "us-east-2",
+    "lease_seconds": "3600",
+    "backend"  : "aws",
+    "role" : "resources",
+    "bucket" : "test-bucket-s3-new",
+    "name": "testaccesspoint",
+    "public_access_block_configuration":{
+      "block_public_acls" :true,
+      "block_public_policy" :true,
+      "ignore_public_acls" :  true,
+      "restrict_public_buckets" : true
+    },
+    "vpc_configuration":{
+       "vpc_id":"vpc-5a863f32"
+    }
+ 
+ }

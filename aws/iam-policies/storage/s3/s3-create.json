@@ -1,0 +1,40 @@
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Sid": "VisualEditor0",
+            "Effect": "Allow",
+            "Action": [
+                "s3:DeleteAccessPoint",
+                "s3:CreateBucket",
+                "s3:DeleteBucketWebsite",
+                "s3:DeleteAccessPointPolicyForObjectLambda",
+                "s3:DeleteJobTagging",
+                "s3:DeleteObject",
+                "s3:DeleteObjectTagging",
+                "lambda:ListFunctions",
+                "s3:DeleteStorageLensConfigurationTagging",
+                "s3:DeleteObjectVersionTagging",
+                "cloudtrail:DescribeTrails",
+                "s3:DescribeJob",
+                "s3:Put*",
+                "s3:CreateJob",
+                "s3:CreateAccessPoint",
+                "s3:DeleteObjectVersion",
+                "s3:ReplicateTags",
+                "sns:ListTopics",
+                "cloudtrail:GetEventSelectors",
+                "cloudwatch:ListMetrics",
+                "iam:PassRole",
+                "s3:DeleteBucketOwnershipControls",
+                "s3:DeleteBucket",
+                "sqs:ListQueues",
+                "s3:List*",
+                "ec2:DescribeVpcs",
+                "s3:DeleteAccessPointPolicy",
+                "s3:Get*"
+            ],
+            "Resource": "*"
+        }
+    ]
+}

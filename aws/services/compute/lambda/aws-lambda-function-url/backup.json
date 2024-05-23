@@ -1,0 +1,56 @@
+{
+    "region"   :  "us-east-2",
+    "lease_seconds": "3600",
+    "backend"  : "aws",
+    "role" : "resources",
+    "function_name":"test-lambda-function1",
+    "lambda_role":"arn:aws:iam::046692759124:role/lambda",
+    "handler":"index.handler",
+    "runtime":"python3.8",
+    "image_uri":"046692759124.dkr.ecr.us-east-2.amazonaws.com/startinstances:1.1",
+    "package_type":"Image",
+    "timeouts": {             
+       "create": "10m"
+     
+     } 
+    
+    
+ }
+
+ {
+  "region"   :  "us-east-2",
+  "lease_seconds": "3600",
+  "backend"  : "aws",
+  "role" : "resources",
+  "function_name":"test-lambda-function-temp",
+  "lambda_role":"arn:aws:iam::046692759124:role/lambda",
+  "handler":"index.handler",
+  "runtime":"python3.8",
+  "dead_letter_config":{
+     "target_arn":"arn:aws:sns:us-east-2:046692759124:testtopic"
+  },
+  "file_system_config":[],
+  "environment":{
+     "variables":{
+        "foo" : "bar"
+     }
+  },
+  "s3_bucket":"test-buck-5",
+  "s3_key":"helloworldfile.zip",
+  "package_type":"Zip",
+  "tracing_config":{
+     "mode":"Active"
+  },
+  "layers":["arn:aws:lambda:us-east-2:046692759124:layer:testlayer:4"],
+  "image_config":{
+    "command":[],
+    "entry_point":[],
+    "working_directory":""
+  }
+  "timeouts": {             
+     "create": "10m"
+   
+   } 
+  
+  
+}

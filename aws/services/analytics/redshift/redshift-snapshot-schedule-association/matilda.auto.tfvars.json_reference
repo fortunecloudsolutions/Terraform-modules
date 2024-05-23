@@ -1,0 +1,6 @@
+{
+    "region": "us-east-2",
+    "cluster_identifier": "test-cluster",
+    "schedule_identifier": "terraform-20210830174739332700000001",
+    "objid": "632b866f548f91408cc6bad4"
+}

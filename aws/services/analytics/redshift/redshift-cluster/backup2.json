@@ -1,0 +1,25 @@
+{
+    "region"   :  "us-east-2",
+    "lease_seconds": "3600",
+    "backend"  : "aws",
+    "role" : "resources",
+    "cluster_identifier":"test-cluster",
+    "node_type" :"dc2.large",
+    "master_password":"Awsuser15",
+    "master_username":"awsuser",
+    "cluster_subnet_group_name":"test-subnet-group",
+    "skip_final_snapshot":true,
+    "encrypted":true,
+    "snapshot_copy":{
+       "destination_region":"us-east-2",
+       "retention_period":"1",
+       "grant_name":"test-snapshot-copy-grant-name-test-cluster"
+    },
+    "timeouts": {             
+       "create": "75m",
+       "update": "75m",
+       "delete": "40m"
+     } 
+ 
+ } 
+ 

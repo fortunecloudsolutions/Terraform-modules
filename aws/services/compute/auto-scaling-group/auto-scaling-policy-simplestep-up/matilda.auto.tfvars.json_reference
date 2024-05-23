@@ -1,0 +1,22 @@
+{
+    "region": "us-east-2",
+    "policy_name": "MyFirstASGScaleupPolicy",
+    "instance_contribute_cooldown_cloudmetric": 300,
+    "autoscaling_group_name": "MyFirstTerraformASG",
+    "adjustment_type": "ChangeInCapacity",
+    "policy_type": "SimpleScaling",
+    "cooldown": 15,
+    "scaling_adjustment": 2,
+    "cloudwatch_alarm_name": "My_First_Terraform_Alarm_Above_Threshold",
+    "comparison_operator": "GreaterThanOrEqualToThreshold",
+    "evaluation_periods": "2",
+    "metric_name": "CPUUtilization",
+    "namespace": "AWS/EC2",
+    "period": "120",
+    "statistic": "Average",
+    "threshold": "2",
+    "alarm_actions": [
+        "This metric monitors ec2 cpu utilization"
+    ],
+    "objid": "632b867055540dfa7ad62ec5"
+}

@@ -1,0 +1,17 @@
+{
+ "region"   :  "us-east-2",
+ "lease_seconds": "3600",                                                                        
+  "backend": "aws",                                                                              
+  "role": "resources",  
+   "allow_users_to_change_password": "true",
+      "require_symbols":"true",
+      "require_uppercase_characters":"true",
+      "require_numbers":"true",
+      "require_lowercase_characters":"true",
+      "minimum_password_length":"8",
+      "max_password_age":"90",
+      "hard_expiry":"false",
+      "objid": "638a2443ab3e3a0b9f7abd7c"
+
+
+}

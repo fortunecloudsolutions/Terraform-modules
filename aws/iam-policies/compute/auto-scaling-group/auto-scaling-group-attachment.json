@@ -1,0 +1,41 @@
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Sid": "VisualEditor0",
+            "Effect": "Allow",
+            "Action": "iam:CreateServiceLinkedRole",
+            "Resource": "*",
+            "Condition": {
+                "StringEquals": {
+                    "iam:AWSServiceName": "autoscaling.amazonaws.com"
+                }
+            }
+        },
+        {
+            "Sid": "VisualEditor1",
+            "Effect": "Allow",
+            "Action": [
+                "autoscaling:AttachLoadBalancers",
+                "SNS:ListSubscriptions",
+                "autoscaling:DetachLoadBalancers",
+                "iam:GetRole",
+                "ec2:AuthorizeSecurityGroupIngress",
+                "autoscaling:Describe*",
+                "ec2:DeleteTags",
+                "cloudwatch:GetMetricData",
+                "ec2:RunInstances",
+                "iam:ListRoles",
+                "cloudwatch:GetMetricStatistics",
+                "cloudwatch:Describe*",
+                "cloudwatch:ListMetrics",
+                "elasticloadbalancing:DescribeLoadBalancers",
+                "cloudwatch:PutMetricAlarm",
+                "ec2:Describe*",
+                "elasticloadbalancing:DescribeTargetGroups",
+                "SNS:ListTopics"
+            ],
+            "Resource": "*"
+        }
+    ]
+}

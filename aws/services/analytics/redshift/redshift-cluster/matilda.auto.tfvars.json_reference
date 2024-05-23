@@ -1,0 +1,14 @@
+{
+    "region": "us-east-2",
+    "cluster_identifier": "test-cluster",
+    "node_type": "dc2.large",
+    "master_password": "Awsuser15",
+    "master_username": "awsuser",
+    "skip_final_snapshot": true,
+    "timeouts": {
+        "create": "75m",
+        "update": "75m",
+        "delete": "40m"
+    },
+    "objid": "632b866f8cc105fbde69d7f1"
+}

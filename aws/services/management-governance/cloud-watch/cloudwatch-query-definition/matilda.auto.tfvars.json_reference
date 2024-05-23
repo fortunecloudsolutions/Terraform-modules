@@ -1,0 +1,9 @@
+{
+    "region": "us-east-2",
+    "name": "test-query",
+    "query_string": "fields @timestamp, @message | sort @timestamp desc | limit 20",
+    "log_group_names": [
+        "test-cloudwatch-log-group"
+    ],
+    "objid": "632b8673a8f54e00d92fda07"
+}

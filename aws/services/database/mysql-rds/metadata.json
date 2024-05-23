@@ -1,0 +1,12 @@
+{
+    "costAPI":{
+        "tfRegion":"region",
+        "tfMultiAZ":"multi_az",
+        "instanceName":"instance",
+        "storagePerRdsType":"storage_type",
+        "tfService":"mysql-rds",
+        "noOfInstances":"1",
+        "rdsStorage":"storage",
+        "provider":"amazon"
+        }
+} 

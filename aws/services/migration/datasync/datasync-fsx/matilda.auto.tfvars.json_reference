@@ -1,0 +1,13 @@
+{
+    "region": "us-east-2",
+    "lease_seconds": "3600",
+    "backend": "aws",
+    "role": "resources",
+    "fsx_filesystem_arn": "arn:aws:fsx:us-east-2:046692759124:file-system/fs-08ee9ab64ede368e6",
+    "user": "SomeUser",
+    "password": "SuperSecretPassword",
+    "security_group_arns": [
+        "arn:aws:ec2:us-east-2:046692759124:security-group/sg-8ab03be1"
+    ],
+    "objid": "632b86754a661abe15d8cf56"
+}

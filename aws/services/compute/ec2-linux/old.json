@@ -1,0 +1,50 @@
+{                                                                            
+  "region": "us-east-2",                                                     
+  "lease_seconds": "3600",
+  "backend": "aws",
+  "role": "resources",                                                   
+  "availability_zone": "us-east-2b",                                           
+  "vpc_security_group_ids": [                                
+    "sg-0acdd0eb27d1a2e1a"               
+  ],
+  "os_map":{"centos" : "ami-01e36b7901e884a10"},
+  "subnet_id": "subnet-0379328a4916c76ec",
+  "os_desc": "centos",
+  "associate_public_ip_address": "true",
+  "instance_name": "Centos 7",
+  "instance_type": "t2.small",
+  "instance_count": 1,
+  "ebs_optimized": false,
+  "key_name": "Matri",
+  "monitoring": false,
+  "root_block_device": [
+    {
+      "volume_type": "gp2",
+      "volume_size": 10,
+      "encrypted": true
+    }
+  ],
+  "ebs_block_device": [
+    {
+      "device_name": "/dev/sdf",
+      "volume_type": "gp2",
+      "volume_size": "5",
+      "encrypted": "true"
+    },
+    {
+      "device_name": "/dev/sdg",
+      "volume_type": "gp2",
+      "volume_size": "5",
+      "encrypted": "true"
+    }
+  ],
+  "_comment":{
+  "bucketname": "matri-ansible-template",
+  "outputFile": "/home/ec2-user/",
+  "awsFile": "final-java.sh jdk-8u202-linux-x64.tar.gz",
+  "AWS_SERVICE": "s3",
+  "java_dist": "jdk-8u202-linux-x64.tar.gz",
+  "jdk_version": "jdk1.8.0_202",
+  "default_java_dir": "/usr/lib/jvm",
+  "user_data_filename": "ec2-centos-final-download.sh" }
+}

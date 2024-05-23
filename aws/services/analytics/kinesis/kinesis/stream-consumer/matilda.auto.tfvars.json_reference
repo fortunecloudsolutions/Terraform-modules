@@ -1,0 +1,6 @@
+{
+    "region": "us-east-2",
+    "name": "test-stream-consumer",
+    "stream_arn": "arn:aws:kinesis:us-east-2:046692759124:stream/test-kinesis-stream",
+    "objid": "632b866fb92ca1767e6e7f92"
+}

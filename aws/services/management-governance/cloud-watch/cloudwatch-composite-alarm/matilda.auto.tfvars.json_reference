@@ -1,0 +1,6 @@
+{
+    "region": "us-east-2",
+    "alarm_name": "test-composite-alarm",
+    "alarm_rule": "ALARM(test-alarm)",
+    "objid": "632b8673b9cb4543a51bec64"
+}

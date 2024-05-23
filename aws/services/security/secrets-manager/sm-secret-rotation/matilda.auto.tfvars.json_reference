@@ -1,0 +1,12 @@
+{
+    "region": "us-east-2",
+    "lease_seconds": "3600",
+    "backend": "aws",
+    "role": "resources",
+    "secret_id": "test-secret",
+    "rotation_lambda_arn": "0003aec2-e39a-4c62-b778-b74e7318c623",
+    "rotation_rules": {
+        "automatically_after_days": "20"
+    },
+    "objid": "632b8677b97b01e1f8c54977"
+}

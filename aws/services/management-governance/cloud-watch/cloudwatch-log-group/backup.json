@@ -1,0 +1,21 @@
+{
+    "region"   :  "us-east-2",
+    "lease_seconds": "3600",
+    "backend"  : "aws",
+    "role" : "resources",
+    "name":"test-cloudwatch-log-group",
+    "retention_in_days":1,
+    "kms_key_id":"arn:aws:kms:us-east-2:046692759124:key/4c48afb1-923a-4ddd-b47d-4b37cc1cd890"
+ 
+    
+ }
+
+ {
+    "region"   :  "us-east-2",
+    "lease_seconds": "3600",
+    "backend"  : "aws",
+    "role" : "resources",
+    "name":"test-cloudwatch-log-group"
+ 
+    
+ }

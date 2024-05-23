@@ -1,0 +1,9 @@
+{
+    "region": "us-east-2",
+    "lease_seconds": "3600",
+    "backend": "aws",
+    "role": "resources",
+    "policy": "{\n\"Version\":\"2012-10-17\",\n\"Statement\":[\n{\n\"Sid\": \"sid1\",\n\"Effect\":\"Allow\",\n\"Principal\": {\n\"AWS\":[\"arn:aws:iam::046692759124:user/sankireddy\"]\n},\n\"Action\":[\n\"events:*\"],\n\"Resource\":[\"arn:aws:events:us-east-2:046692759124:event-bus/test-event-bus\"]\n}\n]\n}",
+    "event_bus_name": "test-event-bus",
+    "objid": "632b8674b70110f8d61f95b4"
+}

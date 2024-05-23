@@ -1,0 +1,49 @@
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Sid": "VisualEditor0",
+            "Effect": "Allow",
+            "Action": [
+                "dms:MoveReplicationTask",
+                "logs:DescribeLogStreams",
+                "redshift:ModifyClusterIamRoles",
+                "iam:AttachRolePolicy",
+                "dms:ModifyReplicationInstance",
+                "dms:DeleteEndpoint",
+                "dms:DeleteReplicationInstance",
+                "RDS:Describe*",
+                "dms:ModifyReplicationTask",
+                "dms:StartReplicationTask",
+                "dms:CreateEndpoint",
+                "iam:ListAttachedRolePolicies",
+                "logs:GetLogEvents",
+                "dms:StartReplicationTaskAssessment",
+                "logs:FilterLogEvents",
+                "cloudwatch:Get*",
+                "dms:ListTagsForResource",
+                "iam:GetRole",
+                "dms:DeleteReplicationTaskAssessmentRun",
+                "logs:DescribeLogGroups",
+                "dms:Describe*",
+                "dms:RemoveTagsFromResource",
+                "dms:DeleteReplicationTask",
+                "cloudwatch:List*",
+                "dms:AddTagsToResource",
+                "dms:CreateReplicationInstance",
+                "ec2:Describe*",
+                "dms:StartReplicationTaskAssessmentRun",
+                "redshift:Describe*",
+                "kms:ListAliases",
+                "dms:StopReplicationTask",
+                "dms:RebootReplicationInstance",
+                "dms:CreateReplicationTask",
+                "dms:CancelReplicationTaskAssessmentRun",
+                "dms:ModifyEndpoint",
+                "secretsmanager:ListSecrets",
+                "iam:PassRole"
+            ],
+            "Resource": "*"
+        }
+    ]
+}

@@ -1,0 +1,18 @@
+{
+    "region": "us-east-2",
+    "lease_seconds": "3600",
+    "backend": "aws",
+    "role": "resources",
+    "asg_group_names": [
+        "MyFirstTerraformASG"
+    ],
+    "notification_types": [
+        "autoscaling:EC2_INSTANCE_LAUNCH",
+        "autoscaling:EC2_INSTANCE_LAUNCH_ERROR",
+        "autoscaling:EC2_INSTANCE_TERMINATE",
+        "autoscaling:EC2_INSTANCE_TERMINATE_ERROR",
+        "autoscaling:TEST_NOTIFICATION"
+    ],
+    "topic_arn": "arn:aws:sns:us-east-2:046692759124:MyASGTerraformSNS",
+    "objid": "632b8670d641dfa1dbdcb30b"
+}

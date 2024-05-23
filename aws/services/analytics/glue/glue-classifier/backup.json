@@ -1,0 +1,25 @@
+
+ {
+    "region"   :  "us-east-2",
+    "lease_seconds": "3600",
+    "backend"  : "aws",
+    "role" : "resources",
+    "name" :"catalog-test-classifier",
+    "grok_classifier":{
+       "classification" : "example",
+       "grok_pattern"   : "example",
+       "custom_patterns": null
+    },
+    "json_classifier":{
+        "json_path" : "example"
+       
+     },
+     "xml_classifier":{
+        "classification" : "example",
+        "row_tag"        : "example"
+     }
+
+    
+ }
+
+ 

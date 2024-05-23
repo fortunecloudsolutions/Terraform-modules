@@ -1,0 +1,9 @@
+{                                                                    
+  "region": "us-east-2",                            
+  "lease_seconds": "7200",                                               
+  "backend": "aws",                                                         
+  "role": "resources",                                                                                                                                                                                                                                                                                                                                  
+  "name": "mssql-subnet-group",
+  "subnet_ids":["subnet-00f135c5e2f4107fa","subnet-0390641cc5d248a02"],
+  "objid": "633f0895c529c3ef0a4bc8c5"
+}

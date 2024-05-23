@@ -1,0 +1,11 @@
+{
+    "region": "us-east-2",
+    "lease_seconds": "3600",
+    "backend": "aws",
+    "role": "resources",
+    "cluster_arn": "arn:aws:kafka:us-east-2:046692759124:cluster/test-cluster/ddec2bba-1012-4dc8-b73a-b17d9fd34160-2",
+    "secret_arn_list": [
+        "arn:aws:secretsmanager:us-east-2:046692759124:secret:AmazonMSK_test-ek9ifZ"
+    ],
+    "objid": "632b86741aa21447e0ba11d7"
+}

@@ -1,0 +1,20 @@
+{
+    "region"   :  "us-east-2",
+    "lease_seconds": "3600",
+    "backend"  : "aws",
+    "role" : "resources",
+    "cluster_identifier":"test-cluster",
+    "node_type" :"dc2.large",
+    "master_password":"Awsuser15",
+    "master_username":"awsuser",
+    "cluster_subnet_group_name":"test-subnet-group",
+    "skip_final_snapshot":true,
+    "timeouts": {             
+       "create": "75m",
+       "update": "75m",
+       "delete": "40m"
+     } 
+ 
+ }
+
+ 

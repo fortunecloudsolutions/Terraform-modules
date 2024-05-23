@@ -1,0 +1,30 @@
+{
+ "region"   :  "us-east-2",
+   "name" :"test-trigger",
+   "type" :"CONDITIONAL",
+   "actions":[{
+      "arguments":{},
+      "crawler_name":null,
+      "job_name":"test-job",
+      "timeout":1,
+      "security_configuration":null,
+      "notification_property":{
+         "notify_delay_after":1
+      }
+   }],
+   "predicate":{
+      "logical":null,
+      "conditions":[{
+         "job_name":null,
+         "state":null,
+         "crawler_name":"test-crawler",
+         "crawl_state":"SUCCEEDED",
+         "logical_operator":"EQUALS"
+
+      }]
+   },
+   "timeouts": {             
+      "create": "5m",
+      "delete": "5m"
+    } 
+} 

@@ -1,0 +1,9 @@
+{
+ "region"   :  "us-east-2",
+ "lease_seconds": "3600",                                                                        
+  "backend": "aws",                                                                              
+  "role": "resources",
+  "account_alias": "my-test-account",
+  "objid": "638a1c190714bde42eb9a16d"
+
+}

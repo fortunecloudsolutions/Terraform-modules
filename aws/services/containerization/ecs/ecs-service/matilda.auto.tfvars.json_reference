@@ -1,0 +1,15 @@
+{
+    "region": "us-east-2",
+    "lease_seconds": "3600",
+    "backend": "aws",
+    "role": "resources",
+    "name": "mongodb",
+    "cluster": "matilda-sandbox-cluster",
+    "task_definition": "arn:aws:ecs:us-east-2:046692759124:task-definition/service:3",
+    "desired_count": "3",
+    "ordered_placement_strategy": {
+        "type": "binpack",
+        "field": "cpu"
+    },
+    "objid": "632b867121673d7b36862153"
+}

@@ -1,0 +1,30 @@
+{
+    "region"   :  "us-east-2",
+    "lease_seconds": "3600",
+    "backend"  : "aws",
+    "role" : "resources",
+    "name":"test-log-subscription-filter",
+    "destination_arn":"arn:aws:kinesis:us-east-2:046692759124:stream/test-kinesis",
+    "filter_pattern":"logtype test",
+    "log_group_name":"test-cloudwatch-log-group",
+    "role_arn":"arn:aws:iam::046692759124:role/kinesisrole",
+    "distribution":"Random"
+    
+ 
+    
+ }
+
+ {
+    "region"   :  "us-east-2",
+    "lease_seconds": "3600",
+    "backend"  : "aws",
+    "role" : "resources",
+    "name":"test-log-subscription-filter",
+    "destination_arn":"arn:aws:kinesis:us-east-2:046692759124:stream/test-stream",
+    "filter_pattern":"logtype test",
+    "log_group_name":"test-cloudwatch-log-group",
+    "role_arn":"arn:aws:iam::046692759124:role/kinesisrole",
+    "distribution":"ByLogStream"
+ 
+    
+ }

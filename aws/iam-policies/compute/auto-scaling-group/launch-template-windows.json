@@ -1,0 +1,43 @@
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Sid": "VisualEditor0",
+            "Effect": "Allow",
+            "Action": [
+                "ec2:DeleteTags",
+                "cloudwatch:Describe*",
+                "cloudwatch:ListMetrics",
+                "iam:AddRoleToInstanceProfile",
+                "autoscaling:describe*",
+                "elasticloadbalancing:DescribeLoadBalancers",
+                "iam:PassRole",
+                "ec2:GetLaunchTemplateData",
+                "ec2:DeleteLaunchTemplateVersions",
+                "iam:ListRolePolicies",
+                "iam:ListPolicies",
+                "iam:GetRole",
+                "ec2:DeleteLaunchTemplate",
+                "iam:GetInstanceProfile",
+                "ec2:ImportKeyPair",
+                "ec2:CreateTags",
+                "ec2:RunInstances",
+                "iam:ListRoles",
+                "iam:ListInstanceProfiles",
+                "cloudwatch:GetMetricStatistics",
+                "ec2:CreateLaunchTemplateVersion",
+                "cloudwatch:PutMetricAlarm",
+                "ec2:Describe*",
+                "sts:AssumeRole",
+                "ec2:CreateLaunchTemplate",
+                "elasticloadbalancing:DescribeTargetGroups",
+                "ec2:ModifyLaunchTemplate",
+                "autoscaling:CreateLaunchConfiguration",
+                "autoscaling:CreateAutoScalingGroup",
+                "autoscaling:DeleteLaunchConfiguration",
+                "autoscaling:DeleteAutoScalingGroup"
+            ],
+            "Resource": "*"
+        }
+    ]
+}

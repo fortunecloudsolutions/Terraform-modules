@@ -1,0 +1,12 @@
+{
+    "region": "us-east-2",
+    "cluster_identifier": "test-cluster",
+    "instance_class": "db.t3.medium",
+    "neptune_subnet_group_name": "default",
+    "timeouts": {
+        "create": "90m",
+        "update": "90m",
+        "delete": "90m"
+    },
+    "objid": "632b8672f3741c9d41a21538"
+}

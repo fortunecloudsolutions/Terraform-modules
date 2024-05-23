@@ -1,0 +1,7 @@
+{
+    "costAPI":{
+        "tfRegion":"region",
+        "tfService":"s3-create",
+        "provider":"amazon"
+       }
+}

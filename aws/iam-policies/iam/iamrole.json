@@ -1,0 +1,37 @@
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Sid": "VisualEditor0",
+            "Effect": "Allow",
+            "Action": [
+                "iam:CreateServiceLinkedRole",
+                "iam:DeleteServiceLinkedRole",
+                "iam:GetAccountSummary",
+                "iam:ListAccountAliases",
+                "iam:ListSAMLProviders",
+                "iam:ListPolicies",
+                "iam:ListRoles",
+                "iam:CreateRole",
+                "iam:TagRole",
+                "iam:UnTagRole",
+                "iam:ListOpenIDConnectProviders",
+                "iam:AttachRolePolicy",
+                "iam:ListRolePolicies",
+                "iam:GetRole",
+                "iam:ListAttachedRolePolicies",
+                "iam:ListRoleTags",
+                "iam:GenerateServiceLastAccessedDetails",
+                "iam:GetServiceLastAccessedDetails",
+                "iam:GetPolicy",
+                "iam:ListEntitiesForPolicy",
+                "iam:DetachRolePolicy",
+                "iam:CreateInstanceProfile",
+                "iam:AddRoleToInstanceProfile",
+                "iam:PassRole",
+                "iam:DeleteRole"
+            ],
+            "Resource": "*"
+        }
+    ]
+}

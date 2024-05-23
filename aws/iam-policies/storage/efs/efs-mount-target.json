@@ -1,0 +1,28 @@
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Sid": "VisualEditor0",
+            "Effect": "Allow",
+            "Action": [
+                "elasticfilesystem:ModifyMountTargetSecurityGroups",
+                "elasticfilesystem:Describe*",
+                "cloudwatch:GetMetricData",
+                "elasticfilesystem:ListTagsForResource",
+                "cloudwatch:ListMetrics",
+                "elasticfilesystem:TagResource",
+                "ec2:Describe*",
+                "elasticfilesystem:CreateMountTarget",
+                "kms:ListAliases",
+                "elasticfilesystem:ClientMount",
+                "cloudwatch:DescribeAlarms",
+                "elasticfilesystem:PutBackupPolicy",
+                "elasticfilesystem:DeleteMountTarget",
+                "elasticfilesystem:CreateAccessPoint",
+                "elasticfilesystem:PutFileSystemPolicy",
+                "elasticfilesystem:UpdateFileSystem"
+            ],
+            "Resource": "*"
+        }
+    ]
+}

@@ -1,0 +1,23 @@
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Sid": "VisualEditor0",
+            "Effect": "Allow",
+            "Action": [
+                "ec2:DeleteTags",
+                "ec2:CreateTags",
+                "ec2:DescribeVpcs",
+                "ec2:DeleteInternetGateway",
+                "ec2:DescribeInternetGateways",
+                "ec2:DetachInternetGateway",
+                "ec2:DescribeNetworkAcls",
+                "ec2:AttachInternetGateway",
+                "ec2:CreateInternetGateway",
+                "ec2:describeDhcpOptions",
+                "ec2:describeRouteTables"
+            ],
+            "Resource": "*"
+        }
+    ]
+}

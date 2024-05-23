@@ -1,0 +1,23 @@
+{
+    "region": "us-east-2",
+    "lease_seconds": "3600",
+    "backend": "aws",
+    "role": "resources",
+    "environment": "prod",
+    "protocol": "http",
+    "family": "http",
+    "file_name": "ecs-services-linux-http.json",
+    "service_name": "Matri-ecs",
+    "number_count": 3,
+    "container_name": "Matri-ecsl",
+    "container_port": [
+        80
+    ],
+    "cluster_id": "arn:aws:ecs:us-east-2:046692759124:cluster/services",
+    "component": "Matri-component",
+    "deployment_identifier": "production",
+    "cluster_name": "services",
+    "target_arn": "arn:aws:elasticloadbalancing:us-east-2:046692759124:targetgroup/MyFirstTerraformALBTarget/82e90157a3ae4d4c",
+    "platform_version": null,
+    "objid": "632b8671bd8d9e1e7218734c"
+}

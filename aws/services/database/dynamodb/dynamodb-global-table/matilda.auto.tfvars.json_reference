@@ -1,0 +1,10 @@
+{
+    "region": "us-east-2",
+    "name": "test-table",
+    "replica": [
+        {
+            "region_name": "us-east-2"
+        }
+    ],
+    "objid": "632b8672144027a065a5d6fc"
+}

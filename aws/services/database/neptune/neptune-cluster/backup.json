@@ -1,0 +1,10 @@
+{
+    "region"   :  "us-east-2",
+    "lease_seconds": "3600",
+    "backend"  : "aws",
+    "role" : "resources",
+    "cluster_identifier":"test-cluster",
+    "neptune_subnet_group_name":"terraform-20210610224030443300000001",
+    "neptune_cluster_parameter_group_name":"test-parameter-group"
+ 
+ }

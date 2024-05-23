@@ -1,0 +1,27 @@
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Sid": "VisualEditor0",
+            "Effect": "Allow",
+            "Action": [
+                "iam:GetAccountSummary",
+                "iam:ListAccountAliases",
+                "iam:ListPolicies",
+                "iam:ListRoles",
+                "iam:AttachRolePolicy",
+                "iam:ListRolePolicies",
+                "iam:GetRole",
+                "iam:ListAttachedRolePolicies",
+                "iam:ListRoleTags",
+                "iam:GetServiceLastAccessedDetails",
+                "iam:GetPolicy",
+                "iam:ListEntitiesForPolicy",
+                "iam:DetachRolePolicy",
+                "iam:ListPoliciesGrantingServiceAccess",
+                "iam:GenerateServiceLastAccessedDetails"
+            ],
+            "Resource": "*"
+        }
+    ]
+}

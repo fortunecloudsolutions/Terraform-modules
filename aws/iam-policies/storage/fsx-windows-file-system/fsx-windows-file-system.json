@@ -1,0 +1,51 @@
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Sid": "VisualEditor0",
+            "Effect": "Allow",
+            "Action": [
+                "fsx:DescribeAssociatedFileGateways",
+                "fsx:DescribeFileSystems",
+                "fsx:DescribeDataRepositoryTasks",
+                "fsx:DeleteBackup",
+                "fsx:DisassociateFileGateway",
+                "cloudwatch:GetMetricData",
+                "fsx:CreateDataRepositoryTask",
+                "ec2:DescribeRegions",
+                "fsx:CancelDataRepositoryTask",
+                "fsx:DescribeFileSystemAliases",
+                "ec2:DescribeVpcAttribute",
+                "ec2:ModifyAvailabilityZoneGroup",
+                "fsx:CreateFileSystemFromBackup",
+                "ec2:DescribeNetworkInterfaces",
+                "ec2:DescribeAvailabilityZones",
+                "ec2:DescribeNetworkInterfaceAttribute",
+                "fsx:CreateBackup",
+                "fsx:TagResource",
+                "fsx:AssociateFileGateway",
+                "fsx:DisassociateFileSystemAliases",
+                "fsx:DescribeBackups",
+                "fsx:ListTagsForResource",
+                "ec2:DescribeVpcClassicLinkDnsSupport",
+                "ec2:ModifyNetworkInterfaceAttribute",
+                "fsx:UntagResource",
+                "ec2:DeleteNetworkInterface",
+                "fsx:UpdateFileSystem",
+                "fsx:AssociateFileSystemAliases",
+                "fsx:DeleteFileSystem",
+                "ec2:DescribeSecurityGroups",
+                "ec2:CreateNetworkInterface",
+                "iam:CreateServiceLinkedRole",
+                "ec2:DescribeVpcs",
+                "fsx:CreateFileSystem",
+                "kms:ListAliases",
+                "ec2:DisableVpcClassicLinkDnsSupport",
+                "ec2:EnableVpcClassicLinkDnsSupport",
+                "ec2:DescribeSubnets",
+                "cloudwatch:DescribeAlarms"
+            ],
+            "Resource": "*"
+        }
+    ]
+}

@@ -1,0 +1,14 @@
+{
+    "region": "us-east-2",
+    "max_lease_seconds": "3600",
+    "backend": "aws",
+    "role": "resources",
+    "peer_vpc_id": "vpc-5a863f32",
+    "vpc_id": "vpc-0e7793d6ce65fc4a7",
+    "timeouts": {
+        "create": "90m",
+        "delete": "90m",
+        "update": "90m"
+    },
+    "objid": "632b8676d9b097ab2994142b"
+}

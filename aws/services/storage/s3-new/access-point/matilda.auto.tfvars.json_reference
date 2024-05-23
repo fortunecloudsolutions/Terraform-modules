@@ -1,0 +1,6 @@
+{
+    "region": "us-east-2",
+    "bucket": "test-bucket-s3-new",
+    "name": "testaccesspoint",
+    "objid": "632b867759470d13c9cf869e"
+}

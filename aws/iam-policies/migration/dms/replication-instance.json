@@ -1,0 +1,34 @@
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Sid": "VisualEditor0",
+            "Effect": "Allow",
+            "Action": [
+                "logs:DescribeLogStreams",
+                "redshift:ModifyClusterIamRoles",
+                "iam:AttachRolePolicy",
+                "dms:ModifyReplicationInstance",
+                "dms:DeleteReplicationInstance",
+                "RDS:Describe*",
+                "iam:ListAttachedRolePolicies",
+                "logs:GetLogEvents",
+                "logs:FilterLogEvents",
+                "cloudwatch:Get*",
+                "dms:ListTagsForResource",
+                "iam:GetRole",
+                "logs:DescribeLogGroups",
+                "dms:Describe*",
+                "dms:RemoveTagsFromResource",
+                "cloudwatch:List*",
+                "dms:AddTagsToResource",
+                "dms:CreateReplicationInstance",
+                "ec2:Describe*",
+                "redshift:Describe*",
+                "kms:ListAliases",
+                "dms:RebootReplicationInstance"
+            ],
+            "Resource": "*"
+        }
+    ]
+}

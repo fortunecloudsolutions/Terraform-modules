@@ -1,0 +1,25 @@
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Sid": "VisualEditor0",
+            "Effect": "Allow",
+            "Action": [
+                "datasync:Describe*",
+                "datasync:ListLocations",
+                "datasync:DeleteLocation",
+                "datasync:DeleteAgent",
+                "datasync:CreateAgent",
+                "datasync:ListTagsForResource",
+                "datasync:ListTasks",
+                "datasync:UpdateAgent",
+                "datasync:ListAgents",
+                "datasync:ListTaskExecutions",
+                "datasync:TagResource",
+                "datasync:UntagResource",
+                "ec2:Describe*"
+            ],
+            "Resource": "*"
+        }
+    ]
+}

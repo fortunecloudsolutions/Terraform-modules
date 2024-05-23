@@ -1,0 +1,40 @@
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Sid": "VisualEditor0",
+            "Effect": "Allow",
+            "Action": [
+                "kafka:UpdateClusterKafkaVersion",
+                "kafka:UpdateBrokerCount",
+                "cloudwatch:GetMetricData",
+                "kafka:GetBootstrapBrokers",
+                "kafka:UpdateBrokerStorage",
+                "ec2:ModifyAvailabilityZoneGroup",
+                "kafka:RebootBroker",
+                "kafka:UpdateMonitoring",
+                "kafka:UpdateBrokerType",
+                "kafka:TagResource",
+                "kafka:CreateCluster",
+                "kafka:GetCompatibleKafkaVersions",
+                "logs:DescribeLogGroups",
+                "application-autoscaling:DescribeScalableTargets",
+                "kms:RetireGrant",
+                "s3:ListAllMyBuckets",
+                "kafka:DeleteCluster",
+                "application-autoscaling:DescribeScalingPolicies",
+                "kafka:UntagResource",
+                "ec2:Describe*",
+                "iam:AttachRolePolicy",
+                "iam:CreateServiceLinkedRole",
+                "iam:PutRolePolicy",
+                "kms:DescribeKey",
+                "kms:CreateGrant",
+                "kafka:Describe*",
+                "kafka:List*",
+                "pricing:GetProducts"
+            ],
+            "Resource": "*"
+        }
+    ]
+}

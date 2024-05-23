@@ -1,0 +1,14 @@
+{
+    "region": "us-east-2",
+    "data_catalog_encryption_settings": {
+        "connection_password_encryption": {
+            "return_connection_password_encrypted": true,
+            "aws_kms_key_id": "arn:aws:kms:us-east-2:046692759124:key/062cf8ae-e994-49fb-a7e8-36bc21c2ccdb"
+        },
+        "encryption_at_rest": {
+            "catalog_encryption_mode": "DISABLED",
+            "sse_aws_kms_key_id": null
+        }
+    },
+    "objid": "632b866f7ac58c5ccefcaa38"
+}

@@ -1,0 +1,9 @@
+{
+    "region": "us-east-2",
+    "lease_seconds": "3600",
+    "backend": "aws",
+    "role": "resources",
+    "name": "mytestami",
+    "source_instance_id": "i-059acc738831312df",
+    "objid": "632b866fdc172b6bb1634e64"
+}

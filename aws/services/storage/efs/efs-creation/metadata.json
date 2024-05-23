@@ -1,0 +1,7 @@
+{
+    "costAPI":{
+        "tfRegion":"region",
+        "tfService":"efs-creation",
+        "provider":"amazon"
+       }
+}

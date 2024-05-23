@@ -1,0 +1,7 @@
+{
+    "costAPI":{
+        "tfRegion":"region",
+        "tfService":"sm-secret",
+        "provider":"amazon"
+    }
+}

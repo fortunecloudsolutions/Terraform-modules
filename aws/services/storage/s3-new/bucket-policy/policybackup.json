@@ -1,0 +1,17 @@
+ {
+    "Version": "2012-10-17",
+    "Statement": [
+      {
+        "Sid": "",
+        "Effect": "Deny",
+        "Principal": "*",
+        "Action": "s3:*",
+        "Resource": "arn:aws:s3:::test-bucket-new",
+        "Condition": { "Null": { "aws:MultiFactorAuthAge": true }}
+      }
+    ]
+ } 
+
+
+
+ #"policy" :"{\n\"Version\":\"2012-10-17\",\n\"Statement\":[\n{\n\"Sid\":\"\",\n\"Effect\":\"Allow\",\n\"Principal\":\"*\",\n\"Action\":\"s3:*\",\n\"Resource\":\"arn:aws:s3:::test-bucket-new\",\n\"Condition\":{\"Null\":{\"aws:MultiFactorAuthAge\":true}}\n}\n]\n}"

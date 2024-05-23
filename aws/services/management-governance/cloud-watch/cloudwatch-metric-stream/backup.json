@@ -1,0 +1,86 @@
+{
+    "region"   :  "us-east-2",
+    "lease_seconds": "3600",
+    "backend"  : "aws",
+    "role" : "resources",
+    "firehose_arn":"arn:aws:firehose:us-east-2:046692759124:deliverystream/PUT-S3-PPvps",
+    "role_arn":"arn:aws:iam::046692759124:role/firehoserole",
+    "output_format":"json"
+  
+ }
+
+ {
+    "region"   :  "us-east-2",
+    "lease_seconds": "3600",
+    "backend"  : "aws",
+    "role" : "resources",
+    "firehose_arn":"arn:aws:firehose:us-east-2:046692759124:deliverystream/KDS-S3-VXgKP",
+    "role_arn":"arn:aws:iam::046692759124:role/firehoserole",
+    "output_format":"json",
+    "name":"test-metric-stream",
+    "exclude_filter":[
+       {
+         "namespace": "AWS/ELB"
+       },
+       {
+         "namespace": "AWS/EC2"
+       }
+     ]
+  
+ }{
+    "region"   :  "us-east-2",
+    "lease_seconds": "3600",
+    "backend"  : "aws",
+    "role" : "resources",
+    "firehose_arn":"arn:aws:firehose:us-east-2:046692759124:deliverystream/KDS-S3-VXgKP",
+    "role_arn":"arn:aws:iam::046692759124:role/firehoserole",
+    "output_format":"json",
+    "name":"test-metric-stream",
+    "exclude_filter":[
+       {
+         "namespace": "AWS/ELB"
+       },
+       {
+         "namespace": "AWS/EC2"
+       }
+     ]
+  
+ }
+
+ {
+    "region"   :  "us-east-2",
+    "lease_seconds": "3600",
+    "backend"  : "aws",
+    "role" : "resources",
+    "firehose_arn":"arn:aws:firehose:us-east-2:046692759124:deliverystream/KDS-S3-VXgKP",
+    "role_arn":"arn:aws:iam::046692759124:role/firehoserole",
+    "output_format":"json",
+    "name":"test-metric-stream",
+    "include_filter":[
+       {
+         "namespace": "AWS/ELB"
+       },
+       {
+         "namespace": "AWS/EC2"
+       }
+     ]
+  
+ }{
+    "region"   :  "us-east-2",
+    "lease_seconds": "3600",
+    "backend"  : "aws",
+    "role" : "resources",
+    "firehose_arn":"arn:aws:firehose:us-east-2:046692759124:deliverystream/KDS-S3-VXgKP",
+    "role_arn":"arn:aws:iam::046692759124:role/firehoserole",
+    "output_format":"json",
+    "name":"test-metric-stream",
+    "include_filter":[
+       {
+         "namespace": "AWS/ELB"
+       },
+       {
+         "namespace": "AWS/EC2"
+       }
+     ]
+  
+ }

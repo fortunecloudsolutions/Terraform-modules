@@ -1,0 +1,24 @@
+{
+    "region": "us-east-2",
+    "lease_seconds": "3600",
+    "backend": "aws",
+    "role": "resources",
+    "name": "matildacloud.org",
+    "comment": "Test zone hosted by Matilda",
+    "force_destroy": false,
+    "tags": {
+        "Team": "Devops",
+        "Organization": "MatildaMigrationDemo"
+    },
+    "vpc": [
+        {
+            "vpc_id": "vpc-0e7793d6ce65fc4a7",
+            "vpc_region": "us-east-2"
+        },
+        {
+            "vpc_id": "vpc-08229d60",
+            "vpc_region": "ap-south-1"
+        }
+    ],
+    "objid": "632b8676bc41d8e2ed806503"
+}

@@ -1,0 +1,14 @@
+{
+    "region": "us-east-2",
+    "lease_seconds": "3600",
+    "backend": "aws",
+    "role": "resources",
+    "alarm_name": "test-alarm",
+    "comparison_operator": "GreaterThanOrEqualToThreshold",
+    "evaluation_periods": "1",
+    "metric_name": "CPUUtilization",
+    "statistic": "Average",
+    "period": "120",
+    "namespace": "AWS/EC2",
+    "objid": "632b8673e2c078637f71f45a"
+}

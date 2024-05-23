@@ -1,0 +1,29 @@
+{
+    "region": "us-east-2",
+    "lease_seconds": "3600",
+    "backend": "aws",
+    "role": "resources",
+    "target_group_name": "MySecondTerraformALBTarget",
+    "target_port": "80",
+    "target_protocol": "HTTP",
+    "target_vpc_id": "vpc-5a863f32",
+    "deregistration_delay": 300,
+    "slow_start": 0,
+    "load_balancing_algorithm_type": "least_outstanding_requests",
+    "target_type": "instance",
+    "tags": {
+        "Name": "MatildaMigrationDemo",
+        "Team": "Devops"
+    },
+    "sticky_type": "lb_cookie",
+    "health_check_enabled": "true",
+    "health_check_interval": "5",
+    "health_check_path": "/",
+    "health_check_port": "80",
+    "health_check_protocol": "HTTP",
+    "health_check_timeout": 3,
+    "healthy_threshold": "2",
+    "unhealthy_threshold": "10",
+    "health_check_success_resp_code": "200-209",
+    "objid": "632b8671137358deca5f6c18"
+}

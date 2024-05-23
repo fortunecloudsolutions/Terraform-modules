@@ -1,0 +1,44 @@
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Sid": "VisualEditor0",
+            "Effect": "Allow",
+            "Action": [
+                "ec2:AuthorizeSecurityGroupIngress",
+                "ec2:ExportClientVpnClientConfiguration",
+                "ec2:AttachInternetGateway",
+                "ec2:SearchTransitGatewayMulticastGroups",
+                "ec2:GetTransitGatewayRouteTableAssociations",
+                "ec2:AuthorizeSecurityGroupEgress",
+                "ec2:GetTransitGatewayAttachmentPropagations",
+                "ec2:ModifySubnetAttribute",
+                "ec2:ExportClientVpnClientCertificateRevocationList",
+                "ec2:SearchTransitGatewayRoutes",
+                "ec2:GetGroupsForCapacityReservation",
+                "ec2:GetTransitGatewayPrefixListReferences",
+                "ec2:SearchLocalGatewayRoutes",
+                "ec2:GetTransitGatewayRouteTablePropagations",
+                "ec2:Describe*",
+                "ec2:GetTransitGatewayMulticastDomainAssociations",
+                "cloudwatch:DescribeAlarmsForMetric",
+                "cloudwatch:ListMetrics",
+                "cloudwatch:GetMetricStatistics",
+                "cloudwatch:PutMetricAlarm",
+                "cloudwatch:DescribeAlarms",
+                "acm:ListCertificates",
+                "acm:ImportCertificate",
+                "elasticloadbalancing:*",
+                "config:DescribeConfigurationRecorderStatus",
+                "config:DescribeConfigurationRecorders",
+                "iam:CreateServiceLinkedRole",
+                "iam:ListServerCertificates",
+                "iam:UploadServerCertificate",
+                "globalaccelerator:CreateAccelerator",
+                "globalaccelerator:UpdateAccelerator",
+                "globalaccelerator:ListListeners"
+            ],
+            "Resource": "*"
+        }
+    ]
+}

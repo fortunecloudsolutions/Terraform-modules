@@ -1,0 +1,54 @@
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Sid": "VisualEditor0",
+            "Effect": "Allow",
+            "Action": "iam:CreateServiceLinkedRole",
+            "Resource": "*",
+            "Condition": {
+                "StringEquals": {
+                    "iam:AWSServiceName": "autoscaling.amazonaws.com"
+                }
+            }
+        },
+        {
+            "Sid": "VisualEditor1",
+            "Effect": "Allow",
+            "Action": [
+                "ec2:AuthorizeSecurityGroupIngress",
+                "ec2:RunInstances",
+                "ec2:DescribeInstances",
+                "ec2:CreateTags",
+                "ec2:DeleteTags",
+                "ec2:DescribeInstanceAttribute",
+                "ec2:DescribeSpotInstanceRequests",
+                "ec2:DescribePlacementGroups",
+                "ec2:DescribeAvailabilityZones",
+                "ec2:CreateSecurityGroup",
+                "ec2:DescribeAccountAttributes",
+                "ec2:DescribeKeyPairs",
+                "iam:GetRole",
+                "ec2:ImportKeyPair",
+                "ec2:DescribeLaunchTemplates",
+                "ec2:DescribeLaunchTemplateVersions",
+                "iam:ListRoles",
+                "cloudwatch:GetMetricStatistics",
+                "ec2:DescribeSecurityGroups",
+                "ec2:DescribeVpcClassicLink",
+                "ec2:DescribeImages",
+                "cloudwatch:PutMetricAlarm",
+                "ec2:CreateLaunchTemplate",
+                "ec2:DescribeVpcs",
+                "ec2:DescribeInstanceTypes",
+                "elasticloadbalancing:DescribeTargetGroups",
+                "ec2:DescribeSubnets",
+                "cloudwatch:Describe*",
+                "autoscaling:*",
+                "cloudwatch:ListMetrics",
+                "elasticloadbalancing:DescribeLoadBalancers"
+            ],
+            "Resource": "*"
+        }
+    ]
+}

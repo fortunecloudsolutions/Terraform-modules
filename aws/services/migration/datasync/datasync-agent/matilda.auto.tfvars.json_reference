@@ -1,0 +1,12 @@
+{
+    "region": "us-east-2",
+    "lease_seconds": "3600",
+    "backend": "aws",
+    "role": "resources",
+    "name": "firstdatasyncagent",
+    "activation_key": "9ATG5-L7CJO-7RKRH-KVGTP-SSHC8",
+    "timeouts": {
+        "create": "20m"
+    },
+    "objid": "632b8675801a935fe75f6a05"
+}

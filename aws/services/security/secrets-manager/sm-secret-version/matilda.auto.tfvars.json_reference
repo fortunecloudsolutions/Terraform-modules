@@ -1,0 +1,11 @@
+{
+    "region": "us-east-2",
+    "lease_seconds": "3600",
+    "backend": "aws",
+    "role": "resources",
+    "secret_id": "arn:aws:secretsmanager:us-east-2:046692759124:secret:terraform-20210120201329291400000001-nk4JOQ",
+    "secret_string": {
+        "mysecretkey": "This is Secret"
+    },
+    "objid": "632b86775c55cb798c738711"
+}

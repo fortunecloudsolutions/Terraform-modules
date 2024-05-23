@@ -1,0 +1,10 @@
+{
+    "region": "us-east-2",
+    "bucket": "test-bucket-s3-new1",
+    "rule": [
+        {
+            "object_ownership": "BucketOwnerPreferred"
+        }
+    ],
+    "objid": "632b86774bbd3483f618d685"
+}

@@ -1,0 +1,15 @@
+{
+    "region": "us-east-2",
+    "name": "test-cloudwatch-metric-filters",
+    "pattern": "name",
+    "log_group_name": "test-cloudwatch-log-group",
+    "metric_transformation": {
+        "name": "EventCount",
+        "namespace": "YourNamespace",
+        "value": "1",
+        "default_value": "1",
+        "dimensions": null,
+        "unit": "Seconds"
+    },
+    "objid": "632b8673517b68fa9356fb25"
+}

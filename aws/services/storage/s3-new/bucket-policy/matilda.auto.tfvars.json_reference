@@ -1,0 +1,6 @@
+{
+    "region": "us-east-2",
+    "bucket": "test-bucket-new",
+    "policy": "{\n\"Version\":\"2012-10-17\",\n\"Statement\":[\n{\n\"Sid\":\"\",\n\"Effect\":\"Allow\",\n\"Action\":\"*\",\n\"Resource\":\"arn:aws:s3:::test-bucket-new\"}\n]\n}",
+    "objid": "632b86776898152eb3ecc89e"
+}

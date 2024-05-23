@@ -1,0 +1,32 @@
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Sid": "VisualEditor0",
+            "Effect": "Allow",
+            "Action": [
+                "cloudwatch:ListMetrics",
+                "cloudwatch:GetMetricStatistics",
+                "sns:GetSMSAttributes",
+                "mobiletargeting:GetSmsChannel",
+                "mobiletargeting:GetApps",
+                "mobiletargeting:ListTemplates",
+                "mobiletargeting:CreateEmailTemplate",
+                "mobiletargeting:GetEmailTemplate",
+                "mobiletargeting:ListTemplateVersions",
+                "mobiletargeting:DeleteEmailTemplate",
+                "mobiletargeting:UpdateEmailTemplate",
+                "sns:TagResource",
+                "sns:UntagResource",
+                "sns:GetSubscriptionAttributes",
+                "sns:GetTopicAttributes",
+                "sns:List*",
+                "iam:PassRole",
+                "sns:Subscribe",
+                "sns:Publish",
+                "sns:SetSMSAttributes"
+            ],
+            "Resource": "*"
+        }
+    ]
+}

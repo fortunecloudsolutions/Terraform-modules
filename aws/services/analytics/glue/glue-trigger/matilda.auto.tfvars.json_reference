@@ -1,0 +1,22 @@
+{
+    "region": "us-east-2",
+    "name": "test-trigger",
+    "type": "ON_DEMAND",
+    "actions": [
+        {
+            "arguments": {},
+            "crawler_name": null,
+            "job_name": "test-job",
+            "timeout": 1,
+            "security_configuration": null,
+            "notification_property": {
+                "notify_delay_after": 1
+            }
+        }
+    ],
+    "timeouts": {
+        "create": "5m",
+        "delete": "5m"
+    },
+    "objid": "632b866f8f829fc1de404a6f"
+}

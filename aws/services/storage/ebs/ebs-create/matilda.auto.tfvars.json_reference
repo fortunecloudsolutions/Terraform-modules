@@ -1,0 +1,13 @@
+{
+    "region": "us-east-2",
+    "lease_seconds": "3600",
+    "backend": "aws",
+    "role": "resources",
+    "availability_zone": "us-east-2a",
+    "ebs_size": "50",
+    "encrypted": true,
+    "multi_attach_enabled": false,
+    "type": "gp2",
+    "snapshot_id": null,
+    "objid": "632b867795a6851f5cb87216"
+}

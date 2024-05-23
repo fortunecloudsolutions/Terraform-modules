@@ -1,0 +1,38 @@
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Sid": "VisualEditor0",
+            "Effect": "Allow",
+            "Action": [
+                "fsx:Describe*",
+                "datasync:DeleteTask",
+                "datasync:ListLocations",
+                "datasync:DeleteLocation",
+                "datasync:Describe*",
+                "cloudwatch:ListMetrics",
+                "datasync:CreateLocationFsxWindows",
+                "iam:PassRole",
+                "ec2:DeleteNetworkInterfacePermission",
+                "ec2:CreateNetworkInterfacePermission",
+                "datasync:ListTagsForResource",
+                "datasync:ListTasks",
+                "datasync:CreateTask",
+                "iam:GetRole",
+                "elasticfilesystem:Describe*",
+                "logs:DescribeLogGroups",
+                "datasync:ListAgents",
+                "ec2:ModifyNetworkInterfaceAttribute",
+                "datasync:ListTaskExecutions",
+                "ec2:DeleteNetworkInterface",
+                "iam:ListRoles",
+                "datasync:TagResource",
+                "ec2:CreateNetworkInterface",
+                "ec2:Describe*",
+                "datasync:UntagResource",
+                "cloudwatch:DescribeAlarms"
+            ],
+            "Resource": "*"
+        }
+    ]
+}

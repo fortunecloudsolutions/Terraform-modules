@@ -1,0 +1,23 @@
+{
+    "region": "us-east-2",                                                                                                                                                                                
+    "lease_seconds": "3600",                                                                                                                                                                              
+    "backend": "aws",                                                                                                                                                                                     
+    "role": "resources", 
+    "name" :"sqs_queue_test",
+    "visibility_timeout_seconds":15,
+    "delay_seconds": 15,
+    "max_message_size":1024,
+    "message_retention_seconds": 60,
+    "receive_wait_time_seconds" : 15,
+    "policy" : "{\n\"Version\": \"2008-10-17\",\n\"Id\": \"__default_policy_ID\",\n\"Statement\": \n[\n{\n \"Sid\": \"__owner_statement\",\n \"Effect\": \"Allow\",\n\"Principal\": {\n\"AWS\": \"arn:aws:iam::046692759124:root\"\n},\n\"Action\": \"SQS:*\",\n\"Resource\": \"arn:aws:sqs:us-east-2:046692759124:MySqs_SNS\"\n},\n{\n\"Sid\": \"AWSEvents_sqs_std_Idc79d6eb9-4173-4832-a517-d68bd75de00d\",\n\"Effect\": \"Allow\",\n\"Principal\": {\n\"Service\": \"events.amazonaws.com\"\n},\n\"Action\": \"sqs:SendMessage\",\n\"Resource\": \"arn:aws:sqs:us-east-2:046692759124:MySqs_SNS\",\n\"Condition\": {\n\"ArnEquals\": {\n\"aws:SourceArn\": \"arn:aws:events:us-east-2:046692759124:rule/test-event-rule\"\n}\n}\n}\n]\n}",
+    "redrive_policy":null,
+    "redrive_allow_policy":null,
+    "fifo_queue":null,
+    "content_based_deduplication":null,
+    "sqs_managed_sse_enabled":null,
+    "kms_master_key_id":null,
+    "kms_data_key_reuse_period_seconds":null,
+    "deduplication_scope":null,
+    "fifo_throughput_limit":null,
+    "tags" :{"name":"SQS_TEST"}
+  }

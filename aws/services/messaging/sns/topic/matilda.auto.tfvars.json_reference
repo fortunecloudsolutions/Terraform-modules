@@ -1,0 +1,9 @@
+{
+    "region": "us-east-2",
+    "lease_seconds": "3600",
+    "backend": "aws",
+    "role": "resources",
+    "name": "MyFirstTopic",
+    "display_name": "TopicTest",
+    "objid": "632b8675fe3078228feb9deb"
+}

@@ -1,0 +1,33 @@
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Sid": "VisualEditor0",
+            "Effect": "Allow",
+            "Action": [
+                "dms:CreateReplicationSubnetGroup",
+                "dms:ListTagsForResource",
+                "logs:DescribeLogGroups",
+                "dms:Describe*",
+                "logs:DescribeLogStreams",
+                "dms:RemoveTagsFromResource",
+                "redshift:ModifyClusterIamRoles",
+                "cloudwatch:List*",
+                "iam:AttachRolePolicy",
+                "dms:ModifyReplicationSubnetGroup",
+                "dms:AddTagsToResource",
+                "RDS:Describe*",
+                "ec2:Describe*",
+                "redshift:Describe*",
+                "iam:ListAttachedRolePolicies",
+                "kms:ListAliases",
+                "logs:GetLogEvents",
+                "dms:DeleteReplicationSubnetGroup",
+                "logs:FilterLogEvents",
+                "cloudwatch:Get*",
+                "iam:GetRole"
+            ],
+            "Resource": "*"
+        }
+    ]
+}

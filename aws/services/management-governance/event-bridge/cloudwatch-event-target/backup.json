@@ -1,0 +1,134 @@
+{                                                 
+    "region": "us-east-2",
+    "lease_seconds": "3600",                                             
+    "backend": "aws",                               
+    "role": "resources",
+    "rule":"test-event-rule",
+    "arn":"arn:aws:lambda:us-east-2:046692759124:function:testfunc"
+  
+  }
+
+  {                                                 
+    "region": "us-east-2",
+    "lease_seconds": "3600",                                             
+    "backend": "aws",                               
+    "role": "resources",
+    "rule":"test-event-rule",
+    "event_bus_name":"test-event-bus",
+    "arn":"arn:aws:lambda:us-east-2:046692759124:function:testfunc",
+    "target_id":"StopInstance",
+    "dead_letter_config":{
+      "arn":"arn:aws:sqs:us-east-2:046692759124:test"
+    },
+    "sqs_target":{
+      "message_group_id":null
+    },
+    "retry_policy":{
+      "maximum_event_age_in_seconds":60,
+      "maximum_retry_attempts":2
+    },
+    "run_command_targets": []
+  
+  }
+
+  {                                                 
+    "region": "us-east-2",
+    "lease_seconds": "3600",                                             
+    "backend": "aws",                               
+    "role": "resources",
+    "rule":"test-event-rule",
+    "role_arn":"arn:aws:iam::046692759124:role/kinesis", 
+    "event_bus_name":"test-event-bus",
+    "arn":"arn:aws:kinesis:us-east-2:046692759124:stream/teststream",
+    "target_id":"StopInstance",
+    "dead_letter_config":{
+      "arn":"arn:aws:sqs:us-east-2:046692759124:test"
+    },
+    "kinesis_target":{
+      "partition_key_path":null
+    }
+    
+  
+  }
+
+  
+  {                                                 
+    "region": "us-east-2",
+    "lease_seconds": "3600",                                             
+    "backend": "aws",                               
+    "role": "resources",
+    "rule":"test-event-rule",
+    "role_arn":"arn:aws:iam::046692759124:role/redshift", 
+    "event_bus_name":"test-event-bus",
+    "arn":"arn:aws:redshift:us-east-2:046692759124:cluster:redshift-cluster-1",
+    "dead_letter_config":{
+      "arn":"arn:aws:sqs:us-east-2:046692759124:test"
+    },
+    "redshift_target":{
+      "database":"redshift-cluster-1",
+      "db_user" :null,         
+      "secrets_manager_arn" :"arn:aws:secretsmanager:us-east-2:046692759124:secret:test1-4m1wim",
+      "sql"                : " ",
+      "statement_name"      : null,
+      "with_event":  true 
+    }
+    
+  
+  }
+
+  {                                                 
+    "region": "us-east-2",
+    "lease_seconds": "3600",                                             
+    "backend": "aws",                               
+    "role": "resources",
+    "rule":"test-event-rule",
+    "role_arn":"arn:aws:iam::046692759124:role/ecsTaskExecutionRole", 
+    "event_bus_name":"test-event-bus",
+    "arn":"arn:aws:ecs:us-east-2:046692759124:cluster/test",
+    
+    "dead_letter_config":{
+      "arn":"arn:aws:sqs:us-east-2:046692759124:test"
+    },
+    "ecs_target":{
+      "group" :"test",            
+      "launch_type" :"FARGATE",          
+      "platform_version" :"1.1.0",      
+      "task_count":1  ,            
+      "task_definition_arn" :"arn:aws:ecs:us-east-2:046692759124:task-definition/test:1",   
+      "tags" :{}  ,                 
+      "propagate_tags"   : "TASK_DEFINITION",      
+      "enable_execute_command"  :false,
+      "enable_ecs_managed_tags" :false,
+      "network_configuration" : {
+        "subnets"   :["subnet-e6932a8e"],
+        "security_groups"  :[],
+        "assign_public_ip" : false
+      },
+      "placement_constraint" : []
+    }
+    
+  
+  }
+
+  {                                                 
+    "region": "us-east-2",
+    "lease_seconds": "3600",                                             
+    "backend": "aws",                               
+    "role": "resources",
+    "rule":"test-event-rule",
+    "event_bus_name":"test-event-bus",
+    "arn":"arn:aws:sqs:us-east-2:046692759124:test",
+    "dead_letter_config":{
+      "arn":"arn:aws:sqs:us-east-2:046692759124:test"
+    },
+    "http_target": {
+      "path_parameter_values":["https://sqs.us-east-2.amazonaws.com/046692759124/test"],
+      "query_string_parameters" : {
+        "Body" : "detail.body"
+      },
+      "header_parameters" : {
+        "Env" : "Test"
+      }
+    }
+  }
+   

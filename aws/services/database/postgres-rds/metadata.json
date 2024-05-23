@@ -1,0 +1,12 @@
+{
+    "costAPI":{
+        "tfRegion":"region",
+        "tfDeploymentType":"multi_az",
+        "instanceName":"instance",
+        "storagePerRdsType":"storage_type",
+        "tfService":"postgres-rds",
+        "noOfInstances":"1",
+        "rdsStorage":"storage",
+        "provider":"amazon"
+    }
+}

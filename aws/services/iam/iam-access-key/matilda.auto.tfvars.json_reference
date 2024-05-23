@@ -1,0 +1,10 @@
+{
+ "region":  "us-east-2",
+ "lease_seconds": "3600",                                                                        
+  "backend": "aws",                                                                              
+  "role": "resources",  
+   "user": "test",
+      "pgp_key":"keybase:prad9192",
+      "objid": "638a1a5fe8edfa975ed54c92"
+
+}

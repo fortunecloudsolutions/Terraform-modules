@@ -1,0 +1,14 @@
+{
+    "region"   :  "us-east-2",
+    "lease_seconds": "3600",
+    "backend"  : "aws",
+    "role" : "resources",
+    "actions_enabled":false,
+    "alarm_actions":["arn:aws:sns:us-east-2:046692759124:testtopic"],
+    "alarm_description" :"test-composite-alarm",
+    "alarm_name":"test-composite-alarm",
+    "alarm_rule":"ALARM(test-alarm)",
+    "insufficient_data_actions":["arn:aws:sns:us-east-2:046692759124:testtopic"],
+    "ok_actions":["arn:aws:sns:us-east-2:046692759124:testtopic"]
+ 
+ }

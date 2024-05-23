@@ -1,0 +1,43 @@
+{
+    "region": "us-east-2",
+    "lease_seconds": "3600",
+    "backend": "aws",
+    "role": "resources",
+    "service_role": "arn:aws:iam::046692759124:role/aws-service-role/batch.amazonaws.com/AWSServiceRoleForBatch",
+    "type": "MANAGED",
+    "compute_environment_name": "test-compute-env",
+    "state": "ENABLED",
+    "compute_resources": {
+        "allocation_strategy": "BEST_FIT",
+        "bid_percentage": null,
+        "desired_vcpus": null,
+        "image_id": null,
+        "ec2_key_pair": null,
+        "instance_role": "arn:aws:iam::046692759124:instance-profile/ecsInstanceRole",
+        "instance_type": [
+            "c4.large"
+        ],
+        "max_vcpus": 16,
+        "min_vcpus": null,
+        "security_group_ids": [
+            "sg-8ab03be1"
+        ],
+        "spot_iam_fleet_role": null,
+        "subnets": [
+            "subnet-e6932a8e",
+            "subnet-3145b44b"
+        ],
+        "tags": {},
+        "type": "EC2",
+        "ec2_configuration": {
+            "image_id_override": null,
+            "image_type": "ECS_AL2"
+        },
+        "launch_template": {
+            "launch_template_id": null,
+            "launch_template_name": null,
+            "version": null
+        }
+    },
+    "objid": "632b8670ce425f48339169ae"
+}

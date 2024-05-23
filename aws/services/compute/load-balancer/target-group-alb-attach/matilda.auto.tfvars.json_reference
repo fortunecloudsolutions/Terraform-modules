@@ -1,0 +1,16 @@
+{
+    "region": "us-east-2",
+    "lease_seconds": "3600",
+    "backend": "aws",
+    "role": "resources",
+    "target_group_arn": "arn:aws:elasticloadbalancing:us-east-2:046692759124:targetgroup/MyFirstTerraformALBTarget/02927002efe62d28",
+    "instance_ip_ecscontainer_lambda_arn": [
+        "i-092b89fb6fce27690",
+        "i-0e27ba7c7efc31585"
+    ],
+    "target_port": 80,
+    "number_of_targets": 2,
+    "az_ip_address": "all",
+    "target_type": "instance",
+    "objid": "632b8671c3477df5a8bf55c9"
+}

@@ -1,0 +1,52 @@
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Sid": "VisualEditor0",
+            "Effect": "Allow",
+            "Action": [
+                "ecs:StartTask",
+                "iam:AddRoleToInstanceProfile",
+                "ecs:StopTask",
+                "ecs:DeregisterContainerInstance",
+                "ecs:TagResource",
+                "ecs:DeleteCluster",
+                "ecs:DeleteTaskSet",
+                "ec2:DisassociateIamInstanceProfile",
+                "iam:PassRole",
+                "ecs:RunTask",
+                "autoscaling:DescribeScalingActivities",
+                "ecs:UpdateTaskSet",
+                "ecs:Describe*",
+                "iam:ListRoles",
+                "ec2:Describe*",
+                "iam:CreateServiceLinkedRole",
+                "iam:AttachRolePolicy",
+                "appmesh:ListMeshes",
+                "autoscaling:DescribeAutoScalingGroups",
+                "iam:ListAttachedRolePolicies",
+                "ecs:RegisterTaskDefinition",
+                "autoscaling:UpdateAutoScalingGroup",
+                "ecs:CreateTaskSet",
+                "ecs:CreateCluster",
+                "sts:AssumeRole",
+                "autoscaling:DescribeLaunchConfigurations",
+                "ecs:RegisterContainerInstance",
+                "ecs:List*",
+                "ecs:UntagResource",
+                "iam:ListInstanceProfiles",
+                "ec2:AssociateIamInstanceProfile",
+                "autoscaling:DeleteAutoScalingGroup",
+                "autoscaling:DeleteLaunchConfiguration",
+                "autoscaling:CreateLaunchConfiguration",
+                "autoscaling:CreateAutoScalingGroup",
+                "cloudwatch:GetMetricStatistics",
+                "cloudformation:Describe*",
+                "cloudformation:CreateStack",
+                "cloudformation:ListStacks",
+                "cloudformation:DeleteStack"
+            ],
+            "Resource": "*"
+        }
+    ]
+}

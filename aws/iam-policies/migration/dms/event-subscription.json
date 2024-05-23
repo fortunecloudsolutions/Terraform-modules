@@ -1,0 +1,38 @@
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Sid": "VisualEditor0",
+            "Effect": "Allow",
+            "Action": [
+                "SNS:List*",
+                "iam:AttachRolePolicy",
+                "dms:DeleteEndpoint",
+                "SNS:ConfirmSubscription",
+                "RDS:Describe*",
+                "SNS:AddPermission",
+                "iam:PassRole",
+                "SNS:SetSubscriptionAttributes",
+                "iam:ListAttachedRolePolicies",
+                "logs:GetLogEvents",
+                "cloudwatch:Get*",
+                "logs:FilterLogEvents",
+                "dms:ListTagsForResource",
+                "iam:GetRole",
+                "logs:DescribeLogGroups",
+                "dms:Describe*",
+                "dms:RemoveTagsFromResource",
+                "cloudwatch:List*",
+                "dms:DeleteEventSubscription",
+                "dms:ModifyEventSubscription",
+                "dms:AddTagsToResource",
+                "ec2:Describe*",
+                "SNS:RemovePermission",
+                "dms:CreateEventSubscription",
+                "redshift:Describe*",
+                "kms:ListAliases"
+            ],
+            "Resource": "*"
+        }
+    ]
+}

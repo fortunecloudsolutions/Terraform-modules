@@ -1,0 +1,9 @@
+{
+    "region": "us-east-2",
+    "allowed_publishers": {
+        "signing_profile_version_arns": [
+            "arn:aws:signer:us-east-2:046692759124:/signing-profiles/test1"
+        ]
+    },
+    "objid": "632b8670480a6cf3c70059f2"
+}

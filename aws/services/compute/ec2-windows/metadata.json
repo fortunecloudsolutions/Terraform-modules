@@ -1,0 +1,9 @@
+{
+    "costAPI":{
+    "tfRegion":"region",
+    "tfAMI":"ami",
+    "name":"instance_type",
+    "tfService":"ec2-windows",
+    "provider":"amazon"
+    }
+}

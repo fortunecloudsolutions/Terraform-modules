@@ -1,0 +1,8 @@
+{
+    "costAPI":{
+    "tfRegion":"region",
+    "tfService":"app-load-balancer",
+    "provider":"amazon"
+    
+    }
+}

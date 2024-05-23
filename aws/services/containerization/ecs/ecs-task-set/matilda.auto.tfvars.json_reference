@@ -1,0 +1,16 @@
+{
+    "region": "us-east-2",
+    "lease_seconds": "3600",
+    "backend": "aws",
+    "role": "resources",
+    "service": "aws_ecs_service.example.id",
+    "cluster": "aws_ecs_cluster.example.id",
+    "task_definition": "aws_ecs_task_definition.example.arn",
+    "load_balancer": {
+        "target_group_arn": "aws_lb_target_group.example.arn",
+        "container_name": "mongo",
+        "container_port": "8080",
+        "load_balancer_name": "test-lb"
+    },
+    "objid": "632b86723708d04fb581fd23"
+}

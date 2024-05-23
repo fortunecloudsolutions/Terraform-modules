@@ -1,0 +1,10 @@
+{
+    "region": "us-east-2",
+    "lease_seconds": "3600",
+    "backend": "aws",
+    "role": "resources",
+    "name": "matildasynctask",
+    "destination_location_arn": "arn:aws:datasync:us-east-2:046692759124:location/loc-0fa8964eabe06ec24",
+    "source_location_arn": "arn:aws:datasync:us-east-2:046692759124:location/loc-01f05397e38f31e1f",
+    "objid": "632b86751ade639d458663e6"
+}

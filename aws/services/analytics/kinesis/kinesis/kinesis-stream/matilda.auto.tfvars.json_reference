@@ -1,0 +1,11 @@
+{
+    "region": "us-east-2",
+    "name": "test-kinesis-stream",
+    "shard_count": "1",
+    "timeouts": {
+        "create": "5m",
+        "update": "120m",
+        "delete": "120m"
+    },
+    "objid": "632b866f3c9be038031c3327"
+}

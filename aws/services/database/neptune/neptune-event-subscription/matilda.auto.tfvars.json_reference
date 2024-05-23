@@ -1,0 +1,10 @@
+{
+    "region": "us-east-2",
+    "sns_topic_arn": "arn:aws:sns:us-east-2:046692759124:testtopic",
+    "timeouts": {
+        "create": "40m",
+        "update": "40m",
+        "delete": "40m"
+    },
+    "objid": "632b8672b7482b534e3c5dfe"
+}

@@ -1,0 +1,29 @@
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Sid": "VisualEditor0",
+            "Effect": "Allow",
+            "Action": [
+                "iam:GetPolicyVersion",
+                "iam:GetPolicy",
+                "iam:ListPolicyVersions",
+                "iam:AttachGroupPolicy",
+                "iam:DetachGroupPolicy",
+                "iam:ListPolicies",
+                "iam:ListGroups",
+                "iam:GetGroup",
+                "iam:ListGroupPolicies",
+                "iam:ListAttachedGroupPolicies",
+                "iam:GenerateServiceLastAccessedDetails",
+                "iam:GetServiceLastAccessedDetails",
+                "iam:ListPoliciesGrantingServiceAccess",
+                "iam:ListGroupsForUser",
+                "iam:ListEntitiesForPolicy",
+                "iam:GetAccountSummary",
+                "iam:ListAccountAliases"
+            ],
+            "Resource": "*"
+        }
+    ]
+}

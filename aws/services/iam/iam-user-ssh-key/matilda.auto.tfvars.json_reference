@@ -1,0 +1,10 @@
+{
+ "region"   :  "us-east-2",
+  "lease_seconds": "3600",                                                                        
+   "backend": "aws",  
+   "role":"resources", 
+   "username":"Test_user" ,
+   "encoding": "SSH",
+   "public_key": "ssh-rsa AAAAB3NzaC1yc2EAAAABJQAAAgEAiN1+hkFmZeZOsnpKcNIrct1/PW89hNAJnvWUioUrOtyswxMgFs7ZHOQEdtjtCu0Y2GOOKzpWMY6+URQR71M09yOyKARUrsA7w/4CVhVWfG0QiIrUSmX6+msZQWn4acP9IJgF/RBKo49sERmQ7xrzlwyMxUXAfNavjKc2APB1shPP9NCijR+mEMYHlA0c2hbNgLwQnoRm57QYQgoato5lWjVVKh70rLzGNGaOIoGqpYzE991gafBZ1MhW1WXR9f+JHaxv4jL/hSQlmvgK7nce5sKbjZiWHzBKUIHdC6MCuxWZS74TVU4BMpJpdS6HN0NV/O7Rbpcj8oQADak+8K66mW6/7m6HfcY/DAgGj2UOv6OHtuNWlaKXMiF6oRaVywe2ml7OyHPu67RhD10LwUDvKEvmxmhOth31LEyMm+lpG7T1TmUHmpFkDJozgEUMO2T4Kmrc9clAtQ0Kt5NEeHfVEAyLC1Vc9at1f/CnpfHhR+GdhrNs/58AZdJVZ9eMXYNc0IHkxTOplrHVb3KCPaFIbOFxDWX2KdEezCtbNt0Ejpj2ibpk0xlZhZgR9tTdlD8ht3YFsGZ/Fouj+TCwVMNih8YpkV0o3P/QGxMv3b7vvWng0nf3r5nSA6HzUXcEBPpU8dni1+DshBCLeu1TdqDty7y4ApmKEZTKccJM08CoYXE= imported-openssh-key",
+    "objid": "633ef74c5c23de571799d2c5"
+}

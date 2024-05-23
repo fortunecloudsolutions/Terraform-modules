@@ -1,0 +1,9 @@
+{
+    "region": "us-east-2",
+    "lease_seconds": "3600",
+    "backend": "aws",
+    "role": "resources",
+    "volume_id": "vol-0850fdb0027da365a",
+    "description": "yo snap volume",
+    "objid": "632b8677eb7cc5ca889af35b"
+}

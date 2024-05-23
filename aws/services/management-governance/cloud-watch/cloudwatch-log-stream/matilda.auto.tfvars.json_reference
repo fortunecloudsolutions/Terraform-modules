@@ -1,0 +1,6 @@
+{
+    "region": "us-east-2",
+    "name": "test-log-stream",
+    "log_group_name": "test-cloudwatch-log-group",
+    "objid": "632b86733cb0255231dc5681"
+}

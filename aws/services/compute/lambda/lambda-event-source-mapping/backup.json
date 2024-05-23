@@ -1,0 +1,41 @@
+{
+    "region"   :  "us-east-2",
+    "lease_seconds": "3600",
+    "backend"  : "aws",
+    "role" : "resources",
+    "function_name":"test-lambda-function",
+    "event_source_arn":"arn:aws:sqs:us-east-2:046692759124:test"
+    
+ }
+
+{
+    "region"   :  "us-east-2",
+    "lease_seconds": "3600",
+    "backend"  : "aws",
+    "role" : "resources",
+    "function_name":"test-lambda-function",
+    "event_source_arn":"arn:aws:mq:us-east-2:046692759124:broker:test:b-1537862b-ea6d-436f-9af2-5e9c40266b07",
+    "queues":["test"],
+    "source_access_configuration":[{
+       "type":"BASIC_AUTH",
+       "uri":"arn:aws:secretsmanager:us-east-2:046692759124:secret:test1-4m1wim"
+    }]
+ }
+
+ {
+    "region"   :  "us-east-2",
+    "lease_seconds": "3600",
+    "backend"  : "aws",
+    "role" : "resources",
+    "function_name":"test-lambda-function",
+    "event_source_arn":"arn:aws:dynamodb:us-east-2:046692759124:table/testtable/stream/2021-10-05T17:11:14.559",
+    "starting_position":"LATEST"
+ }
+ 
+ {
+ "region"   :  "us-east-2",
+   "function_name":"test-lambda-function",
+   "event_source_arn":"arn:aws:kafka:us-east-2:046692759124:cluster/demo-cluster-1/085a671f-cc52-4c48-9013-76f83d93d3fb-2",
+   "topics":["testtopic"],
+   "starting_position": "TRIM_HORIZON"
+}

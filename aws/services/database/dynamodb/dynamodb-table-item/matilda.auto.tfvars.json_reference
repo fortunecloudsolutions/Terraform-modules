@@ -1,0 +1,7 @@
+{
+    "region": "us-east-2",
+    "table_name": "test-table",
+    "hash_key": "TestTableHashKey",
+    "item": "{\n  \"TestTableHashKey\": {\n    \"S\": \"111\"\n  }\n}",
+    "objid": "632b8672775238d313d57cd2"
+}

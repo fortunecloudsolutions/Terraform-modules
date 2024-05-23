@@ -1,0 +1,39 @@
+{
+    "region": "us-east-2",
+    "lease_seconds": "7200",
+    "backend": "aws",
+    "role": "resources",
+    "subnet_id": [
+        "subnet-3145b44b",
+        "subnet-34c4ea79",
+        "subnet-e6932a8e"
+    ],
+    "security_group": [
+        "sg-8ab03be1"
+    ],
+    "identifier": "matridboracle",
+    "allow_major": true,
+    "allow_minor": true,
+    "engine_name": "oracle-ee",
+    "engine_version": "18.0.0.0.ru-2020-04.rur-2020-04.r1",
+    "instance": "db.t3.2xlarge",
+    "storage": 20,
+    "storage_encrypted": false,
+    "username": "MatriUser",
+    "password": "Password",
+    "port": "1521",
+    "multi_az": true,
+    "backup_retention_period": 0,
+    "copy_tags_to_snapshot": true,
+    "monitoring_interval": 0,
+    "publicly_accessible": true,
+    "storage_type": "gp2",
+    "skip_final_snapshot": true,
+    "license_model": "bring-your-own-license",
+    "timeouts": {
+        "create": "90m",
+        "delete": "90m",
+        "update": "90m"
+    },
+    "objid": "632b86720de13ed6672512b5"
+}

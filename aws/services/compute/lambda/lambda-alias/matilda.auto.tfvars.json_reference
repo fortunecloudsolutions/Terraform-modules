@@ -1,0 +1,7 @@
+{
+    "region": "us-east-2",
+    "name": "testfunc1",
+    "function_name": "test-lambda-function",
+    "function_version": "7",
+    "objid": "632b867017de18fd2c623f8b"
+}

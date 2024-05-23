@@ -1,0 +1,32 @@
+{
+    "region": "us-east-2",
+    "bucket": "test-bucket-s3-new1",
+    "name": "testinventorynew",
+    "enabled": true,
+    "optional_fields": [
+        "Size",
+        "EncryptionStatus"
+    ],
+    "filter": {
+        "prefix": "/Documents"
+    },
+    "included_object_versions": "Current",
+    "schedule": {
+        "frequency": "Daily"
+    },
+    "destination": {
+        "bucket": {
+            "account_id": "046692759124",
+            "format": "ORC",
+            "bucket_arn": "arn:aws:s3:::test-bucket-s3-new1",
+            "prefix": null,
+            "encryption": {
+                "sse_kms": {
+                    "key_id": "arn:aws:kms:us-east-2:046692759124:key/062cf8ae-e994-49fb-a7e8-36bc21c2ccdb"
+                },
+                "sse_s3": null
+            }
+        }
+    },
+    "objid": "632b86777be13c9b24501d99"
+}

@@ -1,0 +1,51 @@
+{
+    "region": "us-east-2",
+    "lease_seconds": "3600",
+    "backend": "aws",
+    "role": "resources",
+    "listener_arn": "arn:aws:elasticloadbalancing:us-east-2:046692759124:listener/app/MyFirstTerraformAppLB/1508ffe5d4fc6163/acfb3409e5d05fca",
+    "listener_priority": [
+        100
+    ],
+    "number_of_listener_rules": 1,
+    "routing_action_type": [
+        "forward"
+    ],
+    "single_fwd_target_grp_arn": [
+        "arn:aws:elasticloadbalancing:us-east-2:046692759124:targetgroup/MyFirstTerraformALBTarget/82e90157a3ae4d4c"
+    ],
+    "forward": [
+        null
+    ],
+    "redirect": [
+        null
+    ],
+    "fixed_response": [
+        null
+    ],
+    "authenticate_cognito": [
+        null
+    ],
+    "authenticate_oidc": [
+        null
+    ],
+    "condition": [
+        {
+            "host_header": null,
+            "http_request_method": null,
+            "path_pattern": null,
+            "query_string": null,
+            "source_ip": null,
+            "http_header": [
+                {
+                    "http_header_name": "X-Forwarded-Port",
+                    "values": [
+                        "20",
+                        "30*"
+                    ]
+                }
+            ]
+        }
+    ],
+    "objid": "632b8671e01bf2a109572fdf"
+}

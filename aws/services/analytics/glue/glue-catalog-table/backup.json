@@ -1,0 +1,276 @@
+
+ {
+ "region"   :  "us-east-2",
+   "name" :"catalog-test-table",
+   "database_name":"catalog-test-database"
+} 
+ {
+ "region"   :  "us-east-2",
+   "name" :"catalog-test-table",
+   "database_name":"catalog-test-database",
+   "parameters":{
+      "EXTERNAL"              : "TRUE",
+       "parquet.compression" : "SNAPPY"
+      },
+   "partition_index":[{
+      "index_name":"part1",
+      "keys":["my_str"]
+   }],
+   "partition_keys":{
+      "comment":null,
+      "name":"my_str",
+      "type":"string"
+   },
+   "storage_descriptor":{
+      "bucket_columns":[],
+      "columns":[{
+         "comment" : null,
+         "name": "my_string",
+         "parameters":{},
+         "type":"string"
+      },
+      {
+         "comment" : null,
+         "name": "my_str",
+         "parameters":{},
+         "type":"string"
+      }],
+   
+   "compressed" : null,
+   "input_format" : null,  
+   "location" :  null,       
+   "number_of_buckets"  :null,
+   "output_format" : null,  
+   "parameters" :  {},
+   "schema_reference" :{
+      "schema_id":{
+       "registry_name" :"test-registry",
+       "schema_arn":null,
+       "schema_name":"test-schema"
+
+      },
+   
+   "schema_version_id":null,
+   "schema_version_number" :1
+
+   },
+
+   "ser_de_info" :{
+      "name" :null,               
+      "parameters":{},
+      "serialization_library":null
+    },
+   "sort_columns":[{
+
+      "column"     :"my_string",
+      "sort_order" :0
+   }],
+   "skewed_info":{
+      "skewed_column_names":[],
+      "skewed_column_value_location_maps" : {},
+      "skewed_column_values":[]
+    },
+    "stored_as_sub_directories":false
+ }
+} 
+
+
+{
+ "region"   :  "us-east-2",
+   "name" :"catalog-test-table",
+   "database_name":"catalog-test-database",
+   "parameters":{
+      "EXTERNAL"              : "TRUE",
+       "parquet.compression" : "SNAPPY"
+      },
+   "partition_index":[{
+      "index_name":"part1",
+      "keys":["name"]
+   }],
+   "partition_keys":{
+      "comment":null,
+      "name":"name",
+      "type":"string"
+   },
+   "storage_descriptor":{
+      "bucket_columns":[],
+      "columns":[],
+   
+   "compressed" : null,
+   "input_format" : null,  
+   "location" :  null,       
+   "number_of_buckets"  :null,
+   "output_format" : null,  
+   "parameters" :  {},
+   "schema_reference" :{
+      "schema_id":{
+       "registry_name" :"test-registry",
+       "schema_arn":null,
+       "schema_name":"test-schema"
+
+      },
+   
+   "schema_version_id":null,
+   "schema_version_number" :1
+
+   },
+
+   "ser_de_info" :{
+      "name" :null,               
+      "parameters":{},
+      "serialization_library":null
+    },
+   "sort_columns":[{
+
+      "column"     :"my_string",
+      "sort_order" :0
+   }],
+   "skewed_info":{
+      "skewed_column_names":[],
+      "skewed_column_value_location_maps" : {},
+      "skewed_column_values":[]
+    },
+    "stored_as_sub_directories":false
+ }
+} 
+
+
+{
+ "region"   :  "us-east-2",
+   "name" :"catalog-test-table",
+   "database_name":"catalog-test-database",
+   "parameters":{
+      "EXTERNAL"              : "TRUE",
+       "parquet.compression" : "SNAPPY"
+      },
+   "partition_index":[{
+      "index_name":"part1",
+      "keys":["Name"]
+   }],
+   "partition_keys":[{
+      "comment":null,
+      "name":"Name",
+      "type":"string"
+   }]
+} 
+
+{
+ "region"   :  "us-east-2",
+   "name" :"catalog-test-table",
+   "database_name":"catalog-test-database",
+   "parameters":{
+      "EXTERNAL"              : "TRUE",
+       "parquet.compression" : "SNAPPY"
+      },
+
+   "partition_keys":[{
+      "comment":null,
+      "name":"Age",
+      "type":"integer"
+   }],
+   "storage_descriptor":{
+      "bucket_columns":[],
+      "columns":[],
+   
+   "compressed" : null,
+   "input_format" : null,  
+   "location" :  null,       
+   "number_of_buckets"  :null,
+   "output_format" : null,  
+   "parameters" :  {},
+   "schema_reference" :{
+      "schema_id":{
+       "registry_name" :"test-registry",
+       "schema_arn":null,
+       "schema_name":"test-schema"
+
+      },
+   
+   "schema_version_id":null,
+   "schema_version_number" :1
+
+   },
+
+   "ser_de_info" :{
+      "name" :null,               
+      "parameters":{},
+      "serialization_library":null
+    },
+   "sort_columns":[{
+
+      "column"     :"name",
+      "sort_order" :0
+   }],
+   "skewed_info":{
+      "skewed_column_names":[],
+      "skewed_column_value_location_maps" : {},
+      "skewed_column_values":[]
+    },
+    "stored_as_sub_directories":false
+ }
+} 
+
+
+{
+ "region"   :  "us-east-2",
+   "name" :"catalog-test-table",
+   "database_name":"catalog-test-database",
+   "parameters":{
+      "EXTERNAL"              : "TRUE",
+       "parquet.compression" : "SNAPPY"
+      },
+
+   "partition_keys":[{
+      "comment":null,
+      "name":"Age",
+      "type":"integer"
+   },
+   {
+      "comment":null,
+      "name":"Name",
+      "type":"string"
+   }
+   ],
+   "storage_descriptor":{
+      "bucket_columns":[],
+      "columns":[],
+   
+   "compressed" : null,
+   "input_format" : null,  
+   "location" :  null,       
+   "number_of_buckets"  :null,
+   "output_format" : null,  
+   "parameters" :  {},
+   "schema_reference" :{
+      "schema_id":{
+       "registry_name" :"test-registry",
+       "schema_arn":null,
+       "schema_name":"test-schema"
+
+      },
+   
+   "schema_version_id":null,
+   "schema_version_number" :1
+
+   },
+
+   "ser_de_info" :{
+      "name" :null,               
+      "parameters":{},
+      "serialization_library":null
+    },
+   "sort_columns":[{
+
+      "column"     :"name",
+      "sort_order" :0
+   }],
+   "skewed_info":{
+      "skewed_column_names":[],
+      "skewed_column_value_location_maps" : {},
+      "skewed_column_values":[]
+    },
+    "stored_as_sub_directories":false
+ }
+} 
+
+

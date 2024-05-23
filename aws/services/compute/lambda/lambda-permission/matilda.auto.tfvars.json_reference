@@ -1,0 +1,8 @@
+{
+    "region": "us-east-2",
+    "action": "lambda:InvokeFunction",
+    "function_name": "testlambda",
+    "principal": "logs.*.amazonaws.com",
+    "source_arn": "arn:aws:logs:us-east-2:046692759124:log-group:test-cloudwatch-log-group",
+    "objid": "632b86702239a82ce8fce70a"
+}

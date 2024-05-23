@@ -1,0 +1,16 @@
+{                                                                    
+  "region": "us-east-2",                            
+  "lease_seconds": "7200",                                               
+  "backend": "aws",                                                         
+  "role": "resources",                                                                                                                                                                                                                                                                                                                                  
+  "name": "mssql-db-param-grp",
+  "family":"sqlserver-ee-15.0",
+  "parameters": [       
+    {
+      "name": "clr enabled",                                                            
+      "value": "1",                               
+      "apply_method": "immediate"
+    }                                                                    
+  ],
+  "objid": "633f0871bd4211319e728dce"
+}

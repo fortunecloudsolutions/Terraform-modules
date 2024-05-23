@@ -1,0 +1,6 @@
+{
+    "region": "us-east-2",
+    "function_name": "test-lambda-function1",
+    "input": "{\"key1\": \"value1\",\"key2\":\"value2\"}",
+    "objid": "632b86709bfaa1327ad7fb81"
+}

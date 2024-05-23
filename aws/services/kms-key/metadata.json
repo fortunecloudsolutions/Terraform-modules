@@ -1,0 +1,8 @@
+{
+    "costAPI":{
+        "tfRegion":"region",
+        "tfService":"kms-key",
+        "provider":"amazon",
+        "service":"kmsKey"
+       }
+}

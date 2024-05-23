@@ -1,0 +1,42 @@
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Sid": "VisualEditor0",
+            "Effect": "Allow",
+            "Action": [
+                "eks:DeleteFargateProfile",
+                "eks:UpdateClusterVersion",
+                "eks:Describe*",
+                "eks:UpdateAddon",
+                "eks:UpdateClusterConfig",
+                "eks:UpdateNodegroupVersion",
+                "iam:PassRole",
+                "eks:AssociateEncryptionConfig",
+                "iam:ListAttachedRolePolicies",
+                "eks:CreateCluster",
+                "iam:ListPolicies",
+                "eks:DisassociateIdentityProviderConfig",
+                "ec2:DescribeLaunchTemplates",
+                "ec2:DescribeLaunchTemplateVersions",
+                "iam:ListRoles",
+                "eks:CreateNodegroup",
+                "ec2:DescribeSecurityGroups",
+                "eks:DeleteCluster",
+                "eks:CreateFargateProfile",
+                "eks:DeleteAddon",
+                "ec2:DescribeVpcs",
+                "eks:DeleteNodegroup",
+                "kms:ListAliases",
+                "eks:TagResource",
+                "eks:AccessKubernetesApi",
+                "eks:CreateAddon",
+                "eks:UpdateNodegroupConfig",
+                "eks:List*",
+                "ec2:DescribeSubnets",
+                "eks:AssociateIdentityProviderConfig"
+            ],
+            "Resource": "*"
+        }
+    ]
+}

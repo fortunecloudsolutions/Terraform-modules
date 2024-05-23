@@ -1,0 +1,24 @@
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Sid": "VisualEditor0",
+            "Effect": "Allow",
+            "Action": [
+                "iam:GetAccountSummary",
+                "iam:GetGroup",
+                "iam:AddUserToGroup",
+                "iam:GetUser",
+                "iam:RemoveUserFromGroup",
+                "iam:TagUser",
+                "iam:UntagUser",
+                "iam:List*",
+                "iam:GenerateServiceLastAccessedDetails",
+                "iam:GetServiceLastAccessedDetails",
+                "iam:ListGroupPolicies",
+                "iam:GetLoginProfile"
+            ],
+            "Resource": "*"
+        }
+    ]
+}

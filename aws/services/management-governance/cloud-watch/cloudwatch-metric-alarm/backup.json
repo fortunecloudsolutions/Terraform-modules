@@ -1,0 +1,48 @@
+{                                                 
+    "region"   :  "us-east-2",
+    "lease_seconds": "3600",
+    "backend"  : "aws",
+    "role" : "resources",
+    "alarm_name" : "test-alarm",
+    "comparison_operator" :"GreaterThanOrEqualToThreshold",
+    "evaluation_periods" : "1",
+    "metric_name" :"CPUUtilization",
+    "namespace" :"AWS/SNS",
+    "period" : "120",
+    "statistic" : "Average",
+    "threshold" : "30",
+    "alarm_actions": ["arn:aws:sns:us-east-2:046692759124:testtopic"]
+  }
+
+  {                                                 
+    "region"   :  "us-east-2",
+    "lease_seconds": "3600",
+    "backend"  : "aws",
+    "role" : "resources",
+    "alarm_name" : "test-alarm",
+    "comparison_operator" :"GreaterThanOrEqualToThreshold",
+    "evaluation_periods" : "1",
+    "threshold" : "30",
+    "alarm_actions": ["arn:aws:sns:us-east-2:046692759124:testtopic"],
+    "datapoints_to_alarm":1,
+    "dimensions":null,
+    "treat_missing_data":"ignore",
+    "metric_query":[
+      {
+      "id":"e1",
+      "account_id":null,
+      "expression":null,
+      "label":"Error Rate",
+      "return_data":"true",
+      "metric":{
+        "dimensions":null,
+        "metric_name":"RequestCount",
+        "namespace":"AWS/ApplicationELB",
+        "period":"120",
+        "stat":"Sum",
+        "unit":null
+        }
+       }]
+    
+  
+  }

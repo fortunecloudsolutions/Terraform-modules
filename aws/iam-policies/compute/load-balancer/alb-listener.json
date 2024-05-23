@@ -1,0 +1,23 @@
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Sid": "VisualEditor0",
+            "Effect": "Allow",
+            "Action": [
+                "elasticloadbalancing:RemoveTags",
+                "elasticloadbalancing:ModifyListener",
+                "elasticloadbalancing:CreateListener",
+                "elasticloadbalancing:AddTags",
+                "elasticloadbalancing:Describe*",
+                "elasticloadbalancing:DeleteListener",
+                "elasticloadbalancing:CreateLoadBalancerListeners",
+                "ec2:Describe*",
+                "elasticloadbalancing:SetLoadBalancerPoliciesOfListener",
+                "elasticloadbalancing:DeleteLoadBalancerListeners",
+                "globalaccelerator:ListListeners"
+            ],
+            "Resource": "*"
+        }
+    ]
+}

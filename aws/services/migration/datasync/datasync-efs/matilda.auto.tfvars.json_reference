@@ -1,0 +1,14 @@
+{
+    "region": "us-east-2",
+    "lease_seconds": "3600",
+    "backend": "aws",
+    "role": "resources",
+    "ec2_config": {
+        "security_group_arns": [
+            "arn:aws:ec2:us-east-2:046692759124:security-group/sg-8ab03be1"
+        ],
+        "subnet_arn": "arn:aws:ec2:us-east-2:046692759124:subnet/subnet-3145b44b"
+    },
+    "efs_file_system_arn": "arn:aws:elasticfilesystem:us-east-2:046692759124:file-system/fs-8f8fe5f7",
+    "objid": "632b86759be2dac5000367e5"
+}

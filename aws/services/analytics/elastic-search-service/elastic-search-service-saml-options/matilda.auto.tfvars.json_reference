@@ -1,0 +1,17 @@
+{
+    "region": "us-east-2",
+    "domain_name": "test-elasticsearch-domain",
+    "saml_options": {
+        "enabled": true,
+        "master_backend_role": null,
+        "master_user_name": "testuser",
+        "roles_key": null,
+        "session_timeout_minutes": 10,
+        "subject_key": null,
+        "idp": {
+            "entity_id": "https://vpc-test-elasticsearch-domain-t63wtsvpfjwnmcr6756sb3zmtq.us-east-2.es.amazonaws.com",
+            "metadata_content": "/home/sahithi/Desktop/iasc/iasc/terraform_cloud/aws/services/analytics/elastic-search-service/elastic-search-service-saml-options/saml-metadata.xml"
+        }
+    },
+    "objid": "632b866ea41f3b0567966052"
+}

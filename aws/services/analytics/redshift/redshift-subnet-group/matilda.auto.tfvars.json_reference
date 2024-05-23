@@ -1,0 +1,9 @@
+{
+    "region": "us-east-2",
+    "name": "test-subnet-group",
+    "subnet_ids": [
+        "subnet-e6932a8e",
+        "subnet-34c4ea79"
+    ],
+    "objid": "632b866fd87295ac8ac085ee"
+}

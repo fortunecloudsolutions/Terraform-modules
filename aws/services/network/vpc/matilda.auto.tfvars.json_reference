@@ -1,0 +1,14 @@
+{
+    "region": "us-east-2",
+    "max_lease_seconds": "3600",
+    "backend": "aws",
+    "role": "resources",
+    "cidr_vpc": "10.0.0.0/24",
+    "enable_dns_support": "true",
+    "enable_dns_hostnames": "true",
+    "instance_tenancy": "default",
+    "tags": {
+        "Name": "TestVPC"
+    },
+    "objid": "632b86761b16a619f4b130d5"
+}

@@ -1,0 +1,7 @@
+{
+    "region": "us-east-2",
+    "name": "Matri-IAM-Profile",
+    "path": "/",
+    "role_name": "Matri-role",
+    "objid": "632b8673bc89da9a1cd1f4ef"
+}

@@ -1,0 +1,13 @@
+{
+    "region": "us-east-2",
+    "lease_seconds": "3600",
+    "backend": "aws",
+    "role": "resources",
+    "template_name": "CitizensWindowsLaunchTemplate",
+    "template_description": "launch Template test",
+    "image_id": "ami-05785493aafc97b8b",
+    "instance_type": "t3a.xlarge",
+    "key_name": "Matri",
+    "user_data_filename": "launch-template-windows-iis.ps1",
+    "objid": "632b8670e1d10ced4a375c17"
+}

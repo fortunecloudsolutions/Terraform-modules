@@ -1,0 +1,8 @@
+{
+    "region": "us-east-2",
+    "layer_name": "testlayer",
+    "s3_bucket": "test-buck-5",
+    "s3_key": "helloworldfile.zip",
+    "s3_object_version": null,
+    "objid": "632b8670fdef5e6d85671b61"
+}

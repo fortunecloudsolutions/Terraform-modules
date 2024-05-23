@@ -1,0 +1,18 @@
+{
+    "region": "us-east-2",
+    "name": "test-job-definition",
+    "type": "container",
+    "container_properties": "{\n  \"command\": [\"echo\", \"test\"],\n  \"image\": \"busybox\",\n  \"resourceRequirements\": [\n    {\"type\": \"VCPU\", \"value\": \"1\"},\n    {\"type\": \"MEMORY\", \"value\": \"512\"}\n  ],\n  \"executionRoleArn\": \"arn:aws:iam::046692759124:role/ecsTaskExecutionRole\"\n}",
+    "retry_strategy": {
+        "attempts": 1,
+        "evaluate_on_exit": [
+            {
+                "action": "RETRY",
+                "on_exit_code": 1,
+                "on_reason": null,
+                "on_status_reason": null
+            }
+        ]
+    },
+    "objid": "632b8670da50214f77d39905"
+}

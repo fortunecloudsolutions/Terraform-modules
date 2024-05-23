@@ -1,0 +1,27 @@
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Sid": "VisualEditor0",
+            "Effect": "Allow",
+            "Action": [
+                "iam:CreatePolicy",
+                "iam:ListPolicies",
+                "iam:ListEntitiesForPolicy",
+                "iam:ListAccountAliases",
+                "iam:UntagPolicy",
+                "iam:TagPolicy",
+                "iam:GetAccountSummary",
+                "iam:ListPolicyVersions",
+                "iam:GetPolicyVersion",
+                "iam:DeletePolicy",
+                "access-analyzer:ValidatePolicy",
+                "iam:CreatePolicyVersion",
+                "iam:GetPolicy",
+                "iam:ListPolicyTags",
+                "iam:GenerateServiceLastAccessedDetails"
+            ],
+            "Resource": "*"
+        }
+    ]
+}

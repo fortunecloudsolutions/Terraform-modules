@@ -1,0 +1,20 @@
+{
+    "region"   :  "us-east-2",
+    "lease_seconds": "3600",
+    "backend"  : "aws",
+    "role" : "resources",
+    "name" :"test-job",
+    "connections":["catalog-test-connection"],
+    "role_arn":"arn:aws:iam::046692759124:role/service-role/AWSGlueServiceRole-test-role-glue",
+    "command":{
+       "name":"glueetl",
+       "script_location":"s3://aws-glue-scripts-046692759124-us-east-2/sankireddy",
+       "python_version":"3"
+    },
+    "execution_property":{
+       "max_concurrent_runs":1
+    },
+    "notification_property":{
+       "notify_delay_after":5
+    }
+ }

@@ -1,0 +1,25 @@
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Sid": "VisualEditor0",
+            "Effect": "Allow",
+            "Action": [
+                "ec2:AttachVolume",
+                "ec2:ModifyVolumeAttribute",
+                "ec2:Describe*",
+                "ec2:DeleteTags",
+                "cloudwatch:GetMetricData",
+                "kms:ListResourceTags",
+                "cloudwatch:ListMetrics",
+                "kms:DescribeKey",
+                "ec2:DetachVolume",
+                "ec2:ModifyVolume",
+                "cloudwatch:GetMetricStatistics",
+                "kms:ListAliases",
+                "cloudwatch:DescribeAlarms"
+            ],
+            "Resource": "*"
+        }
+    ]
+}

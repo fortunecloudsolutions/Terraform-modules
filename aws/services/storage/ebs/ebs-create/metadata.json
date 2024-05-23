@@ -1,0 +1,10 @@
+{
+    "costAPI":{
+        "tfRegion": "region",
+        "tfService": "ebs-create",
+        "provider": "amazon",
+        "type": "type",
+        "ebsSize": "ebs_size",
+        "iops": "iops"
+    }
+}

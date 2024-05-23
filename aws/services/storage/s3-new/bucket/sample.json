@@ -1,0 +1,133 @@
+{
+ "region"   :  "us-east-2",
+   "bucket" : "bobthebuilder-bucket-east",
+   "acl":null,
+   "force_destroy":false,
+   "acceleration_status":"Enabled",
+   "request_payer":"Requester",
+   "website":{"index_document":"index.html","error_document":null,
+               "redirect_all_requests_to":null,"routing_rules":null},
+   "cors_rule":{
+   "allowed_headers":[
+      "*"
+   ],
+   "allowed_methods":[
+      "PUT",
+      "POST"
+   ],
+   "allowed_origins":[
+      "https://s3-website-test.hashicorp.com"
+   ],
+   "expose_headers":[
+      "ETag"
+   ],
+   "max_age_seconds":3000
+},
+"versioning":{"enabled":true,"mfa_delete":false},  
+"logging":{"target_bucket":"myawsbucketeast2-select","target_prefix":"loggingdude/"},
+"lifecycle_rule": [
+   {
+      "id":"log",
+      "enabled":true,
+      "prefix":"log/",
+      "abort_incomplete_multipart_upload_days":null,
+      "tags":{
+         "rule":"log",
+         "autoclean":"true"
+      },
+      "transition":[
+         {
+            "days":30,
+            "storage_class":"STANDARD_IA",
+            "date":null
+         },
+         {
+            "days":60,
+            "storage_class":"GLACIER",
+            "date":null
+         }
+      ],
+      "expiration":{
+         "days":90,
+         "date":null,
+         "expired_object_delete_marker":null
+      },
+      "noncurrent_version_transition":null,
+      "noncurrent_version_expiration":null
+   },
+   {
+      "id":"tmp",
+      "prefix":"tmp/",
+      "enabled":true,
+      "abort_incomplete_multipart_upload_days":null,
+      "tags":{
+         
+      },
+      "expiration":{
+         "date":"2022-01-12",
+         "expired_object_delete_marker":null,
+         "days":null
+      },
+      "transition":null,
+      "noncurrent_version_transition":null,
+      "noncurrent_version_expiration":null
+   }
+],         
+   "replication_configuration":[{
+    "role" : "arn:aws:iam::046692759124:role/service-role/s3crr_role_for_myawsbucketeast2",
+    "rules" :{
+    "id"     : "foobar",
+    "priority":null,
+    "prefix" : "foo",
+    "status" : "Enabled",
+      "destination": {
+        "bucket"        : "arn:aws:s3:::myawsbucketeast2-select",
+        "storage_class" : "STANDARD",
+      "replica_kms_key_id":null,
+      "account_id":"046692759124",
+      "access_control_translation" : null},
+      "source_selection_criteria" :null,
+      "filter" :null     }
+  }],
+   "server_side_encryption_configuration":{
+      "rule":{
+         "apply_server_side_encryption_by_default":{
+            "sse_algorithm":"AES256",
+            "kms_master_key_id":null
+         },
+         "bucket_key_enabled":false
+      }
+   },
+   "object_lock_configuration":{
+      "object_lock_enabled":"Enabled",
+      "rule":{
+         "default_retention":{
+            "mode":"GOVERNANCE",
+            "days":300,
+            "years":null
+         }
+      }
+   },
+
+   "grant":[{
+      "id":"e7e18f6ed43dff8211d1e5c680442b3b4116d807b0430dfe0ff1ffa84c9e8f68",
+      "type":"CanonicalUser",
+      "permissions": ["FULL_CONTROL"],
+      "uri":null
+   },
+   {
+      "id":null,
+      "type":"Group",
+      "permissions": ["READ_ACP", "WRITE"],
+      "uri":"http://acs.amazonaws.com/groups/s3/LogDelivery"
+   }]
+}
+
+
+
+
+
+{
+ "region"   :  "us-east-2",
+   "bucket" : "test-bucket-new"
+}

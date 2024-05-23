@@ -1,0 +1,25 @@
+{
+    "region": "us-east-2",
+    "max_lease_seconds": "3600",
+    "backend": "aws",
+    "role": "resources",
+    "vpc_id": "vpc-045f287cd5beb1d76",
+    "subnet_ids": [
+        "subnet-03c13dd229655b703"
+    ],
+    "nacl_name": "Cnetnacl",
+    "ingress_enable": true,
+    "ingress1_rule_no": 100,
+    "ingress1_fport": 0,
+    "ingress1_tport": 0,
+    "ingress1_protocol": -1,
+    "ingress1_cidr": "0.0.0.0/0",
+    "ingress1_action": "allow",
+    "egress1_rule_no": 100,
+    "egress1_fport": 0,
+    "egress1_tport": 0,
+    "egress1_protocol": -1,
+    "egress1_cidr": "0.0.0.0/0",
+    "egress1_action": "allow",
+    "objid": "632b867504a86a78c4855bae"
+}

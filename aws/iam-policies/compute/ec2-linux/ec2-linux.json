@@ -1,0 +1,46 @@
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Sid": "VisualEditor0",
+            "Effect": "Allow",
+            "Action": [
+                "ec2:DescribeAddresses",
+                "ec2:DescribeInstances",
+                "ec2:DeleteTags",
+                "ec2:DescribeInstanceAttribute",
+                "ec2:DescribeRegions",
+                "ec2:DescribeCoipPools",
+                "ec2:DescribePlacementGroups",
+                "ec2:DescribeVpcAttribute",
+                "ec2:DescribeNetworkInterfaces",
+                "ec2:StartInstances",
+                "ec2:DescribeAvailabilityZones",
+                "ec2:DescribeVolumes",
+                "ec2:DescribeAccountAttributes",
+                "ec2:DescribeKeyPairs",
+                "ec2:DescribeNetworkAcls",
+                "ec2:DescribeRouteTables",
+                "ec2:DescribeInstanceStatus",
+                "ec2:TerminateInstances",
+                "ec2:DescribeTags",
+                "ec2:CreateTags",
+                "ec2:RunInstances",
+                "ec2:StopInstances",
+                "ec2:DescribeVolumeAttribute",
+                "ec2:DescribeSecurityGroups",
+                "ec2:DescribeImages",
+                "ec2:DescribeVpcs",
+                "ec2:DescribePublicIpv4Pools",
+                "ec2:DescribeInstanceTypes",
+                "compute-optimizer:GetEC2InstanceRecommendations",
+                "compute-optimizer:GetEnrollmentStatus",
+                "ec2:DescribeElasticGpus",
+                "ec2:DescribeSubnets",
+                "cloudwatch:DescribeAlarms",
+                "cloudwatch:GetMetricData"
+            ],
+            "Resource": "*"
+        }
+    ]
+}

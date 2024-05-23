@@ -1,0 +1,27 @@
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Sid": "VisualEditor0",
+            "Effect": "Allow",
+            "Action": [
+                "cloudwatch:TagResource",
+                "ec2:CopySnapshot",
+                "ec2:DisableFastSnapshotRestores",
+                "cloudwatch:GetMetricData",
+                "ec2:CreateTags",
+                "kms:ListResourceTags",
+                "cloudwatch:GetMetricStatistics",
+                "cloudwatch:ListMetrics",
+                "ec2:EnableFastSnapshotRestores",
+                "ec2:Describe*",
+                "kms:ListAliases",
+                "ec2:CreateSnapshot",
+                "ec2:DeleteSnapshot",
+                "cloudwatch:DescribeAlarms",
+                "kms:DescribeKey"
+            ],
+            "Resource": "*"
+        }
+    ]
+}

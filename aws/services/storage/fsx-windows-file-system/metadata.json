@@ -1,0 +1,11 @@
+{
+    "costAPI":{
+        "tfRegion":"region",
+        "tfService":"fsx-windows-file-system",
+        "provider":"amazon",
+        "storageType":"storage_type",
+        "deploymentType": "deployment_type",
+        "storageCapacity":"storage_capacity",
+        "throughputCapacity":"throughput_capacity"
+       }
+}

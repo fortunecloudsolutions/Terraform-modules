@@ -1,0 +1,46 @@
+{                                   
+  "region": "us-east-2",   
+  "lease_seconds": "3600",
+  "backend": "aws",
+  "role": "resources",                                                                                                                                                
+  "availability_zone": "us-east-2b",                                                                      
+  "vpc_security_group_ids": [                                                                                                                                                             
+    "sg-0acdd0eb27d1a2e1a"
+  ],                                         
+  "subnet_id": "subnet-0379328a4916c76ec",
+  "os_map":{"windowsserver2016" : "ami-0587770c46124f677"},
+  "os_desc": "windowsserver2016",
+  "get_password_data": "true",
+  "associate_public_ip_address": "true",                                                                                                                                                                  
+  "instance_type": "t2.xlarge",                                                                                                                                                                     
+  "instance_count": 1,
+  "ebs_optimized": false,
+  "key_name": "Matri",
+  "monitoring": false,
+  "filenames": "auth-ansible-final.ps1",
+  "DownloadDirectoryPath": "C:\\Users\\Administrator\\",
+  "bucketname": "matri-ansible-template",
+  "root_block_device": [
+    {
+      "volume_type": "gp2",
+      "volume_size": 30,
+      "encrypted": true
+    }
+  ],
+  "ebs_block_device": [
+    {
+      "device_name": "/dev/sdf",
+      "volume_type": "gp2",
+      "volume_size": "30",
+      "encrypted": "true"
+    },
+    {
+      "device_name": "/dev/sdg",
+      "volume_type": "gp2",
+      "volume_size": "30",
+      "encrypted": "true"
+    }
+  ],
+  "user_data_filename": "ec2-windows2016-user-data.txt",
+  "pem_key":"-----BEGIN RSA PRIVATE KEY-----\nMIIEogIBAAKCAQEAjzTCuH5TclF1/p8sBqy/onlDitQlny1Zi6LB3cDvguW7E2JeE7ZFiNbOJCuP\nio09FuJsxzAuVQS1ZjEX6ecwAUyIIdctKyz6ZiPXRz8MPLlLs4Hif8AMRLTHOS5CEOZqW3jtOK+L\nN9kTA6f5+ZTa7t+BqRpcqylBqsdM3Z9OVdR+nPbH1nHlyNiOwOOfu1Z1euc8OM4rEGvj5NyFpxpZ\n+JGo2fnXJHgkvnGHPOdRDi2FFWfzq2cpz/RZgthqi/tbNSTBoYee5aidYl8SD1r4JGRtr5jqzQ0+\nLz6Fe2jeI4FP1QIh/6Ll+kPEECGsSnGPPsZghjwR0QYLFyBDIqf5mQIDAQABAoIBACeKKsVj48hp\no4mlCzPgmJzUnIiFYMndbJ74VkzTC455vbhxbYZFylco8AvelyhrLNXXuK8ap4BD544Kug6UDZYe\nOmwVjFwidBSlirgaOVe+1Z7/mrkpHnoN6//mvMkLxYvyDJWdKnRGFFDrHUMDDZvszFETfUipAH+V\nvaxnYuqhb5NG7T+4S7fBVPi3UbjXapvBfoeiSPTJhUuObRlI8OoVL4XQXFBqcV+hseNRbs68CLWa\nXH1JmCinGRRRztPh4L/W2ECiiAnNGbGoE4pBzqPIsYKTDAPec/QLlQ6p0nkQXTS2lUGODkPKoRMG\nidWN3C+4NoyBummw8QOMdAeQr4ECgYEA8ke0EMuPOiVLvMft9MRvGrYgWg7YoOTGiAbIBm3eNNow\ni3UtWS3OsK5SCgc/kvp/5QgEhrVoUKhN1Y5rlcro4Dchudg6Cj/T8c+I9L5yEtXj0XWQ3MizxDTQ\nF3+Ze2LbJ0rObVqrNlR/kBdiRKX0GWUkBIpe+H5JoCjrstC0fRECgYEAl1DMCbKRlarAH4O6mHip\nw46h+4r1F8IZMqeSz6uwJvGAfEupBbZknUYUr+oL0g0EV+tHEpdgHts8YmBxe8jbhbv2cBNInpa7\nvDbsR+x8SVJNqSdc6udpQOZkDtocwb2m7sKY3HCEpAjX3rkwLU+Urh7zmtwKudXdW30TKtbmVAkC\ngYAK722TLHzkdPZ8KNH2sD8Lh5jiN7VTXcAQN64jjCXxYL+8K6fGVKj1lIijZzxZV/EZ10jNA7cX\nnOEWeH0mn6fvJs3g43+LIuJgEavu0AG6E+ladOH69RwYCQIzbVDyHr4hgeDbUrJTm3C+gi+vRYZE\n9ymvAsfSk3CjR/WLdpwO4QKBgATyqGlcxHPvbG7bYNuhfnOdk2BlT9RiDW7hmeReidkMJpZp5vH/\n39RguUZzUcWhlVXGpMFP393Cb3wMCUnx7HO4DLvndYVyCluCNEG50uqW3WE9n0UzIfb0UatGqJAR\nQocmJ9d1enDetShcR94DbyouaurSbStceeuG8HyDIG75AoGAArVaZXdHPvst/WUDLjqc6ClpnIpq\n4p82eTR2EGVRbt2/uYt/zJjzgEgZGZ24abJ2N6iRILeCu6XQEqqV1/yQi5oul40MXEkLLhq0hUCK\n6LvW9qEF728KIzSASAVW4xJrAPlVGa2du3RjQ20S8Zyc5M6J6+mPnDxA2WflE2uCtH8=\n-----END RSA PRIVATE KEY-----"
+}

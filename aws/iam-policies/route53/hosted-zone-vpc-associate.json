@@ -1,0 +1,28 @@
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Sid": "VisualEditor0",
+            "Effect": "Allow",
+            "Action": [
+                "route53:CreateHostedZone",
+                "route53domains:ListTagsForDomain",
+                "route53:DisassociateVPCFromHostedZone",
+                "route53:ListHostedZonesByName",
+                "route53:ListTagsForResource",
+                "route53:ListTagsForResources",
+                "route53:ListHostedZonesByVPC",
+                "route53:Get*",
+                "route53domains:ListDomains",
+                "ec2:DescribeVpcs",
+                "route53domains:ListOperations",
+                "route53:ListTrafficPolicies",
+                "route53:ChangeTagsForResource",
+                "route53:ListResourceRecordSets",
+                "route53:UpdateHostedZoneComment",
+                "route53:AssociateVPCWithHostedZone"
+            ],
+            "Resource": "*"
+        }
+    ]
+}

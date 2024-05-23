@@ -1,0 +1,8 @@
+{
+    "region"   :  "us-east-2",
+    "lease_seconds": "3600",
+    "backend"  : "aws",
+    "role" : "resources",
+    "allowed_publishers":{"signing_profile_version_arns":["arn:aws:signer:us-east-2:046692759124:/signing-profiles/test1"]},
+    "policies":{"untrusted_artifact_on_deployment":"Warn"}
+ }

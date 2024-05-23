@@ -1,0 +1,27 @@
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Sid": "VisualEditor0",
+            "Effect": "Allow",
+            "Action": [
+                "ec2:DeleteVpcPeeringConnection",
+                "ec2:AcceptVpcEndpointConnections",
+                "ec2:AcceptVpcPeeringConnection",
+                "ec2:CreateVpcPeeringConnection",
+                "ec2:RejectVpcPeeringConnection",
+                "ec2:Describe*",
+                "ec2:DeleteTags",
+                "ec2:CreateTags",
+                "ec2:StartVpcEndpointServicePrivateDnsVerification",
+                "ec2:DisableVpcClassicLinkDnsSupport",
+                "ec2:ModifyVpcPeeringConnectionOptions",
+                "iam:ListRoles",
+                "ec2:EnableVpcClassicLinkDnsSupport"
+            ],
+            "Resource": "*"
+        }
+    ]
+}
+
+

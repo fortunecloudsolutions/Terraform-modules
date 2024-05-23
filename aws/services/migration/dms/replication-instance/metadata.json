@@ -1,0 +1,10 @@
+{
+    "costAPI":{
+        "tfRegion":"region",
+        "instance":"replication_instance_class",
+        "tfDeploymentType":"multi_az",
+        "tfService":"replication-instance",
+        "provider":"amazon",
+        "storage":"allocated_storage"
+        }
+} 

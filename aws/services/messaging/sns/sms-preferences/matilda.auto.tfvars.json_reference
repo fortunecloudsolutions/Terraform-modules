@@ -1,0 +1,9 @@
+{
+    "region": "us-east-2",
+    "lease_seconds": "3600",
+    "backend": "aws",
+    "role": "resources",
+    "default_sender_id": "Matilda",
+    "default_sms_type": "Transactional",
+    "objid": "632b8674ad1e3c56b10d646e"
+}

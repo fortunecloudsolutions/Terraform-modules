@@ -1,0 +1,18 @@
+
+ {
+    "region"   :  "us-east-2",
+    "lease_seconds": "3600",
+    "backend"  : "aws",
+    "role" : "resources",
+    "function_name":"test-lambda-function",
+    "qualifier": "$LATEST",
+    "destination_config":{
+       "on_failure":{
+          "destination":"arn:aws:sns:us-east-2:046692759124:testtopic"
+       },
+       "on_success":{
+          "destination":"arn:aws:sns:us-east-2:046692759124:testtopic"
+       }
+    }
+   
+ }

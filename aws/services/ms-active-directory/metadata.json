@@ -1,0 +1,10 @@
+{
+    "costAPI":{
+        "tfRegion":"region",
+        "tfService":"ms-active-directory",
+        "provider":"amazon",
+        "dirType":"dir_type",
+        "size":"size",
+        "edition":"edition"
+    }
+}

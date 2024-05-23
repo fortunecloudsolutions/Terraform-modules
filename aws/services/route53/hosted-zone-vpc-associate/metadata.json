@@ -1,0 +1,7 @@
+{
+    "costAPI":{
+        "tfRegion":"region",
+        "tfService":"hosted-zone-vpc-associate",
+        "provider":"amazon"
+    }
+}

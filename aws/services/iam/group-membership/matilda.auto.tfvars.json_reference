@@ -1,0 +1,9 @@
+{
+    "region": "us-east-2",
+    "group": "matrigroup2",
+    "name": "tf-group-memebership",
+    "user": [
+        "matriuser2"
+    ],
+    "objid": "632b8673a7eb267fbc1c27df"
+}

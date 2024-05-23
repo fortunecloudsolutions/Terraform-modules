@@ -1,0 +1,91 @@
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Sid": "VisualEditor0",
+            "Effect": "Allow",
+            "Action": [
+                "iam:CreatePolicy",
+                "iam:GetPolicyVersion",
+                "iam:DetachRolePolicy",
+                "iam:GetPolicy",
+                "iam:ListPolicyVersions",
+                "iam:AttachGroupPolicy",
+                "iam:AttachUserPolicy",
+                "iam:DeletePolicy",
+                "iam:AttachRolePolicy",
+                "iam:DetachGroupPolicy",
+                "iam:DetachUserPolicy",
+                "iam:ListPolicies",
+                "iam:ListGroups",
+                "iam:GetGroup",
+                "iam:ListGroupPolicies",
+                "iam:ListAttachedGroupPolicies",
+                "iam:GenerateServiceLastAccessedDetails",
+                "iam:GetServiceLastAccessedDetails",
+                "iam:ListPoliciesGrantingServiceAccess",
+                "iam:ListUsers",
+                "iam:ListUserPolicies",
+                "iam:GetUser",
+                "iam:ListAttachedUserPolicies",
+                "iam:ListGroupsForUser",
+                "iam:RemoveUserFromGroup",
+                "iam:ListEntitiesForPolicy",
+                "iam:ListRoles",
+                "iam:ListRolePolicies",
+                "iam:ListAttachedRolePolicies",
+                "iam:ListRoleTags",
+                "iam:GetRole",
+                "iam:ListUserTags",
+                "iam:GetAccountSummary",
+                "iam:ListAccountAliases"
+            ],
+            "Resource": "*"
+        }
+    ]
+}{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Sid": "VisualEditor0",
+            "Effect": "Allow",
+            "Action": [
+                "iam:CreatePolicy",
+                "iam:GetPolicyVersion",
+                "iam:DetachRolePolicy",
+                "iam:GetPolicy",
+                "iam:ListPolicyVersions",
+                "iam:AttachGroupPolicy",
+                "iam:AttachUserPolicy",
+                "iam:DeletePolicy",
+                "iam:AttachRolePolicy",
+                "iam:DetachGroupPolicy",
+                "iam:DetachUserPolicy",
+                "iam:ListPolicies",
+                "iam:ListGroups",
+                "iam:GetGroup",
+                "iam:ListGroupPolicies",
+                "iam:ListAttachedGroupPolicies",
+                "iam:GenerateServiceLastAccessedDetails",
+                "iam:GetServiceLastAccessedDetails",
+                "iam:ListPoliciesGrantingServiceAccess",
+                "iam:ListUsers",
+                "iam:ListUserPolicies",
+                "iam:GetUser",
+                "iam:ListAttachedUserPolicies",
+                "iam:ListGroupsForUser",
+                "iam:RemoveUserFromGroup",
+                "iam:ListEntitiesForPolicy",
+                "iam:ListRoles",
+                "iam:ListRolePolicies",
+                "iam:ListAttachedRolePolicies",
+                "iam:ListRoleTags",
+                "iam:GetRole",
+                "iam:ListUserTags",
+                "iam:GetAccountSummary",
+                "iam:ListAccountAliases"
+            ],
+            "Resource": "*"
+        }
+    ]
+}

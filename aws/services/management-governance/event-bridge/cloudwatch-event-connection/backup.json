@@ -1,0 +1,276 @@
+
+{                                                 
+    "region": "us-east-2",
+    "lease_seconds": "3600",                                             
+    "backend": "aws",                               
+    "role": "resources",
+    "name":"test-eventt-connection",
+    "authorization_type":"BASIC",
+    "auth_parameters":{
+      "api_key":null,
+      "basic":{
+        "username":"user",
+        "password":"Pass1234!"
+      },
+      "oauth":null,
+      "invocation_http_parameters":null
+  
+      }
+  
+  }
+
+  {                                                 
+    "region": "us-east-2",
+    "lease_seconds": "3600",                                             
+    "backend": "aws",                               
+    "role": "resources",
+    "name":"test-eventt-connection",
+    "authorization_type":"API_KEY",
+    "auth_parameters":{
+      "api_key":{
+        "key":"x-signature",
+        "value":"1234"
+      },
+      "basic":null,
+      "oauth":null,
+      "invocation_http_parameters":null
+  
+      }
+    }
+    
+    {                                                 
+      "region": "us-east-2",
+      "lease_seconds": "3600",                                             
+      "backend": "aws",                               
+      "role": "resources",
+      "name":"test-eventt-connection",
+      "authorization_type":"OAUTH_CLIENT_CREDENTIALS",
+      "auth_parameters":{
+        "api_key":null,
+        "basic":null,
+        "oauth":{
+          "authorization_endpoint":"https://sqs.us-east-2.amazonaws.com/046692759124/test",
+          "http_method":"GET",
+          "client_parameters":{
+            "client_id":"1234567890",
+            "client_secret":"Pass1234!"
+          },
+          "oauth_http_parameters":{
+            "body":[{
+              "key":"body-parameter-key",
+              "value":"body-parameter-value",
+              "is_value_secret":false
+            },
+            {
+              "key":"body-parameter-key1",
+              "value":"body-parameter-value1",
+              "is_value_secret":false
+            }
+          ],
+            
+            "header":[{
+              "key":"header-parameter-key2",
+              "value":"header-parameter-value2",
+              "is_value_secret":true
+            }],
+            
+            "query_string":[{
+              "key":"query-string-parameter-key",
+              "value":"query-string-parameter-value",
+              "is_value_secret":false
+            }]
+            
+    
+          }
+        },
+        "invocation_http_parameters":null
+    
+        }
+      }
+      
+      {                                                 
+        "region": "us-east-2",
+        "lease_seconds": "3600",                                             
+        "backend": "aws",                               
+        "role": "resources",
+        "name":"test-eventt-connection",
+        "authorization_type":"OAUTH_CLIENT_CREDENTIALS",
+        "auth_parameters":{
+          "api_key":null,
+          "basic":null,
+          "oauth":{
+            "authorization_endpoint":"https://sqs.us-east-2.amazonaws.com/046692759124/test",
+            "http_method":"GET",
+            "client_parameters":{
+              "client_id":"1234567890",
+              "client_secret":"Pass1234!"
+            },
+            "oauth_http_parameters":{
+              "body":[{
+                "key":"body-parameter-key",
+                "value":"body-parameter-value",
+                "is_value_secret":false
+              },
+              {
+                "key":"body-parameter-key1",
+                "value":"body-parameter-value1",
+                "is_value_secret":false
+              }
+            ],
+              
+              "header":[{
+                "key":"header-parameter-key2",
+                "value":"header-parameter-value2",
+                "is_value_secret":true
+              }],
+              
+              "query_string":[{
+                "key":"query-string-parameter-key",
+                "value":"query-string-parameter-value",
+                "is_value_secret":false
+              }]
+              
+      
+            }
+          },
+          "invocation_http_parameters":{
+            "body":[{
+              "key":"body-parameter-key",
+              "value":"body-parameter-value",
+              "is_value_secret":false
+            },
+            {
+              "key":"body-parameter-key1",
+              "value":"body-parameter-value1",
+              "is_value_secret":false
+            }
+          ],
+            
+            "header":[{
+              "key":"header-parameter-key2",
+              "value":"header-parameter-value2",
+              "is_value_secret":true
+            }],
+            
+            "query_string":[{
+              "key":"query-string-parameter-key",
+              "value":"query-string-parameter-value",
+              "is_value_secret":false
+            }]
+            
+      
+          }
+      
+          }
+        }
+        
+      
+        {                                                 
+          "region": "us-east-2",
+          "lease_seconds": "3600",                                             
+          "backend": "aws",                               
+          "role": "resources",
+          "name":"test-eventt-connection",
+          "authorization_type":"OAUTH_CLIENT_CREDENTIALS",
+          "auth_parameters":{
+            "api_key":null,
+            "basic":null,
+            "oauth":{
+              "authorization_endpoint":"https://sqs.us-east-2.amazonaws.com/046692759124/test",
+              "http_method":"GET",
+              "client_parameters":{
+                "client_id":"1234567890",
+                "client_secret":"Pass1234!"
+              },
+              "oauth_http_parameters":{
+                "body":[{
+                  "key":"body-parameter-key",
+                  "value":"body-parameter-value",
+                  "is_value_secret":false
+                },
+                {
+                  "key":"body-parameter-key1",
+                  "value":"body-parameter-value1",
+                  "is_value_secret":false
+                }
+              ],
+                
+                "header":[{
+                  "key":"header-parameter-key2",
+                  "value":"header-parameter-value2",
+                  "is_value_secret":true
+                }],
+                
+                "query_string":[{
+                  "key":"query-string-parameter-key",
+                  "value":"query-string-parameter-value",
+                  "is_value_secret":false
+                }]
+                
+        
+              }
+            },
+            "invocation_http_parameters":{
+              "body":[{
+                "key":"body-parameter-key",
+                "value":"body-parameter-value",
+                "is_value_secret":false
+              },
+              {
+                "key":"body-parameter-key1",
+                "value":"body-parameter-value1",
+                "is_value_secret":false
+              }
+            ],
+              
+              "header":[{
+                "key":"header-parameter-key2",
+                "value":"header-parameter-value2",
+                "is_value_secret":true
+              }],
+              
+              "query_string":[{
+                "key":"query-string-parameter-key",
+                "value":"query-string-parameter-value",
+                "is_value_secret":false
+              }]
+              
+        
+            }
+        
+            }
+          }
+          
+        
+          
+        
+        
+        
+        
+        
+          
+        
+          
+        
+               
+      
+      
+      
+      
+      
+        
+      
+        
+      
+         
+      
+    
+    
+    
+    
+    
+      
+    
+      
+    
+    
