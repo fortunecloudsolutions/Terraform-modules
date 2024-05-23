@@ -5,3 +5,7 @@ output "vpc_ids" {
     account_b_vpc1 = aws_vpc.vpc_account_b_1.id
   }
 }
+
+output "transit_gateway_id" {
+  value = aws_ec2_transit_gateway.tgw.id
+}
