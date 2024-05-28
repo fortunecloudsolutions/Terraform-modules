@@ -1,3 +1,104 @@
+provider "aws" {
+  alias  = "perimeter"
+  region = "us-west-2"
+  access_key = var.aws_perimeter_access_key_id
+  secret_key = var.aws_perimeter_secret_access_key
+}
+
+provider "aws" {
+  alias  = "centralhub"
+  region = "us-west-2"
+  access_key = var.aws_centralhub_access_key_id
+  secret_key = var.aws_centralhub_secret_access_key
+}
+
+provider "aws" {
+  alias  = "production"
+  region = "us-west-2"
+  access_key = var.aws_production_access_key_id
+  secret_key = var.aws_production_secret_access_key
+}
+
+provider "aws" {
+  alias  = "production_east"
+  region = "us-east-1"
+  access_key = var.aws_production_access_key_id
+  secret_key = var.aws_production_secret_access_key
+}
+
+provider "aws" {
+  alias  = "performance"
+  region = "us-west-2"
+  access_key = var.aws_performance_access_key_id
+  secret_key = var.aws_performance_secret_access_key
+}
+
+provider "aws" {
+  alias  = "development"
+  region = "us-west-2"
+  access_key = var.aws_development_access_key_id
+  secret_key = var.aws_development_secret_access_key
+}
+
+variable "aws_perimeter_access_key_id" {
+  description = "AWS Access Key ID for Perimeter Account"
+}
+
+variable "aws_perimeter_secret_access_key" {
+  description = "AWS Secret Access Key for Perimeter Account"
+}
+
+variable "aws_centralhub_access_key_id" {
+  description = "AWS Access Key ID for CentralHub Account"
+}
+
+variable "aws_centralhub_secret_access_key" {
+  description = "AWS Secret Access Key for CentralHub Account"
+}
+
+variable "aws_production_access_key_id" {
+  description = "AWS Access Key ID for Production Account"
+}
+
+variable "aws_production_secret_access_key" {
+  description = "AWS Secret Access Key for Production Account"
+}
+
+variable "aws_performance_access_key_id" {
+  description = "AWS Access Key ID for Performance Account"
+}
+
+variable "aws_performance_secret_access_key" {
+  description = "AWS Secret Access Key for Performance Account"
+}
+
+variable "aws_development_access_key_id" {
+  description = "AWS Access Key ID for Development Account"
+}
+
+variable "aws_development_secret_access_key" {
+  description = "AWS Secret Access Key for Development Account"
+}
+
+variable "vpc_cidr_blocks" {
+  type = map(map(string))
+  default = {
+    perimeter = {
+      vpc1 = "10.0.0.0/16"
+      vpc2 = "10.1.0.0/16"
+    }
+    centralhub = {
+      vpc1 = "10.2.0.0/16"
+    }
+  }
+}
+
+variable "availability_zones" {
+  description = "List of availability zones to use for the subnets"
+  type        = list(string)
+  default     = ["us-west-2a", "us-west-2b", "us-west-2c"]
+}
+
 resource "aws_vpc" "vpc_perimeter_edge" {
   provider   = aws.perimeter
   cidr_block = var.vpc_cidr_blocks["perimeter"]["vpc1"]
@@ -103,43 +204,84 @@ module "subnets_centralhub" {
   }
 }
 
-resource "aws_route_table" "route_table_perimeter_edge" {
-  provider = aws.perimeter
-  vpc_id   = aws_vpc.vpc_perimeter_edge.id
-  tags = {
-    Name = "Perimeter-edge-route-table"
+module "route_tables_perimeter_edge" {
+  source              = "./Terraform-modules/aws/modules/network/route-table"
+  for_each            = toset(range(7))
+  vpc_id              = aws_vpc.vpc_perimeter_edge.id
+  route               = {
+    cidr_block = "0.0.0.0/0"
+    gateway_id = "igw_id"  # Replace with actual Internet Gateway ID
+  }
+  tags                = {
+    Name = "Perimeter-edge-route-table-${each.key}"
   }
 }
 
-resource "aws_route_table" "route_table_perimeter_egress" {
-  provider = aws.perimeter
-  vpc_id   = aws_vpc.vpc_perimeter_egress.id
-  tags = {
-    Name = "Perimeter-egress-route-table"
+module "route_tables_perimeter_egress" {
+  source              = "./Terraform-modules/aws/modules/network/route-table"
+  for_each            = toset(range(7))
+  vpc_id              = aws_vpc.vpc_perimeter_egress.id
+  route               = {
+    cidr_block = "0.0.0.0/0"
+    gateway_id = "igw_id"  # Replace with actual Internet Gateway ID
+  }
+  tags                = {
+    Name = "Perimeter-egress-route-table-${each.key}"
   }
 }
 
-resource "aws_route_table" "route_table_centralhub" {
-  provider = aws.centralhub
-  vpc_id   = aws_vpc.vpc_centralhub.id
-  tags = {
-    Name = "CentralHub-route-table"
+module "route_tables_centralhub" {
+  source              = "./Terraform-modules/aws/modules/network/route-table"
+  for_each            = toset(range(7))
+  vpc_id              = aws_vpc.vpc_centralhub.id
+  route               = {
+    cidr_block = "0.0.0.0/0"
+    gateway_id = "igw_id"  # Replace with actual Internet Gateway ID
+  }
+  tags                = {
+    Name = "Centralhub-route-table-${each.key}"
   }
 }
 
-output "subnet_ids" {
-  value = {
-    perimeter_edge = [for subnet in module.subnets_perimeter_edge : subnet.subnet_id]
-    perimeter_egress = [for subnet in module.subnets_perimeter_egress : subnet.subnet_id]
-    centralhub = [for subnet in module.subnets_centralhub : subnet.subnet_id]
+module "network_acl_perimeter_edge" {
+  source              = "./Terraform-modules/aws/modules/network/nacl"
+  vpc_id              = aws_vpc.vpc_perimeter_edge.id
+  subnet_ids          = module.subnets_perimeter_edge[*].subnet_id
+  ingress1_rule_no    = 100
+  ingress1_fport      = 0
+  ingress1_tport      = 65535
+  ingress1_protocol   = "-1"
+  ingress1_cidr       = "0.0.0.0/0"
+  ingress1_action     = "allow"
+  egress1_rule_no     = 100
+  egress1_fport       = 0
+  egress1_tport       = 65535
+  egress1_protocol    = "-1"
+  egress1_cidr        = "0.0.0.0/0"
+  egress1_action      = "allow"
+  tags                = {
+    Name = "Perimeter-edge-nacl"
   }
 }
 
-output "route_table_ids" {
-  value = {
-    perimeter_edge = aws_route_table.route_table_perimeter_edge.id
-    perimeter_egress = aws_route_table.route_table_perimeter_egress.id
-    centralhub = aws_route_table.route_table_centralhub.id
+module "network_acl_perimeter_egress" {
+  source              = "./Terraform-modules/aws/modules/network/nacl"
+  vpc_id              = aws_vpc.vpc_perimeter_egress.id
+  subnet_ids          = module.subnets_perimeter_egress[*].subnet_id
+  ingress1_rule_no    = 100
+  ingress1_fport      = 0
+  ingress1_tport      = 65535
+  ingress1_protocol   = "-1"
+  ingress1_cidr       = "0.0.0.0/0"
+  ingress1_action     = "allow"
+  egress1_rule_no     = 100
+  egress1_fport       = 0
+  egress1_tport       = 65535
+  egress1_protocol    = "-1"
+  egress1_cidr        = "0.0.0.0/0"
+  egress1_action      = "allow"
+  tags                = {
+    Name = "Perimeter-egress-nacl"
   }
 }
 

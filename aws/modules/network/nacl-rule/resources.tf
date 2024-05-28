@@ -7,8 +7,4 @@ resource "aws_network_acl_rule" "nacl_rule" {
   cidr_block     = var.cidr
   from_port      = var.fport
   to_port        = var.tport
-  #ipv6_cidr_block = var.ipv6_cidr
-  #icmp_type = var.icmp_type
-  #icmp_code = var.icmp_code
-
 }

@@ -3,7 +3,6 @@ resource "aws_network_acl" "main_nacl" {
   subnet_ids = var.subnet_ids
 
   egress {
-    # count = var.egress_enable ? 1:0
     protocol        = var.egress1_protocol
     rule_no         = var.egress1_rule_no
     action          = var.egress1_action
@@ -16,7 +15,6 @@ resource "aws_network_acl" "main_nacl" {
   }
 
   ingress {
-    # count = var.ingress_enable ? 1:0
     protocol        = var.ingress1_protocol
     rule_no         = var.ingress1_rule_no
     action          = var.ingress1_action
