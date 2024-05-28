@@ -1,32 +1,32 @@
-resource "aws_vpc" "vpc_account_a_1" {
-  provider   = aws.account_a
-  cidr_block = var.vpc_cidr_blocks["account_a"]["vpc1"]
+resource "aws_vpc" "vpc_perimeter_edge" {
+  provider   = aws.perimeter
+  cidr_block = var.vpc_cidr_blocks["perimeter"]["vpc1"]
 
   tags = {
-    Name = "VPC-Account-A-1"
+    Name = "Perimeter-edge"
   }
 }
 
-resource "aws_vpc" "vpc_account_a_2" {
-  provider   = aws.account_a
-  cidr_block = var.vpc_cidr_blocks["account_a"]["vpc2"]
+resource "aws_vpc" "vpc_perimeter_egress" {
+  provider   = aws.perimeter
+  cidr_block = var.vpc_cidr_blocks["perimeter"]["vpc2"]
 
   tags = {
-    Name = "VPC-Account-A-2"
+    Name = "Perimeter-egress"
   }
 }
 
-resource "aws_vpc" "vpc_account_b_1" {
-  provider   = aws.account_b
-  cidr_block = var.vpc_cidr_blocks["account_b"]["vpc1"]
+resource "aws_vpc" "vpc_centralhub" {
+  provider   = aws.centralhub
+  cidr_block = var.vpc_cidr_blocks["centralhub"]["vpc1"]
 
   tags = {
-    Name = "VPC-Account-B-1"
+    Name = "CentralHub"
   }
 }
 
 resource "aws_ec2_transit_gateway" "tgw" {
-  provider = aws.account_a
+  provider = aws.perimeter
   description = "My Transit Gateway"
 
   auto_accept_shared_attachments = "enable"
@@ -42,7 +42,7 @@ resource "aws_ec2_transit_gateway" "tgw" {
 }
 
 resource "aws_ram_resource_share" "tgw_share" {
-  provider = aws.account_a
+  provider = aws.perimeter
   name     = "TGW-Share"
 
   allow_external_principals = true
@@ -53,22 +53,22 @@ resource "aws_ram_resource_share" "tgw_share" {
 }
 
 resource "aws_ram_principal_association" "tgw_principal_association" {
-  provider            = aws.account_a
+  provider            = aws.perimeter
   resource_share_arn  = aws_ram_resource_share.tgw_share.arn
-  principal           = "arn:aws:organizations::ACCOUNT_B:organization/ACCOUNT_B_ORG_ID"  # Replace with the ARN of the account B
+  principal           = "arn:aws:organizations::centralhub:organization/centralhub_ORG_ID"  # Replace with the ARN of the account B
 }
 
 resource "aws_ram_resource_association" "tgw_resource_association" {
-  provider            = aws.account_a
+  provider            = aws.perimeter
   resource_share_arn  = aws_ram_resource_share.tgw_share.arn
   resource_arn        = aws_ec2_transit_gateway.tgw.arn
 }
 
 resource "aws_ec2_transit_gateway_vpc_attachment" "tgw_vpc_attachment_a_1" {
-  provider            = aws.account_a
-  subnet_ids          = [aws_vpc.vpc_account_a_1.id]
+  provider            = aws.perimeter
+  subnet_ids          = [aws_vpc.vpc_perimeter_1.id]
   transit_gateway_id  = aws_ec2_transit_gateway.tgw.id
-  vpc_id              = aws_vpc.vpc_account_a_1.id
+  vpc_id              = aws_vpc.vpc_perimeter_1.id
 
   tags = {
     Name = "VPC-Attachment-Account-A-1"
@@ -76,10 +76,10 @@ resource "aws_ec2_transit_gateway_vpc_attachment" "tgw_vpc_attachment_a_1" {
 }
 
 resource "aws_ec2_transit_gateway_vpc_attachment" "tgw_vpc_attachment_a_2" {
-  provider            = aws.account_a
-  subnet_ids          = [aws_vpc.vpc_account_a_2.id]
+  provider            = aws.perimeter
+  subnet_ids          = [aws_vpc.vpc_perimeter_2.id]
   transit_gateway_id  = aws_ec2_transit_gateway.tgw.id
-  vpc_id              = aws_vpc.vpc_account_a_2.id
+  vpc_id              = aws_vpc.vpc_perimeter_2.id
 
   tags = {
     Name = "VPC-Attachment-Account-A-2"
@@ -87,10 +87,10 @@ resource "aws_ec2_transit_gateway_vpc_attachment" "tgw_vpc_attachment_a_2" {
 }
 
 resource "aws_ec2_transit_gateway_vpc_attachment" "tgw_vpc_attachment_b_1" {
-  provider            = aws.account_b
-  subnet_ids          = [aws_vpc.vpc_account_b_1.id]
+  provider            = aws.centralhub
+  subnet_ids          = [aws_vpc.vpc_centralhub_1.id]
   transit_gateway_id  = aws_ec2_transit_gateway.tgw.id
-  vpc_id              = aws_vpc.vpc_account_b_1.id
+  vpc_id              = aws_vpc.vpc_centralhub_1.id
 
   tags = {
     Name = "VPC-Attachment-Account-B-1"

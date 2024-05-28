@@ -1,13 +1,41 @@
 provider "aws" {
-  alias  = "account_a"
+  alias  = "perimeter"
   region = "us-west-2"
-  access_key = var.aws_account_a_access_key_id
-  secret_key = var.aws_account_a_secret_access_key
+  access_key = var.aws_perimeter_access_key_id
+  secret_key = var.aws_perimeter_secret_access_key
 }
 
 provider "aws" {
-  alias  = "account_b"
+  alias  = "centralhub"
   region = "us-west-2"
-  access_key = var.aws_account_b_access_key_id
-  secret_key = var.aws_account_b_secret_access_key
+  access_key = var.aws_centralhub_access_key_id
+  secret_key = var.aws_centralhub_secret_access_key
+}
+
+provider "aws" {
+  alias  = "production"
+  region = "us-west-2"
+  access_key = var.aws_production_access_key_id
+  secret_key = var.aws_production_secret_access_key
+}
+
+provider "aws" {
+  alias  = "production"
+  region = "us-east-1"
+  access_key = var.aws_production_access_key_id
+  secret_key = var.aws_production_secret_access_key
+}
+
+provider "aws" {
+  alias  = "performance"
+  region = "us-west-2"
+  access_key = var.aws_performance_access_key_id
+  secret_key = var.aws_performance_secret_access_key
+}
+
+provider "aws" {
+  alias  = "development"
+  region = "us-west-2"
+  access_key = var.aws_development_access_key_id
+  secret_key = var.aws_development_secret_access_key
 }
