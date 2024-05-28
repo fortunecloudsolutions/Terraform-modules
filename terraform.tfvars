@@ -1,14 +1,22 @@
-aws_account_a_access_key_id      = "ACCOUNT_A_ACCESS_KEY_ID"
-aws_account_a_secret_access_key  = "ACCOUNT_A_SECRET_ACCESS_KEY"
-aws_account_b_access_key_id      = "ACCOUNT_B_ACCESS_KEY_ID"
-aws_account_b_secret_access_key  = "ACCOUNT_B_SECRET_ACCESS_KEY"
+aws_perimeter_access_key_id       = "YOUR_AWS_PERIMETER_ACCESS_KEY_ID"
+aws_perimeter_secret_access_key   = "YOUR_AWS_PERIMETER_SECRET_ACCESS_KEY"
+aws_centralhub_access_key_id      = "YOUR_AWS_CENTRALHUB_ACCESS_KEY_ID"
+aws_centralhub_secret_access_key  = "YOUR_AWS_CENTRALHUB_SECRET_ACCESS_KEY"
+aws_production_access_key_id      = "YOUR_AWS_PRODUCTION_ACCESS_KEY_ID"
+aws_production_secret_access_key  = "YOUR_AWS_PRODUCTION_SECRET_ACCESS_KEY"
+aws_performance_access_key_id     = "YOUR_AWS_PERFORMANCE_ACCESS_KEY_ID"
+aws_performance_secret_access_key = "YOUR_AWS_PERFORMANCE_SECRET_ACCESS_KEY"
+aws_development_access_key_id     = "YOUR_AWS_DEVELOPMENT_ACCESS_KEY_ID"
+aws_development_secret_access_key = "YOUR_AWS_DEVELOPMENT_SECRET_ACCESS_KEY"
 
 vpc_cidr_blocks = {
-  account_a = {
+  perimeter = {
     vpc1 = "10.0.0.0/16"
     vpc2 = "10.1.0.0/16"
   }
-  account_b = {
+  centralhub = {
     vpc1 = "10.2.0.0/16"
   }
 }
+
+availability_zones = ["us-west-2a", "us-west-2b", "us-west-2c"]

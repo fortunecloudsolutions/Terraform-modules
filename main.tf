@@ -64,35 +64,114 @@ resource "aws_ram_resource_association" "tgw_resource_association" {
   resource_arn        = aws_ec2_transit_gateway.tgw.arn
 }
 
-resource "aws_ec2_transit_gateway_vpc_attachment" "tgw_vpc_attachment_a_1" {
-  provider            = aws.perimeter
-  subnet_ids          = [aws_vpc.vpc_perimeter_1.id]
-  transit_gateway_id  = aws_ec2_transit_gateway.tgw.id
-  vpc_id              = aws_vpc.vpc_perimeter_1.id
-
-  tags = {
-    Name = "VPC-Attachment-Account-A-1"
+module "subnets_perimeter_edge" {
+  source              = "./Terraform-modules/aws/modules/network/subnet"
+  for_each            = toset(range(12))
+  vpc_id              = aws_vpc.vpc_perimeter_edge.id
+  cidr_subnet         = cidrsubnet(aws_vpc.vpc_perimeter_edge.cidr_block, 4, each.key)
+  map_publicip        = false
+  availability_zone   = element(var.availability_zones, each.key % length(var.availability_zones))
+  assign_ipv6_address_on_creation = false
+  tags                = {
+    Name = "Perimeter-edge-subnet-${each.key}"
   }
 }
 
-resource "aws_ec2_transit_gateway_vpc_attachment" "tgw_vpc_attachment_a_2" {
-  provider            = aws.perimeter
-  subnet_ids          = [aws_vpc.vpc_perimeter_2.id]
-  transit_gateway_id  = aws_ec2_transit_gateway.tgw.id
-  vpc_id              = aws_vpc.vpc_perimeter_2.id
-
-  tags = {
-    Name = "VPC-Attachment-Account-A-2"
+module "subnets_perimeter_egress" {
+  source              = "./Terraform-modules/aws/modules/network/subnet"
+  for_each            = toset(range(12))
+  vpc_id              = aws_vpc.vpc_perimeter_egress.id
+  cidr_subnet         = cidrsubnet(aws_vpc.vpc_perimeter_egress.cidr_block, 4, each.key)
+  map_publicip        = false
+  availability_zone   = element(var.availability_zones, each.key % length(var.availability_zones))
+  assign_ipv6_address_on_creation = false
+  tags                = {
+    Name = "Perimeter-egress-subnet-${each.key}"
   }
 }
 
-resource "aws_ec2_transit_gateway_vpc_attachment" "tgw_vpc_attachment_b_1" {
+module "subnets_centralhub" {
+  source              = "./Terraform-modules/aws/modules/network/subnet"
+  for_each            = toset(range(12))
+  vpc_id              = aws_vpc.vpc_centralhub.id
+  cidr_subnet         = cidrsubnet(aws_vpc.vpc_centralhub.cidr_block, 4, each.key)
+  map_publicip        = false
+  availability_zone   = element(var.availability_zones, each.key % length(var.availability_zones))
+  assign_ipv6_address_on_creation = false
+  tags                = {
+    Name = "CentralHub-subnet-${each.key}"
+  }
+}
+
+resource "aws_route_table" "route_table_perimeter_edge" {
+  provider = aws.perimeter
+  vpc_id   = aws_vpc.vpc_perimeter_edge.id
+  tags = {
+    Name = "Perimeter-edge-route-table"
+  }
+}
+
+resource "aws_route_table" "route_table_perimeter_egress" {
+  provider = aws.perimeter
+  vpc_id   = aws_vpc.vpc_perimeter_egress.id
+  tags = {
+    Name = "Perimeter-egress-route-table"
+  }
+}
+
+resource "aws_route_table" "route_table_centralhub" {
+  provider = aws.centralhub
+  vpc_id   = aws_vpc.vpc_centralhub.id
+  tags = {
+    Name = "CentralHub-route-table"
+  }
+}
+
+output "subnet_ids" {
+  value = {
+    perimeter_edge = [for subnet in module.subnets_perimeter_edge : subnet.subnet_id]
+    perimeter_egress = [for subnet in module.subnets_perimeter_egress : subnet.subnet_id]
+    centralhub = [for subnet in module.subnets_centralhub : subnet.subnet_id]
+  }
+}
+
+output "route_table_ids" {
+  value = {
+    perimeter_edge = aws_route_table.route_table_perimeter_edge.id
+    perimeter_egress = aws_route_table.route_table_perimeter_egress.id
+    centralhub = aws_route_table.route_table_centralhub.id
+  }
+}
+
+resource "aws_ec2_transit_gateway_vpc_attachment" "tgw_vpc_attachment_perimeter_edge" {
+  provider            = aws.perimeter
+  subnet_ids          = module.subnets_perimeter_edge[*].subnet_id
+  transit_gateway_id  = aws_ec2_transit_gateway.tgw.id
+  vpc_id              = aws_vpc.vpc_perimeter_edge.id
+
+  tags = {
+    Name = "VPC-Attachment-Perimeter-Edge"
+  }
+}
+
+resource "aws_ec2_transit_gateway_vpc_attachment" "tgw_vpc_attachment_perimeter_egress" {
+  provider            = aws.perimeter
+  subnet_ids          = module.subnets_perimeter_egress[*].subnet_id
+  transit_gateway_id  = aws_ec2_transit_gateway.tgw.id
+  vpc_id              = aws_vpc.vpc_perimeter_egress.id
+
+  tags = {
+    Name = "VPC-Attachment-Perimeter-Egress"
+  }
+}
+
+resource "aws_ec2_transit_gateway_vpc_attachment" "tgw_vpc_attachment_centralhub" {
   provider            = aws.centralhub
-  subnet_ids          = [aws_vpc.vpc_centralhub_1.id]
+  subnet_ids          = module.subnets_centralhub[*].subnet_id
   transit_gateway_id  = aws_ec2_transit_gateway.tgw.id
-  vpc_id              = aws_vpc.vpc_centralhub_1.id
+  vpc_id              = aws_vpc.vpc_centralhub.id
 
   tags = {
-    Name = "VPC-Attachment-Account-B-1"
+    Name = "VPC-Attachment-CentralHub"
   }
 }

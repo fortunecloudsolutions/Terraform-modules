@@ -20,7 +20,7 @@ provider "aws" {
 }
 
 provider "aws" {
-  alias  = "production"
+  alias  = "production_east"
   region = "us-east-1"
   access_key = var.aws_production_access_key_id
   secret_key = var.aws_production_secret_access_key
