@@ -54,5 +54,14 @@ variable "security_group_ids" {
   default     = null
 
 }
+variable "vpc_endpoint_type" {
+  description = "(Optional) The VPC endpoint type, Gateway, GatewayLoadBalancer, or Interface. Defaults to Gateway."
+  type        = string
+  default     = "Gateway"
+}
 
+variable "tags" {
+  description = "A map of tags to assign to the resource."
+  type        = map(any)
+}
 
