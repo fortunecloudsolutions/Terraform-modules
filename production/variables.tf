@@ -6,6 +6,12 @@ variable "aws_production_secret_access_key" {
   description = "AWS Secret Access Key for Production Account"
 }
 
+variable "aws_region" {
+  description = "AWS Region"
+  type        = string
+  default     = "us-west-2"
+}
+
 variable "vpc_cidr_blocks" {
   type = map(string)
   default = {
@@ -126,4 +132,397 @@ variable "security_group_descriptions" {
       egress_security_groups = []
     }
   }
+}
+
+variable "enable_dns_support" {
+  description = "Enable DNS support for the VPC"
+  type        = bool
+  default     = true
+}
+
+variable "enable_dns_hostnames" {
+  description = "Enable DNS hostnames for the VPC"
+  type        = bool
+  default     = true
+}
+
+variable "instance_tenancy" {
+  description = "Instance tenancy for the VPC"
+  type        = string
+  default     = "default"
+}
+
+variable "vpc_name" {
+  description = "Name of the VPC"
+  type        = string
+}
+
+variable "map_publicip" {
+  description = "Map public IP on launch"
+  type        = bool
+  default     = false
+}
+
+variable "assign_ipv6_address_on_creation" {
+  description = "Assign IPv6 address on creation"
+  type        = bool
+  default     = false
+}
+
+variable "internet_gateway_id" {
+  description = "Internet Gateway ID"
+  type        = string
+}
+
+variable "route_table_name" {
+  description = "Name of the route table"
+  type        = string
+}
+
+variable "route_cidr_block" {
+  description = "CIDR block for route"
+  type        = string
+  default     = "0.0.0.0/0"
+}
+
+variable "vpc_endpoints" {
+  description = "List of VPC endpoints"
+  type        = list(string)
+  default     = ["s3", "dynamodb", "sns"]
+}
+
+variable "vpc_endpoint_type" {
+  description = "Type of VPC endpoint"
+  type        = string
+  default     = "Gateway"
+}
+
+variable "s3_acl" {
+  description = "ACL for S3 bucket"
+  type        = string
+  default     = "private"
+}
+
+variable "instance_type" {
+  description = "Instance type for EC2"
+  type        = string
+  default     = "m6i.large"
+}
+
+variable "security_group_ids" {
+  description = "List of security group IDs"
+  type        = list(string)
+}
+
+variable "key_name" {
+  description = "Key name for EC2 instances"
+  type        = string
+}
+
+variable "alb_internal" {
+  description = "Boolean to determine if ALB is internal"
+  type        = bool
+  default     = false
+}
+
+variable "alb_idle_timeout" {
+  description = "Idle timeout for ALB"
+  type        = number
+  default     = 60
+}
+
+variable "enable_alb_delete_via_awsapi" {
+  description = "Boolean to enable ALB deletion via AWS API"
+  type        = bool
+  default     = false
+}
+
+variable "alb_ip_address_type" {
+  description = "IP address type for ALB"
+  type        = string
+  default     = "ipv4"
+}
+
+variable "access_log_bucket_name" {
+  description = "Bucket name for ALB access logs"
+  type        = string
+}
+
+variable "enable_access_logs" {
+  description = "Boolean to enable ALB access logs"
+  type        = bool
+  default     = false
+}
+
+variable "target_port" {
+  description = "Target port for target groups"
+  type        = number
+  default     = 80
+}
+
+variable "target_protocol" {
+  description = "Target protocol for target groups"
+  type        = string
+  default     = "HTTP"
+}
+
+variable "deregistration_delay" {
+  description = "Deregistration delay for target groups"
+  type        = number
+  default     = 300
+}
+
+variable "slow_start" {
+  description = "Slow start duration for target groups"
+  type        = number
+  default     = 0
+}
+
+variable "load_balancing_algorithm_type" {
+  description = "Load balancing algorithm type"
+  type        = string
+  default     = "round_robin"
+}
+
+variable "target_type" {
+  description = "Target type for target groups"
+  type        = string
+  default     = "instance"
+}
+
+variable "sticky_type" {
+  description = "Stickiness type for target groups"
+  type        = string
+  default     = "lb_cookie"
+}
+
+variable "sticky_cookie_duration" {
+  description = "Stickiness cookie duration"
+  type        = number
+  default     = 86400
+}
+
+variable "sticky_enabled" {
+  description = "Boolean to enable stickiness"
+  type        = bool
+  default     = true
+}
+
+variable "health_check_enabled" {
+  description = "Boolean to enable health checks"
+  type        = bool
+  default     = true
+}
+
+variable "health_check_interval" {
+  description = "Health check interval"
+  type        = number
+  default     = 30
+}
+
+variable "health_check_path" {
+  description = "Health check path"
+  type        = string
+  default     = "/"
+}
+
+variable "health_check_port" {
+  description = "Health check port"
+  type        = string
+  default     = "traffic-port"
+}
+
+variable "health_check_protocol" {
+  description = "Health check protocol"
+  type        = string
+  default     = "HTTP"
+}
+
+variable "health_check_timeout" {
+  description = "Health check timeout"
+  type        = number
+  default     = 5
+}
+
+variable "healthy_threshold" {
+  description = "Healthy threshold for health checks"
+  type        = number
+  default     = 3
+}
+
+variable "unhealthy_threshold" {
+  description = "Unhealthy threshold for health checks"
+  type        = number
+  default     = 3
+}
+
+variable "health_check_success_resp_code" {
+  description = "Success response code for health checks"
+  type        = string
+  default     = "200"
+}
+
+variable "ingress1_rule_no" {
+  description = "Rule number for ingress rule 1"
+  type        = number
+}
+
+variable "ingress1_fport" {
+  description = "From port for ingress rule 1"
+  type        = number
+}
+
+variable "ingress1_tport" {
+  description = "To port for ingress rule 1"
+  type        = number
+}
+
+variable "ingress1_protocol" {
+  description = "Protocol for ingress rule 1"
+  type        = string
+}
+
+variable "ingress1_cidr" {
+  description = "CIDR block for ingress rule 1"
+  type        = string
+}
+
+variable "ingress1_action" {
+  description = "Action for ingress rule 1"
+  type        = string
+}
+
+variable "ingress1_ipv6_cidr" {
+  description = "IPv6 CIDR block for ingress rule 1"
+  type        = string
+}
+
+variable "ingress1_icmp_type" {
+  description = "ICMP type for ingress rule 1"
+  type        = number
+}
+
+variable "ingress1_icmp_code" {
+  description = "ICMP code for ingress rule 1"
+  type        = number
+}
+
+variable "egress1_rule_no" {
+  description = "Rule number for egress rule 1"
+  type        = number
+}
+
+variable "egress1_fport" {
+  description = "From port for egress rule 1"
+  type        = number
+}
+
+variable "egress1_tport" {
+  description = "To port for egress rule 1"
+  type        = number
+}
+
+variable "egress1_protocol" {
+  description = "Protocol for egress rule 1"
+  type        = string
+}
+
+variable "egress1_cidr" {
+  description = "CIDR block for egress rule 1"
+  type        = string
+}
+
+variable "egress1_action" {
+  description = "Action for egress rule 1"
+  type        = string
+}
+
+variable "egress1_ipv6_cidr" {
+  description = "IPv6 CIDR block for egress rule 1"
+  type        = string
+}
+
+variable "egress1_icmp_type" {
+  description = "ICMP type for egress rule 1"
+  type        = number
+}
+
+variable "egress1_icmp_code" {
+  description = "ICMP code for egress rule 1"
+  type        = number
+}
+
+variable "network_acl_name" {
+  description = "Name of the network ACL"
+  type        = string
+}
+
+variable "nacl_ingress_rule_base" {
+  description = "Base number for ingress rule"
+  type        = number
+}
+
+variable "nacl_ingress_fport" {
+  description = "From port for NACL ingress rule"
+  type        = number
+}
+
+variable "nacl_ingress_tport" {
+  description = "To port for NACL ingress rule"
+  type        = number
+}
+
+variable "nacl_ingress_protocol" {
+  description = "Protocol for NACL ingress rule"
+  type        = string
+}
+
+variable "nacl_ingress_cidr" {
+  description = "CIDR block for NACL ingress rule"
+  type        = string
+}
+
+variable "nacl_ingress_action" {
+  description = "Action for NACL ingress rule"
+  type        = string
+}
+
+variable "nacl_egress_rule_base" {
+  description = "Base number for egress rule"
+  type        = number
+}
+
+variable "nacl_egress_fport" {
+  description = "From port for NACL egress rule"
+  type        = number
+}
+
+variable "nacl_egress_tport" {
+  description = "To port for NACL egress rule"
+  type        = number
+}
+
+variable "nacl_egress_protocol" {
+  description = "Protocol for NACL egress rule"
+  type        = string
+}
+
+variable "nacl_egress_cidr" {
+  description = "CIDR block for NACL egress rule"
+  type        = string
+}
+
+variable "nacl_egress_action" {
+  description = "Action for NACL egress rule"
+  type        = string
+}
+
+variable "vpc_cidr_blocks" {
+  description = "CIDR blocks for VPC"
+  type        = map(string)
+}
+
+variable "security_group_ids" {
+  description = "Security group IDs"
+  type        = list(string)
 }

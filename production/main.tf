@@ -1,63 +1,11 @@
-provider "aws" {
-  alias  = "production"
-  region = "us-west-2"
-  access_key = var.aws_production_access_key_id
-  secret_key = var.aws_production_secret_access_key
-}
-
-variable "aws_production_access_key_id" {
-  description = "AWS Access Key ID for Production Account"
-}
-
-variable "aws_production_secret_access_key" {
-  description = "AWS Secret Access Key for Production Account"
-}
-
-variable "vpc_cidr_blocks" {
-  type = map(string)
-  default = {
-    production = "10.3.0.0/16"
-  }
-}
-
-variable "availability_zones" {
-  description = "List of availability zones to use for the subnets"
-  type        = list(string)
-  default     = ["us-west-2a", "us-west-2b"]
-}
-
-variable "bucket_names" {
-  description = "List of S3 bucket names"
-  type        = list(string)
-  default     = ["bucket1", "bucket2", "bucket3", "bucket4", "bucket5", "bucket6", "bucket7"]
-}
-
-variable "ami_id" {
-  description = "AMI ID for the Windows EC2 instances"
-  type        = string
-  default     = "" # Replace with actual AMI ID
-}
-
-variable "alb_names" {
-  description = "List of ALB names"
-  type        = list(string)
-  default     = ["Prod-App-A-Alb", "Prod-Web-A-Alb", "Prod-Esb-A-Alb"]
-}
-
-variable "target_group_names" {
-  description = "List of Target Group names"
-  type        = list(string)
-  default     = ["tg1", "tg2", "tg3", "tg4", "tg5", "tg6", "tg7", "tg8", "tg9", "tg10", "tg11", "tg12"]
-}
-
 module "vpc_production" {
   source = "./Terraform-modules/aws/modules/network/vpc"
   cidr_vpc = var.vpc_cidr_blocks["production"]
-  enable_dns_support = true
-  enable_dns_hostnames = true
-  instance_tenancy = "default"
+  enable_dns_support = var.enable_dns_support
+  enable_dns_hostnames = var.enable_dns_hostnames
+  instance_tenancy = var.instance_tenancy
   tags = {
-    Name = "Production-VPC"
+    Name = var.vpc_name
   }
 }
 
@@ -66,11 +14,11 @@ module "subnets_production_az_a" {
   for_each            = toset(range(6))
   vpc_id              = module.vpc_production.vpc_id
   cidr_subnet         = cidrsubnet(var.vpc_cidr_blocks["production"], 4, each.key)
-  map_publicip        = false
-  availability_zone   = "us-west-2a"
-  assign_ipv6_address_on_creation = false
+  map_publicip        = var.map_publicip
+  availability_zone   = element(var.availability_zones, 0)
+  assign_ipv6_address_on_creation = var.assign_ipv6_address_on_creation
   tags                = {
-    Name = "Production-subnet-us-west-2a-${each.key}"
+    Name = "Production-subnet-${element(var.availability_zones, 0)}-${each.key}"
   }
 }
 
@@ -79,11 +27,11 @@ module "subnets_production_az_b" {
   for_each            = toset(range(6))
   vpc_id              = module.vpc_production.vpc_id
   cidr_subnet         = cidrsubnet(var.vpc_cidr_blocks["production"], 4, each.key + 6)
-  map_publicip        = false
-  availability_zone   = "us-west-2b"
-  assign_ipv6_address_on_creation = false
+  map_publicip        = var.map_publicip
+  availability_zone   = element(var.availability_zones, 1)
+  assign_ipv6_address_on_creation = var.assign_ipv6_address_on_creation
   tags                = {
-    Name = "Production-subnet-us-west-2b-${each.key}"
+    Name = "Production-subnet-${element(var.availability_zones, 1)}-${each.key}"
   }
 }
 
@@ -91,11 +39,11 @@ module "route_table_production" {
   source = "./Terraform-modules/aws/modules/network/route-table"
   vpc_id = module.vpc_production.vpc_id
   route = {
-    cidr_block = "0.0.0.0/0"
-    gateway_id = "igw_id"  # Replace with actual Internet Gateway ID
+    cidr_block = var.route_cidr_block
+    gateway_id = var.internet_gateway_id
   }
   tags = {
-    Name = "central"
+    Name = var.route_table_name
   }
 }
 
@@ -107,10 +55,10 @@ resource "aws_route_table_association" "subnet_association" {
 
 module "vpc_endpoints_production" {
   source = "./Terraform-modules/aws/modules/network/vpc-endpoint"
-  for_each = toset(["s3", "dynamodb", "sns"])
+  for_each = toset(var.vpc_endpoints)
   vpc_id = module.vpc_production.vpc_id
-  service_name = "com.amazonaws.${var.region}.${each.key}"
-  vpc_endpoint_type = "Gateway"
+  service_name = "com.amazonaws.${var.aws_region}.${each.key}"
+  vpc_endpoint_type = var.vpc_endpoint_type
   tags = {
     Name = "Production-VPC-${each.key}-endpoint"
   }
@@ -120,7 +68,7 @@ module "s3_buckets" {
   source = "./Terraform-modules/aws/modules/volumes/s3/s3-create-bucket"
   for_each = toset(var.bucket_names)
   bucket = each.key
-  acl = "private"
+  acl = var.s3_acl
   tags = {
     Name = each.key
   }
@@ -130,11 +78,11 @@ module "ec2_instances" {
   source = "./Terraform-modules/aws/modules/ec2/ec2-instance"
   for_each = toset(range(6))
   ami = var.ami_id
-  instance_type = "m6i.large"
+  instance_type = var.instance_type
   subnet_id = each.value % 2 == 0 ? module.subnets_production_az_a[each.value / 2].subnet_id : module.subnets_production_az_b[each.value / 2].subnet_id
-  vpc_security_group_ids = ["sg-12345678"] # Replace with actual security group IDs
-  key_name = "your-key-name" # Replace with your key name
-  availability_zone = each.value % 2 == 0 ? "us-west-2a" : "us-west-2b"
+  vpc_security_group_ids = var.security_group_ids
+  key_name = var.key_name
+  availability_zone = each.value % 2 == 0 ? element(var.availability_zones, 0) : element(var.availability_zones, 1)
   tags = {
     Name = "EC2-Instance-${each.value}"
   }
@@ -144,14 +92,14 @@ module "load_balancers" {
   source = "./Terraform-modules/aws/modules/load-balancer/app-load-balancer"
   for_each = toset(var.alb_names)
   alb_name = each.value
-  alb_internal = false
-  security_group_ids = ["sg-xxxxxxxx"]
-  idle_timeout = 60
-  enable_alb_delete_via_awsapi = false
-  ip_address_type = "ipv4"
+  alb_internal = var.alb_internal
+  security_group_ids = var.security_group_ids
+  idle_timeout = var.alb_idle_timeout
+  enable_alb_delete_via_awsapi = var.enable_alb_delete_via_awsapi
+  ip_address_type = var.alb_ip_address_type
   attach_alb_subnet_ids = concat(module.subnets_production_az_a[*].subnet_id, module.subnets_production_az_b[*].subnet_id)
-  access_log_bucket_name = "my-access-logs-bucket"
-  enable_access_logs = true
+  access_log_bucket_name = var.access_log_bucket_name
+  enable_access_logs = var.enable_access_logs
   tags = {
     Name = each.value
   }
@@ -161,25 +109,25 @@ module "target_groups" {
   source = "./Terraform-modules/aws/modules/load-balancer/target-group-alb"
   for_each = toset(var.target_group_names)
   target_group_name = each.value
-  target_port = 80
-  target_protocol = "HTTP"
+  target_port = var.target_port
+  target_protocol = var.target_protocol
   target_vpc_id = module.vpc_production.vpc_id
-  deregistration_delay = 300
-  slow_start = 0
-  load_balancing_algorithm_type = "round_robin"
-  target_type = "instance"
-  sticky_type = "lb_cookie"
-  sticky_cookie_duration = 86400
-  sticky_enabled = true
-  health_check_enabled = true
-  health_check_interval = 30
-  health_check_path = "/"
-  health_check_port = "traffic-port"
-  health_check_protocol = "HTTP"
-  health_check_timeout = 5
-  healthy_threshold = 3
-  unhealthy_threshold = 3
-  health_check_success_resp_code = "200"
+  deregistration_delay = var.deregistration_delay
+  slow_start = var.slow_start
+  load_balancing_algorithm_type = var.load_balancing_algorithm_type
+  target_type = var.target_type
+  sticky_type = var.sticky_type
+  sticky_cookie_duration = var.sticky_cookie_duration
+  sticky_enabled = var.sticky_enabled
+  health_check_enabled = var.health_check_enabled
+  health_check_interval = var.health_check_interval
+  health_check_path = var.health_check_path
+  health_check_port = var.health_check_port
+  health_check_protocol = var.health_check_protocol
+  health_check_timeout = var.health_check_timeout
+  healthy_threshold = var.healthy_threshold
+  unhealthy_threshold = var.unhealthy_threshold
+  health_check_success_resp_code = var.health_check_success_resp_code
   tags = {
     Name = each.value
   }
@@ -189,26 +137,26 @@ module "network_acl" {
   source = "./Terraform-modules/aws/modules/network/nacl"
   vpc_id = module.vpc_production.vpc_id
   subnet_ids = concat(module.subnets_production_az_a[*].subnet_id, module.subnets_production_az_b[*].subnet_id)
-  ingress1_rule_no = 100
-  ingress1_fport = 0
-  ingress1_tport = 65535
-  ingress1_protocol = "tcp"
-  ingress1_cidr = "0.0.0.0/0"
-  ingress1_action = "allow"
-  ingress1_ipv6_cidr = null
-  ingress1_icmp_type = 0
-  ingress1_icmp_code = 0
-  egress1_rule_no = 100
-  egress1_fport = 0
-  egress1_tport = 65535
-  egress1_protocol = "tcp"
-  egress1_cidr = "0.0.0.0/0"
-  egress1_action = "allow"
-  egress1_ipv6_cidr = null
-  egress1_icmp_type = 0
-  egress1_icmp_code = 0
+  ingress1_rule_no = var.ingress1_rule_no
+  ingress1_fport = var.ingress1_fport
+  ingress1_tport = var.ingress1_tport
+  ingress1_protocol = var.ingress1_protocol
+  ingress1_cidr = var.ingress1_cidr
+  ingress1_action = var.ingress1_action
+  ingress1_ipv6_cidr = var.ingress1_ipv6_cidr
+  ingress1_icmp_type = var.ingress1_icmp_type
+  ingress1_icmp_code = var.ingress1_icmp_code
+  egress1_rule_no = var.egress1_rule_no
+  egress1_fport = var.egress1_fport
+  egress1_tport = var.egress1_tport
+  egress1_protocol = var.egress1_protocol
+  egress1_cidr = var.egress1_cidr
+  egress1_action = var.egress1_action
+  egress1_ipv6_cidr = var.egress1_ipv6_cidr
+  egress1_icmp_type = var.egress1_icmp_type
+  egress1_icmp_code = var.egress1_icmp_code
   tags = {
-    Name = "Production-NACL"
+    Name = var.network_acl_name
   }
 }
 
@@ -217,12 +165,12 @@ module "nacl_rules_ingress" {
   for_each = toset(range(8))
   nacl_id = module.network_acl.nacl_id
   egress_enable = false
-  rule_no = each.value * 10 + 100
-  fport = 0
-  tport = 65535
-  protocol = "tcp"
-  cidr = "0.0.0.0/0"
-  action = "allow"
+  rule_no = each.value * 10 + var.nacl_ingress_rule_base
+  fport = var.nacl_ingress_fport
+  tport = var.nacl_ingress_tport
+  protocol = var.nacl_ingress_protocol
+  cidr = var.nacl_ingress_cidr
+  action = var.nacl_ingress_action
 }
 
 module "nacl_rules_egress" {
@@ -230,77 +178,34 @@ module "nacl_rules_egress" {
   for_each = toset(range(8))
   nacl_id = module.network_acl.nacl_id
   egress_enable = true
-  rule_no = each.value * 10 + 100
-  fport = 0
-  tport = 65535
-  protocol = "tcp"
-  cidr = "0.0.0.0/0"
-  action = "allow"
+  rule_no = each.value * 10 + var.nacl_egress_rule_base
+  fport = var.nacl_egress_fport
+  tport = var.nacl_egress_tport
+  protocol = var.nacl_egress_protocol
+  cidr = var.nacl_egress_cidr
+  action = var.nacl_egress_action
 }
 
 module "security_groups" {
   source = "./Terraform-modules/aws/modules/network/sg"
-  for_each = {
-    Esb-Prod-SG = {
-      sg_name = "Esb-Prod-SG"
-      sg_text = "ESB Production Security Group"
-      ingress1_desc = "Allow HTTP"
-      ingress1_fport = 80
-      ingress1_tport = 80
-      ingress1_protocol = "tcp"
-      ingress1_cidr = ["0.0.0.0/0"]
-      ingress1_ipv6_cidr = []
-      ingress1_prefix_ids = []
-      ingress1_security_groups = []
-      egress1_desc = "Allow all outbound traffic"
-      egress1_fport = 0
-      egress1_tport = 65535
-      egress1_protocol = "-1"
-      egress1_cidr = ["0.0.0.0/0"]
-      egress1_ipv6_cidr = []
-      egress1_prefix_ids = []
-      egress1_security_groups = []
-    }
-    Web-Prod-SG = {
-      sg_name = "Web-Prod-SG"
-      sg_text = "Web Production Security Group"
-      ingress1_desc = "Allow HTTP"
-      ingress1_fport = 80
-      ingress1_tport = 80
-      ingress1_protocol = "tcp"
-      ingress1_cidr = ["0.0.0.0/0"]
-      ingress1_ipv6_cidr = []
-      ingress1_prefix_ids = []
-      ingress1_security_groups = []
-      egress1_desc = "Allow all outbound traffic"
-      egress1_fport = 0
-      egress1_tport = 65535
-      egress1_protocol = "-1"
-      egress1_cidr = ["0.0.0.0/0"]
-      egress1_ipv6_cidr = []
-      egress1_prefix_ids = []
-      egress1_security_groups = []
-    }
-    App-Prod-SG = {
-      sg_name = "App-Prod-SG"
-      sg_text = "App Production Security Group"
-      ingress1_desc = "Allow HTTP"
-      ingress1_fport = 80
-      ingress1_tport = 80
-      ingress1_protocol = "tcp"
-      ingress1_cidr = ["0.0.0.0/0"]
-      ingress1_ipv6_cidr = []
-      ingress1_prefix_ids = []
-      ingress1_security_groups = []
-      egress1_desc = "Allow all outbound traffic"
-      egress1_fport = 0
-      egress1_tport = 65535
-      egress1_protocol = "-1"
-      egress1_cidr = ["0.0.0.0/0"]
-      egress1_ipv6_cidr = []
-      egress1_prefix_ids = []
-      egress1_security_groups = []
-    }
-  }
+  for_each = toset(var.sg_names)
+  sg_name = each.value
+  sg_text = var.sg_descriptions[element(index(var.sg_names, each.value), var.sg_descriptions)]
+  ingress1_desc = var.security_group_descriptions[each.value].ingress_desc
+  ingress1_fport = var.security_group_descriptions[each.value].ingress_fport
+  ingress1_tport = var.security_group_descriptions[each.value].ingress_tport
+  ingress1_protocol = var.security_group_descriptions[each.value].ingress_protocol
+  ingress1_cidr = var.security_group_descriptions[each.value].ingress_cidr
+  ingress1_ipv6_cidr = var.security_group_descriptions[each.value].ingress_ipv6_cidr
+  ingress1_prefix_ids = var.security_group_descriptions[each.value].ingress_prefix_ids
+  ingress1_security_groups = var.security_group_descriptions[each.value].ingress_security_groups
+  egress1_desc = var.security_group_descriptions[each.value].egress_desc
+  egress1_fport = var.security_group_descriptions[each.value].egress_fport
+  egress1_tport = var.security_group_descriptions[each.value].egress_tport
+  egress1_protocol = var.security_group_descriptions[each.value].egress_protocol
+  egress1_cidr = var.security_group_descriptions[each.value].egress_cidr
+  egress1_ipv6_cidr = var.security_group_descriptions[each.value].egress_ipv6_cidr
+  egress1_prefix_ids = var.security_group_descriptions[each.value].egress_prefix_ids
+  egress1_security_groups = var.security_group_descriptions[each.value].egress_security_groups
   vpc_id = module.vpc_production.vpc_id
 }

@@ -20,3 +20,32 @@ vpc_cidr_blocks = {
 }
 
 availability_zones = ["us-west-2a", "us-west-2b", "us-west-2c"]
+
+gateway_id = "YOUR_INTERNET_GATEWAY_ID"
+
+transit_gateway_description = "My Transit Gateway"
+auto_accept_shared_attachments = "enable"
+default_route_table_association = "enable"
+default_route_table_propagation = "enable"
+dns_support = "enable"
+multicast_support = "enable"
+vpn_ecmp_support = "enable"
+transit_gateway_name = "main-transit-gateway"
+ram_resource_share_name = "TGW-Share"
+allow_external_principals = true
+ram_principal_arn = "arn:aws:organizations::centralhub:organization/centralhub_ORG_ID"
+map_publicip = false
+assign_ipv6_address_on_creation = false
+route_cidr_block = "0.0.0.0/0"
+ingress1_rule_no = 100
+ingress1_fport = 0
+ingress1_tport = 65535
+ingress1_protocol = "-1"
+ingress1_cidr = "0.0.0.0/0"
+ingress1_action = "allow"
+egress1_rule_no = 100
+egress1_fport = 0
+egress1_tport = 65535
+egress1_protocol = "-1"
+egress1_cidr = "0.0.0.0/0"
+egress1_action = "allow"

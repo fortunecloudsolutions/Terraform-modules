@@ -1,104 +1,3 @@
-provider "aws" {
-  alias  = "perimeter"
-  region = "us-west-2"
-  access_key = var.aws_perimeter_access_key_id
-  secret_key = var.aws_perimeter_secret_access_key
-}
-
-provider "aws" {
-  alias  = "centralhub"
-  region = "us-west-2"
-  access_key = var.aws_centralhub_access_key_id
-  secret_key = var.aws_centralhub_secret_access_key
-}
-
-provider "aws" {
-  alias  = "production"
-  region = "us-west-2"
-  access_key = var.aws_production_access_key_id
-  secret_key = var.aws_production_secret_access_key
-}
-
-provider "aws" {
-  alias  = "production_east"
-  region = "us-east-1"
-  access_key = var.aws_production_access_key_id
-  secret_key = var.aws_production_secret_access_key
-}
-
-provider "aws" {
-  alias  = "performance"
-  region = "us-west-2"
-  access_key = var.aws_performance_access_key_id
-  secret_key = var.aws_performance_secret_access_key
-}
-
-provider "aws" {
-  alias  = "development"
-  region = "us-west-2"
-  access_key = var.aws_development_access_key_id
-  secret_key = var.aws_development_secret_access_key
-}
-
-variable "aws_perimeter_access_key_id" {
-  description = "AWS Access Key ID for Perimeter Account"
-}
-
-variable "aws_perimeter_secret_access_key" {
-  description = "AWS Secret Access Key for Perimeter Account"
-}
-
-variable "aws_centralhub_access_key_id" {
-  description = "AWS Access Key ID for CentralHub Account"
-}
-
-variable "aws_centralhub_secret_access_key" {
-  description = "AWS Secret Access Key for CentralHub Account"
-}
-
-variable "aws_production_access_key_id" {
-  description = "AWS Access Key ID for Production Account"
-}
-
-variable "aws_production_secret_access_key" {
-  description = "AWS Secret Access Key for Production Account"
-}
-
-variable "aws_performance_access_key_id" {
-  description = "AWS Access Key ID for Performance Account"
-}
-
-variable "aws_performance_secret_access_key" {
-  description = "AWS Secret Access Key for Performance Account"
-}
-
-variable "aws_development_access_key_id" {
-  description = "AWS Access Key ID for Development Account"
-}
-
-variable "aws_development_secret_access_key" {
-  description = "AWS Secret Access Key for Development Account"
-}
-
-variable "vpc_cidr_blocks" {
-  type = map(map(string))
-  default = {
-    perimeter = {
-      vpc1 = "10.0.0.0/16"
-      vpc2 = "10.1.0.0/16"
-    }
-    centralhub = {
-      vpc1 = "10.2.0.0/16"
-    }
-  }
-}
-
-variable "availability_zones" {
-  description = "List of availability zones to use for the subnets"
-  type        = list(string)
-  default     = ["us-west-2a", "us-west-2b", "us-west-2c"]
-}
-
 resource "aws_vpc" "vpc_perimeter_edge" {
   provider   = aws.perimeter
   cidr_block = var.vpc_cidr_blocks["perimeter"]["vpc1"]
@@ -128,35 +27,35 @@ resource "aws_vpc" "vpc_centralhub" {
 
 resource "aws_ec2_transit_gateway" "tgw" {
   provider = aws.perimeter
-  description = "My Transit Gateway"
+  description = var.transit_gateway_description
 
-  auto_accept_shared_attachments = "enable"
-  default_route_table_association = "enable"
-  default_route_table_propagation = "enable"
-  dns_support = "enable"
-  multicast_support = "enable"
-  vpn_ecmp_support = "enable"
+  auto_accept_shared_attachments = var.auto_accept_shared_attachments
+  default_route_table_association = var.default_route_table_association
+  default_route_table_propagation = var.default_route_table_propagation
+  dns_support = var.dns_support
+  multicast_support = var.multicast_support
+  vpn_ecmp_support = var.vpn_ecmp_support
 
   tags = {
-    Name = "main-transit-gateway"
+    Name = var.transit_gateway_name
   }
 }
 
 resource "aws_ram_resource_share" "tgw_share" {
   provider = aws.perimeter
-  name     = "TGW-Share"
+  name     = var.ram_resource_share_name
 
-  allow_external_principals = true
+  allow_external_principals = var.allow_external_principals
 
   tags = {
-    Name = "TGW-Share"
+    Name = var.ram_resource_share_name
   }
 }
 
 resource "aws_ram_principal_association" "tgw_principal_association" {
   provider            = aws.perimeter
   resource_share_arn  = aws_ram_resource_share.tgw_share.arn
-  principal           = "arn:aws:organizations::centralhub:organization/centralhub_ORG_ID"  # Replace with the ARN of the account B
+  principal           = var.ram_principal_arn
 }
 
 resource "aws_ram_resource_association" "tgw_resource_association" {
@@ -170,9 +69,9 @@ module "subnets_perimeter_edge" {
   for_each            = toset(range(12))
   vpc_id              = aws_vpc.vpc_perimeter_edge.id
   cidr_subnet         = cidrsubnet(aws_vpc.vpc_perimeter_edge.cidr_block, 4, each.key)
-  map_publicip        = false
+  map_publicip        = var.map_publicip
   availability_zone   = element(var.availability_zones, each.key % length(var.availability_zones))
-  assign_ipv6_address_on_creation = false
+  assign_ipv6_address_on_creation = var.assign_ipv6_address_on_creation
   tags                = {
     Name = "Perimeter-edge-subnet-${each.key}"
   }
@@ -183,9 +82,9 @@ module "subnets_perimeter_egress" {
   for_each            = toset(range(12))
   vpc_id              = aws_vpc.vpc_perimeter_egress.id
   cidr_subnet         = cidrsubnet(aws_vpc.vpc_perimeter_egress.cidr_block, 4, each.key)
-  map_publicip        = false
+  map_publicip        = var.map_publicip
   availability_zone   = element(var.availability_zones, each.key % length(var.availability_zones))
-  assign_ipv6_address_on_creation = false
+  assign_ipv6_address_on_creation = var.assign_ipv6_address_on_creation
   tags                = {
     Name = "Perimeter-egress-subnet-${each.key}"
   }
@@ -196,9 +95,9 @@ module "subnets_centralhub" {
   for_each            = toset(range(12))
   vpc_id              = aws_vpc.vpc_centralhub.id
   cidr_subnet         = cidrsubnet(aws_vpc.vpc_centralhub.cidr_block, 4, each.key)
-  map_publicip        = false
+  map_publicip        = var.map_publicip
   availability_zone   = element(var.availability_zones, each.key % length(var.availability_zones))
-  assign_ipv6_address_on_creation = false
+  assign_ipv6_address_on_creation = var.assign_ipv6_address_on_creation
   tags                = {
     Name = "CentralHub-subnet-${each.key}"
   }
@@ -209,8 +108,8 @@ module "route_tables_perimeter_edge" {
   for_each            = toset(range(7))
   vpc_id              = aws_vpc.vpc_perimeter_edge.id
   route               = {
-    cidr_block = "0.0.0.0/0"
-    gateway_id = "igw_id"  # Replace with actual Internet Gateway ID
+    cidr_block = var.route_cidr_block
+    gateway_id = var.gateway_id
   }
   tags                = {
     Name = "Perimeter-edge-route-table-${each.key}"
@@ -222,8 +121,8 @@ module "route_tables_perimeter_egress" {
   for_each            = toset(range(7))
   vpc_id              = aws_vpc.vpc_perimeter_egress.id
   route               = {
-    cidr_block = "0.0.0.0/0"
-    gateway_id = "igw_id"  # Replace with actual Internet Gateway ID
+    cidr_block = var.route_cidr_block
+    gateway_id = var.gateway_id
   }
   tags                = {
     Name = "Perimeter-egress-route-table-${each.key}"
@@ -235,8 +134,8 @@ module "route_tables_centralhub" {
   for_each            = toset(range(7))
   vpc_id              = aws_vpc.vpc_centralhub.id
   route               = {
-    cidr_block = "0.0.0.0/0"
-    gateway_id = "igw_id"  # Replace with actual Internet Gateway ID
+    cidr_block = var.route_cidr_block
+    gateway_id = var.gateway_id
   }
   tags                = {
     Name = "Centralhub-route-table-${each.key}"
@@ -247,18 +146,18 @@ module "network_acl_perimeter_edge" {
   source              = "./Terraform-modules/aws/modules/network/nacl"
   vpc_id              = aws_vpc.vpc_perimeter_edge.id
   subnet_ids          = module.subnets_perimeter_edge[*].subnet_id
-  ingress1_rule_no    = 100
-  ingress1_fport      = 0
-  ingress1_tport      = 65535
-  ingress1_protocol   = "-1"
-  ingress1_cidr       = "0.0.0.0/0"
-  ingress1_action     = "allow"
-  egress1_rule_no     = 100
-  egress1_fport       = 0
-  egress1_tport       = 65535
-  egress1_protocol    = "-1"
-  egress1_cidr        = "0.0.0.0/0"
-  egress1_action      = "allow"
+  ingress1_rule_no    = var.ingress1_rule_no
+  ingress1_fport      = var.ingress1_fport
+  ingress1_tport      = var.ingress1_tport
+  ingress1_protocol   = var.ingress1_protocol
+  ingress1_cidr       = var.ingress1_cidr
+  ingress1_action     = var.ingress1_action
+  egress1_rule_no     = var.egress1_rule_no
+  egress1_fport       = var.egress1_fport
+  egress1_tport       = var.egress1_tport
+  egress1_protocol    = var.egress1_protocol
+  egress1_cidr        = var.egress1_cidr
+  egress1_action      = var.egress1_action
   tags                = {
     Name = "Perimeter-edge-nacl"
   }
@@ -268,18 +167,18 @@ module "network_acl_perimeter_egress" {
   source              = "./Terraform-modules/aws/modules/network/nacl"
   vpc_id              = aws_vpc.vpc_perimeter_egress.id
   subnet_ids          = module.subnets_perimeter_egress[*].subnet_id
-  ingress1_rule_no    = 100
-  ingress1_fport      = 0
-  ingress1_tport      = 65535
-  ingress1_protocol   = "-1"
-  ingress1_cidr       = "0.0.0.0/0"
-  ingress1_action     = "allow"
-  egress1_rule_no     = 100
-  egress1_fport       = 0
-  egress1_tport       = 65535
-  egress1_protocol    = "-1"
-  egress1_cidr        = "0.0.0.0/0"
-  egress1_action      = "allow"
+  ingress1_rule_no    = var.ingress1_rule_no
+  ingress1_fport      = var.ingress1_fport
+  ingress1_tport      = var.ingress1_tport
+  ingress1_protocol   = var.ingress1_protocol
+  ingress1_cidr       = var.ingress1_cidr
+  ingress1_action     = var.ingress1_action
+  egress1_rule_no     = var.egress1_rule_no
+  egress1_fport       = var.egress1_fport
+  egress1_tport       = var.egress1_tport
+  egress1_protocol    = var.egress1_protocol
+  egress1_cidr        = var.egress1_cidr
+  egress1_action      = var.egress1_action
   tags                = {
     Name = "Perimeter-egress-nacl"
   }
