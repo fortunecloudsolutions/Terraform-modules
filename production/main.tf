@@ -209,3 +209,73 @@ module "security_groups" {
   egress1_security_groups = var.security_group_descriptions[each.value].egress_security_groups
   vpc_id = module.vpc_production.vpc_id
 }
+
+module "db_subnet_group" {
+  source = "./Terraform-modules/aws/modules/rds/subnet-group"
+  name = var.db_subnet_group_name
+  description = var.db_subnet_group_description
+  subnet_ids = concat(module.subnets_production_az_a[*].subnet_id, module.subnets_production_az_b[*].subnet_id)
+  tags = {
+    Name = var.db_subnet_group_name
+  }
+}
+
+module "db_instance" {
+  source = "./Terraform-modules/aws/modules/rds/db-instance"
+  identifier = var.db_identifier
+  allow_major_version_upgrade = var.db_allow_major_version_upgrade
+  auto_minor_version_upgrade = var.db_auto_minor_version_upgrade
+  engine = var.db_engine
+  engine_version = var.db_engine_version
+  instance_class = var.db_instance_class
+  allocated_storage = var.db_allocated_storage
+  storage_encrypted = var.db_storage_encrypted
+  db_subnet_group_name = module.db_subnet_group.subnet_group_id
+  parameter_group_name = var.db_parameter_group_name
+  option_group_name = var.db_option_group_name
+  name = var.db_name
+  username = var.db_username
+  password = var.db_password
+  port = var.db_port
+  copy_tags_to_snapshot = var.db_copy_tags_to_snapshot
+  monitoring_interval = var.db_monitoring_interval
+  publicly_accessible = var.db_publicly_accessible
+  storage_type = var.db_storage_type
+  domain = var.db_domain
+  domain_iam_role_name = var.db_domain_iam_role_name
+  multi_az = var.db_multi_az
+  skip_final_snapshot = var.db_skip_final_snapshot
+  vpc_security_group_ids = [var.db_vpc_security_group_id, module.security_groups["App-Prod-SG"].sg_id]
+  backup_retention_period = var.db_backup_retention_period
+  license_model = var.db_license_model
+  tags = var.db_tags
+  apply_immediately = var.db_apply_immediately
+  availability_zone = var.db_availability_zone
+  backup_window = var.db_backup_window
+  ca_cert_identifier = var.db_ca_cert_identifier
+  delete_automated_backups = var.db_delete_automated_backups
+  deletion_protection = var.db_deletion_protection
+  final_snapshot_identifier = var.db_final_snapshot_identifier
+  iam_database_authentication_enabled = var.db_iam_database_authentication_enabled
+  iops = var.db_iops
+  kms_key_id = module.kms_key.kms_key_id
+  maintenance_window = var.db_maintenance_window
+  max_allocated_storage = var.db_max_allocated_storage
+  monitoring_role_arn = var.db_monitoring_role_arn
+  replicate_source_db = var.db_replicate_source_db
+  snapshot_identifier = var.db_snapshot_identifier
+  timezone = var.db_timezone
+  timeouts = var.db_timeouts
+}
+
+module "kms_key" {
+  source = "./Terraform-modules/aws/modules/kms-key"
+  description = var.kms_description
+  key_usage = var.kms_key_usage
+  customer_master_key_spec = var.kms_customer_master_key_spec
+  policy = var.kms_policy
+  deletion_window_in_days = var.kms_deletion_window_in_days
+  is_enabled = var.kms_is_enabled
+  enable_key_rotation = var.kms_enable_key_rotation
+  tags = var.kms_tags
+}

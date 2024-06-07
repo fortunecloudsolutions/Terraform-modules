@@ -526,3 +526,284 @@ variable "security_group_ids" {
   description = "Security group IDs"
   type        = list(string)
 }
+
+variable "db_identifier" {
+  description = "Identifier for the DB instance"
+  type        = string
+}
+
+variable "db_allow_major_version_upgrade" {
+  description = "Indicates that major version upgrades are allowed"
+  type        = bool
+  default     = false
+}
+
+variable "db_auto_minor_version_upgrade" {
+  description = "Indicates that minor version upgrades are allowed"
+  type        = bool
+  default     = true
+}
+
+variable "db_engine" {
+  description = "Database engine to use"
+  type        = string
+}
+
+variable "db_engine_version" {
+  description = "Engine version to use"
+  type        = string
+}
+
+variable "db_instance_class" {
+  description = "Instance type of the RDS instance"
+  type        = string
+  default     = "db.m6i.12xlarge"
+}
+
+variable "db_allocated_storage" {
+  description = "Allocated storage in gigabytes"
+  type        = number
+}
+
+variable "db_storage_encrypted" {
+  description = "Specifies whether the DB instance is encrypted"
+  type        = bool
+  default     = true
+}
+
+variable "db_parameter_group_name" {
+  description = "Name of the DB parameter group to associate"
+  type        = string
+}
+
+variable "db_option_group_name" {
+  description = "Name of the DB option group to associate"
+  type        = string
+}
+
+variable "db_name" {
+  description = "The name of the database to create"
+  type        = string
+}
+
+variable "db_username" {
+  description = "Username for the master DB user"
+  type        = string
+}
+
+variable "db_password" {
+  description = "Password for the master DB user"
+  type        = string
+}
+
+variable "db_port" {
+  description = "The port on which the DB accepts connections"
+  type        = string
+}
+
+variable "db_copy_tags_to_snapshot" {
+  description = "Copy all Instance tags to snapshots"
+  type        = bool
+  default     = false
+}
+
+variable "db_monitoring_interval" {
+  description = "The interval, in seconds, between points when Enhanced Monitoring metrics are collected"
+  type        = number
+}
+
+variable "db_publicly_accessible" {
+  description = "Bool to control if instance is publicly accessible"
+  type        = bool
+  default     = false
+}
+
+variable "db_storage_type" {
+  description = "One of standard (magnetic), gp2 (general purpose SSD), or io1 (provisioned IOPS SSD)"
+  type        = string
+}
+
+variable "db_domain" {
+  description = "The ID of the Directory Service Active Directory domain to create the instance in"
+  type        = string
+}
+
+variable "db_domain_iam_role_name" {
+  description = "The name of the IAM role to be used when making API calls to the Directory Service"
+  type        = string
+}
+
+variable "db_multi_az" {
+  description = "Specifies if the RDS instance is multi-AZ"
+  type        = bool
+}
+
+variable "db_skip_final_snapshot" {
+  description = "Determines whether a final DB snapshot is created before the DB instance is deleted"
+  type        = bool
+  default     = false
+}
+
+variable "db_vpc_security_group_id" {
+  description = "VPC security group ID to associate with the RDS instance"
+  type        = string
+}
+
+variable "db_backup_retention_period" {
+  description = "The days to retain backups for"
+  type        = number
+}
+
+variable "db_license_model" {
+  description = "License model information for the DB instance"
+  type        = string
+}
+
+variable "db_tags" {
+  description = "A map of tags to assign to the resource"
+  type        = map(string)
+}
+
+variable "db_apply_immediately" {
+  description = "Specifies whether any database modifications are applied immediately, or during the next maintenance window"
+  type        = bool
+  default     = false
+}
+
+variable "db_availability_zone" {
+  description = "The AZ for the RDS instance"
+  type        = string
+}
+
+variable "db_backup_window" {
+  description = "The daily time range during which automated backups are created"
+  type        = string
+}
+
+variable "db_ca_cert_identifier" {
+  description = "The identifier of the CA certificate for the DB instance"
+  type        = string
+}
+
+variable "db_delete_automated_backups" {
+  description = "Specifies whether to remove automated backups immediately after the DB instance is deleted"
+  type        = bool
+  default     = true
+}
+
+variable "db_deletion_protection" {
+  description = "If the DB instance should have deletion protection enabled"
+  type        = bool
+  default     = false
+}
+
+variable "db_final_snapshot_identifier" {
+  description = "The name of your final DB snapshot when this DB instance is deleted"
+  type        = string
+}
+
+variable "db_iam_database_authentication_enabled" {
+  description = "Specifies whether mappings of AWS IAM accounts to database accounts is enabled"
+  type        = bool
+}
+
+variable "db_iops" {
+  description = "The amount of provisioned IOPS"
+  type        = number
+}
+
+variable "db_maintenance_window" {
+  description = "The window to perform maintenance in"
+  type        = string
+}
+
+variable "db_max_allocated_storage" {
+  description = "The upper limit to which Amazon RDS can automatically scale the storage of the DB instance"
+  type        = number
+}
+
+variable "db_monitoring_role_arn" {
+  description = "The ARN for the IAM role that permits RDS to send enhanced monitoring metrics to CloudWatch Logs"
+  type        = string
+}
+
+variable "db_replicate_source_db" {
+  description = "Specifies that this resource is a Replicate database, and to use this value as the source database"
+  type        = string
+}
+
+variable "db_snapshot_identifier" {
+  description = "Specifies whether or not to create this database from a snapshot"
+  type        = string
+}
+
+variable "db_timezone" {
+  description = "Time zone of the DB instance"
+  type        = string
+}
+
+variable "db_timeouts" {
+  description = "Timeouts configuration options for the DB instance"
+  type = object({
+    create = string
+    update = string
+    delete = string
+  })
+}
+
+variable "db_subnet_group_name" {
+  description = "Name of DB subnet group"
+  type        = string
+}
+
+variable "db_subnet_group_description" {
+  description = "Description of DB subnet group"
+  type        = string
+}
+
+variable "kms_description" {
+  description = "The description of the KMS key"
+  type        = string
+}
+
+variable "kms_key_usage" {
+  description = "Specifies the intended use of the key"
+  type        = string
+  default     = "ENCRYPT_DECRYPT"
+}
+
+variable "kms_customer_master_key_spec" {
+  description = "Specifies whether the key contains a symmetric key or an asymmetric key pair and the encryption algorithms or signing algorithms that the key supports"
+  type        = string
+  default     = "SYMMETRIC_DEFAULT"
+}
+
+variable "kms_policy" {
+  description = "A valid policy JSON document"
+  type        = string
+  default     = null
+}
+
+variable "kms_deletion_window_in_days" {
+  description = "Duration in days after which the key is deleted after destruction of the resource"
+  type        = number
+  default     = 30
+}
+
+variable "kms_is_enabled" {
+  description = "Specifies whether the key is enabled"
+  type        = bool
+  default     = true
+}
+
+variable "kms_enable_key_rotation" {
+  description = "Specifies whether key rotation is enabled"
+  type        = bool
+  default     = true
+}
+
+variable "kms_tags" {
+  description = "A map of tags to assign to the object"
+  type        = map(any)
+  default     = {}
+}
