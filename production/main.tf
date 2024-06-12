@@ -1,66 +1,66 @@
-module "vpc_production" {
+module "vpc" {
   source = "./Terraform-modules/aws/modules/network/vpc"
-  cidr_vpc = var.vpc_cidr_blocks["production"]
+  cidr_vpc = var.vpc_cidr_blocks[var.env]
   enable_dns_support = var.enable_dns_support
   enable_dns_hostnames = var.enable_dns_hostnames
   instance_tenancy = var.instance_tenancy
   tags = {
-    Name = var.vpc_name
+    Name = "${var.env}-vpc"
   }
 }
 
-module "subnets_production_az_a" {
+module "subnets_az_a" {
   source              = "./Terraform-modules/aws/modules/network/subnet"
   for_each            = toset(range(6))
-  vpc_id              = module.vpc_production.vpc_id
-  cidr_subnet         = cidrsubnet(var.vpc_cidr_blocks["production"], 4, each.key)
+  vpc_id              = module.vpc.vpc_id
+  cidr_subnet         = cidrsubnet(var.vpc_cidr_blocks[var.env], 4, each.key)
   map_publicip        = var.map_publicip
   availability_zone   = element(var.availability_zones, 0)
   assign_ipv6_address_on_creation = var.assign_ipv6_address_on_creation
   tags                = {
-    Name = "Production-subnet-${element(var.availability_zones, 0)}-${each.key}"
+    Name = "${var.env}-subnet-${element(var.availability_zones, 0)}-${each.key}"
   }
 }
 
-module "subnets_production_az_b" {
+module "subnets_az_b" {
   source              = "./Terraform-modules/aws/modules/network/subnet"
   for_each            = toset(range(6))
-  vpc_id              = module.vpc_production.vpc_id
-  cidr_subnet         = cidrsubnet(var.vpc_cidr_blocks["production"], 4, each.key + 6)
+  vpc_id              = module.vpc.vpc_id
+  cidr_subnet         = cidrsubnet(var.vpc_cidr_blocks[var.env], 4, each.key + 6)
   map_publicip        = var.map_publicip
   availability_zone   = element(var.availability_zones, 1)
   assign_ipv6_address_on_creation = var.assign_ipv6_address_on_creation
   tags                = {
-    Name = "Production-subnet-${element(var.availability_zones, 1)}-${each.key}"
+    Name = "${var.env}-subnet-${element(var.availability_zones, 1)}-${each.key}"
   }
 }
 
-module "route_table_production" {
+module "route_table" {
   source = "./Terraform-modules/aws/modules/network/route-table"
-  vpc_id = module.vpc_production.vpc_id
+  vpc_id = module.vpc.vpc_id
   route = {
     cidr_block = var.route_cidr_block
     gateway_id = var.internet_gateway_id
   }
   tags = {
-    Name = var.route_table_name
+    Name = "${var.env}-route-table"
   }
 }
 
 resource "aws_route_table_association" "subnet_association" {
-  for_each        = concat(module.subnets_production_az_a, module.subnets_production_az_b)
+  for_each        = concat(module.subnets_az_a, module.subnets_az_b)
   subnet_id       = each.value.subnet_id
-  route_table_id  = module.route_table_production.id
+  route_table_id  = module.route_table.id
 }
 
-module "vpc_endpoints_production" {
+module "vpc_endpoints" {
   source = "./Terraform-modules/aws/modules/network/vpc-endpoint"
   for_each = toset(var.vpc_endpoints)
-  vpc_id = module.vpc_production.vpc_id
+  vpc_id = module.vpc.vpc_id
   service_name = "com.amazonaws.${var.aws_region}.${each.key}"
   vpc_endpoint_type = var.vpc_endpoint_type
   tags = {
-    Name = "Production-VPC-${each.key}-endpoint"
+    Name = "${var.env}-vpc-${each.key}-endpoint"
   }
 }
 
@@ -79,12 +79,12 @@ module "ec2_instances" {
   for_each = toset(range(6))
   ami = var.ami_id
   instance_type = var.instance_type
-  subnet_id = each.value % 2 == 0 ? module.subnets_production_az_a[each.value / 2].subnet_id : module.subnets_production_az_b[each.value / 2].subnet_id
+  subnet_id = each.value % 2 == 0 ? module.subnets_az_a[each.value / 2].subnet_id : module.subnets_az_b[each.value / 2].subnet_id
   vpc_security_group_ids = var.security_group_ids
   key_name = var.key_name
   availability_zone = each.value % 2 == 0 ? element(var.availability_zones, 0) : element(var.availability_zones, 1)
   tags = {
-    Name = "EC2-Instance-${each.value}"
+    Name = "${var.env}-ec2-instance-${each.value}"
   }
 }
 
@@ -97,7 +97,7 @@ module "load_balancers" {
   idle_timeout = var.alb_idle_timeout
   enable_alb_delete_via_awsapi = var.enable_alb_delete_via_awsapi
   ip_address_type = var.alb_ip_address_type
-  attach_alb_subnet_ids = concat(module.subnets_production_az_a[*].subnet_id, module.subnets_production_az_b[*].subnet_id)
+  attach_alb_subnet_ids = concat(module.subnets_az_a[*].subnet_id, module.subnets_az_b[*].subnet_id)
   access_log_bucket_name = var.access_log_bucket_name
   enable_access_logs = var.enable_access_logs
   tags = {
@@ -111,7 +111,7 @@ module "target_groups" {
   target_group_name = each.value
   target_port = var.target_port
   target_protocol = var.target_protocol
-  target_vpc_id = module.vpc_production.vpc_id
+  target_vpc_id = module.vpc.vpc_id
   deregistration_delay = var.deregistration_delay
   slow_start = var.slow_start
   load_balancing_algorithm_type = var.load_balancing_algorithm_type
@@ -135,8 +135,8 @@ module "target_groups" {
 
 module "network_acl" {
   source = "./Terraform-modules/aws/modules/network/nacl"
-  vpc_id = module.vpc_production.vpc_id
-  subnet_ids = concat(module.subnets_production_az_a[*].subnet_id, module.subnets_production_az_b[*].subnet_id)
+  vpc_id = module.vpc.vpc_id
+  subnet_ids = concat(module.subnets_az_a[*].subnet_id, module.subnets_az_b[*].subnet_id)
   ingress1_rule_no = var.ingress1_rule_no
   ingress1_fport = var.ingress1_fport
   ingress1_tport = var.ingress1_tport
@@ -207,14 +207,14 @@ module "security_groups" {
   egress1_ipv6_cidr = var.security_group_descriptions[each.value].egress_ipv6_cidr
   egress1_prefix_ids = var.security_group_descriptions[each.value].egress_prefix_ids
   egress1_security_groups = var.security_group_descriptions[each.value].egress_security_groups
-  vpc_id = module.vpc_production.vpc_id
+  vpc_id = module.vpc.vpc_id
 }
 
 module "db_subnet_group" {
   source = "./Terraform-modules/aws/modules/rds/subnet-group"
   name = var.db_subnet_group_name
   description = var.db_subnet_group_description
-  subnet_ids = concat(module.subnets_production_az_a[*].subnet_id, module.subnets_production_az_b[*].subnet_id)
+  subnet_ids = concat(module.subnets_az_a[*].subnet_id, module.subnets_az_b[*].subnet_id)
   tags = {
     Name = var.db_subnet_group_name
   }

@@ -1,3 +1,8 @@
+variable "env" {
+  description = "The environment name"
+  type        = string
+}
+
 variable "aws_production_access_key_id" {
   description = "AWS Access Key ID for Production Account"
 }
