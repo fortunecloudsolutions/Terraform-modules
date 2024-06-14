@@ -1,21 +1,21 @@
 output "vpc_id" {
   description = "The ID of the VPC"
-  value       = module.vpc_production.vpc_id
+  value       = module.vpc.vpc_id
 }
 
 output "subnet_ids_az_a" {
   description = "The IDs of the subnets in AZ A"
-  value       = module.subnets_production_az_a[*].subnet_id
+  value       = module.subnets_az_a[*].subnet_id
 }
 
 output "subnet_ids_az_b" {
   description = "The IDs of the subnets in AZ B"
-  value       = module.subnets_production_az_b[*].subnet_id
+  value       = module.subnets_az_b[*].subnet_id
 }
 
 output "route_table_id" {
   description = "The ID of the route table"
-  value       = module.route_table_production.id
+  value       = module.route_table.id
 }
 
 output "s3_bucket_ids" {

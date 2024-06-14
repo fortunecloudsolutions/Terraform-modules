@@ -1,37 +1,60 @@
 module "vpc" {
   source = "./Terraform-modules/aws/modules/network/vpc"
-  cidr_vpc = var.vpc_cidr_blocks[var.env]
+  cidr_vpc = var.vpc_cidr_block
   enable_dns_support = var.enable_dns_support
   enable_dns_hostnames = var.enable_dns_hostnames
   instance_tenancy = var.instance_tenancy
   tags = {
-    Name = "${var.env}-vpc"
+    Name       = "ctc-vis-${var.env}-vpc"
+    Division   = var.division_tag
+    Application = var.application_tag
+    Billing    = var.billing_tag
   }
 }
 
 module "subnets_az_a" {
-  source              = "./Terraform-modules/aws/modules/network/subnet"
-  for_each            = toset(range(6))
-  vpc_id              = module.vpc.vpc_id
-  cidr_subnet         = cidrsubnet(var.vpc_cidr_blocks[var.env], 4, each.key)
-  map_publicip        = var.map_publicip
-  availability_zone   = element(var.availability_zones, 0)
+  source = "./Terraform-modules/aws/modules/network/subnet"
+  for_each = toset([0, 1, 2, 3, 4, 5])
+  vpc_id = module.vpc.vpc_id
+  cidr_subnet = element([
+    "10.81.0.16/28",
+    "10.81.0.32/28",
+    "10.81.0.48/28",
+    "10.81.0.64/28",
+    "10.81.0.80/28",
+    "10.81.0.96/28"
+  ], each.key)
+  map_publicip = var.map_publicip
+  availability_zone = element(var.availability_zones, 0)
   assign_ipv6_address_on_creation = var.assign_ipv6_address_on_creation
-  tags                = {
-    Name = "${var.env}-subnet-${element(var.availability_zones, 0)}-${each.key}"
+  tags = {
+    Name        = "ctc-vis-${var.env}-subnet-${element(var.availability_zones, 0)}-${each.key}"
+    Division    = var.division_tag
+    Application = var.application_tag
+    Billing     = var.billing_tag
   }
 }
 
 module "subnets_az_b" {
-  source              = "./Terraform-modules/aws/modules/network/subnet"
-  for_each            = toset(range(6))
-  vpc_id              = module.vpc.vpc_id
-  cidr_subnet         = cidrsubnet(var.vpc_cidr_blocks[var.env], 4, each.key + 6)
-  map_publicip        = var.map_publicip
-  availability_zone   = element(var.availability_zones, 1)
+  source = "./Terraform-modules/aws/modules/network/subnet"
+  for_each = toset([0, 1, 2, 3, 4, 5])
+  vpc_id = module.vpc.vpc_id
+  cidr_subnet = element([
+    "10.81.0.112/28",
+    "10.81.0.128/28",
+    "10.81.0.144/28",
+    "10.81.0.160/28",
+    "10.81.0.176/28",
+    "10.81.0.192/28"
+  ], each.key)
+  map_publicip = var.map_publicip
+  availability_zone = element(var.availability_zones, 1)
   assign_ipv6_address_on_creation = var.assign_ipv6_address_on_creation
-  tags                = {
-    Name = "${var.env}-subnet-${element(var.availability_zones, 1)}-${each.key}"
+  tags = {
+    Name        = "ctc-vis-${var.env}-subnet-${element(var.availability_zones, 1)}-${each.key}"
+    Division    = var.division_tag
+    Application = var.application_tag
+    Billing     = var.billing_tag
   }
 }
 
@@ -43,24 +66,30 @@ module "route_table" {
     gateway_id = var.internet_gateway_id
   }
   tags = {
-    Name = "${var.env}-route-table"
+    Name        = "ctc-vis-${var.env}-route-table"
+    Division    = var.division_tag
+    Application = var.application_tag
+    Billing     = var.billing_tag
   }
 }
 
 resource "aws_route_table_association" "subnet_association" {
-  for_each        = concat(module.subnets_az_a, module.subnets_az_b)
-  subnet_id       = each.value.subnet_id
-  route_table_id  = module.route_table.id
+  for_each       = concat(module.subnets_az_a, module.subnets_az_b)
+  subnet_id      = each.value.subnet_id
+  route_table_id = module.route_table.id
 }
 
 module "vpc_endpoints" {
   source = "./Terraform-modules/aws/modules/network/vpc-endpoint"
-  for_each = toset(var.vpc_endpoints)
+  for_each = toset(["dynamodb", "s3"])
   vpc_id = module.vpc.vpc_id
   service_name = "com.amazonaws.${var.aws_region}.${each.key}"
-  vpc_endpoint_type = var.vpc_endpoint_type
+  vpc_endpoint_type = "Gateway"
   tags = {
-    Name = "${var.env}-vpc-${each.key}-endpoint"
+    Name        = "ctc-vis-${var.env}-vpc-${each.key}-endpoint"
+    Division    = var.division_tag
+    Application = var.application_tag
+    Billing     = var.billing_tag
   }
 }
 
@@ -70,21 +99,71 @@ module "s3_buckets" {
   bucket = each.key
   acl = var.s3_acl
   tags = {
-    Name = each.key
+    Name        = "ctc-vis-${var.env}-${each.key}"
+    Division    = var.division_tag
+    Application = var.application_tag
+    Billing     = var.billing_tag
+  }
+}
+
+module "iam_role" {
+  source = "./Terraform-modules/aws/modules/iam/iam-role"
+  name = "ec2-role-${var.env}"
+  role_policy = data.aws_iam_policy_document.assume_role_policy.json
+  force_detach_policies = false
+  path = "/"
+  max_session_duration = 3600
+  tags = {
+    Name        = "ctc-vis-${var.env}-iam-role"
+    Division    = var.division_tag
+    Application = var.application_tag
+    Billing     = var.billing_tag
+  }
+}
+
+data "aws_iam_policy_document" "assume_role_policy" {
+  statement {
+    actions = ["sts:AssumeRole"]
+    principals {
+      type        = "Service"
+      identifiers = ["ec2.amazonaws.com"]
+    }
+  }
+}
+
+module "iam_policy" {
+  source = "./Terraform-modules/aws/modules/iam/iam-role-policy"
+  iam_role = module.iam_role.role_name
+  iam_policy = data.aws_iam_policy_document.ec2_policy.json
+}
+
+data "aws_iam_policy_document" "ec2_policy" {
+  statement {
+    actions = [
+      "s3:*",
+      "ec2:*"
+    ]
+    resources = ["*"]
   }
 }
 
 module "ec2_instances" {
   source = "./Terraform-modules/aws/modules/ec2/ec2-instance"
-  for_each = toset(range(6))
+  for_each = toset([0, 1, 2])
   ami = var.ami_id
   instance_type = var.instance_type
-  subnet_id = each.value % 2 == 0 ? module.subnets_az_a[each.value / 2].subnet_id : module.subnets_az_b[each.value / 2].subnet_id
+  subnet_id = module.subnets_az_a[each.key].subnet_id
   vpc_security_group_ids = var.security_group_ids
   key_name = var.key_name
-  availability_zone = each.value % 2 == 0 ? element(var.availability_zones, 0) : element(var.availability_zones, 1)
+  availability_zone = element(var.availability_zones, 0)
+  iam_instance_profile = {
+    name = module.iam_role.role_name
+  }
   tags = {
-    Name = "${var.env}-ec2-instance-${each.value}"
+    Name        = "ctc-vis-${var.env}-ec2-instance-${each.key}"
+    Division    = var.division_tag
+    Application = var.application_tag
+    Billing     = var.billing_tag
   }
 }
 
@@ -101,7 +180,10 @@ module "load_balancers" {
   access_log_bucket_name = var.access_log_bucket_name
   enable_access_logs = var.enable_access_logs
   tags = {
-    Name = each.value
+    Name        = "ctc-vis-${var.env}-${each.value}"
+    Division    = var.division_tag
+    Application = var.application_tag
+    Billing     = var.billing_tag
   }
 }
 
@@ -129,7 +211,10 @@ module "target_groups" {
   unhealthy_threshold = var.unhealthy_threshold
   health_check_success_resp_code = var.health_check_success_resp_code
   tags = {
-    Name = each.value
+    Name        = "ctc-vis-${var.env}-${each.value}"
+    Division    = var.division_tag
+    Application = var.application_tag
+    Billing     = var.billing_tag
   }
 }
 
@@ -156,7 +241,10 @@ module "network_acl" {
   egress1_icmp_type = var.egress1_icmp_type
   egress1_icmp_code = var.egress1_icmp_code
   tags = {
-    Name = var.network_acl_name
+    Name        = "ctc-vis-${var.env}-nacl"
+    Division    = var.division_tag
+    Application = var.application_tag
+    Billing     = var.billing_tag
   }
 }
 
@@ -208,6 +296,12 @@ module "security_groups" {
   egress1_prefix_ids = var.security_group_descriptions[each.value].egress_prefix_ids
   egress1_security_groups = var.security_group_descriptions[each.value].egress_security_groups
   vpc_id = module.vpc.vpc_id
+  tags = {
+    Name        = "ctc-vis-${var.env}-${each.value}"
+    Division    = var.division_tag
+    Application = var.application_tag
+    Billing     = var.billing_tag
+  }
 }
 
 module "db_subnet_group" {
@@ -216,7 +310,10 @@ module "db_subnet_group" {
   description = var.db_subnet_group_description
   subnet_ids = concat(module.subnets_az_a[*].subnet_id, module.subnets_az_b[*].subnet_id)
   tags = {
-    Name = var.db_subnet_group_name
+    Name        = "ctc-vis-${var.env}-db-subnet-group"
+    Division    = var.division_tag
+    Application = var.application_tag
+    Billing     = var.billing_tag
   }
 }
 
@@ -248,7 +345,12 @@ module "db_instance" {
   vpc_security_group_ids = [var.db_vpc_security_group_id, module.security_groups["App-Prod-SG"].sg_id]
   backup_retention_period = var.db_backup_retention_period
   license_model = var.db_license_model
-  tags = var.db_tags
+  tags = {
+    Name        = "ctc-vis-${var.env}-db-instance"
+    Division    = var.division_tag
+    Application = var.application_tag
+    Billing     = var.billing_tag
+  }
   apply_immediately = var.db_apply_immediately
   availability_zone = var.db_availability_zone
   backup_window = var.db_backup_window
@@ -277,5 +379,96 @@ module "kms_key" {
   deletion_window_in_days = var.kms_deletion_window_in_days
   is_enabled = var.kms_is_enabled
   enable_key_rotation = var.kms_enable_key_rotation
-  tags = var.kms_tags
+  tags = {
+    Name        = "ctc-vis-${var.env}-kms-key"
+    Division    = var.division_tag
+    Application = var.application_tag
+    Billing     = var.billing_tag
+  }
+}
+
+module "web_sg" {
+  source = "./Terraform-modules/aws/modules/network/sg"
+  sg_name = "web-dev-sg"
+  sg_text = "Security group for web-dev"
+  ingress1_desc = "Allow HTTP inbound"
+  ingress1_fport = 80
+  ingress1_tport = 80
+  ingress1_protocol = "tcp"
+  ingress1_cidr = "0.0.0.0/0"
+  egress1_desc = "Allow all outbound traffic"
+  egress1_fport = 0
+  egress1_tport = 65535
+  egress1_protocol = "tcp"
+  egress1_cidr = "0.0.0.0/0"
+  vpc_id = module.vpc.vpc_id
+  tags = {
+    Name        = "ctc-vis-${var.env}-web-sg"
+    Division    = var.division_tag
+    Application = var.application_tag
+    Billing     = var.billing_tag
+  }
+}
+
+module "app_sg" {
+  source = "./Terraform-modules/aws/modules/network/sg"
+  sg_name = "app-dev-sg"
+  sg_text = "Security group for app-dev"
+  ingress1_desc = "Allow HTTP inbound"
+  ingress1_fport = 80
+  ingress1_tport = 80
+  ingress1_protocol = "tcp"
+  ingress1_cidr = "0.0.0.0/0"
+  egress1_desc = "Allow all outbound traffic"
+  egress1_fport = 0
+  egress1_tport = 65535
+  egress1_protocol = "tcp"
+  egress1_cidr = "0.0.0.0/0"
+  vpc_id = module.vpc.vpc_id
+  tags = {
+    Name        = "ctc-vis-${var.env}-app-sg"
+    Division    = var.division_tag
+    Application = var.application_tag
+    Billing     = var.billing_tag
+  }
+}
+
+resource "aws_lb_listener_rule" "app_rule" {
+  for_each        = toset(range(10))
+  listener_arn    = module.load_balancers["app-lb"].alb_listener_arn
+  priority        = 10 + each.key
+  action {
+    type             = "forward"
+    target_group_arn = module.target_groups["app-target-group"].target_group_arn
+  }
+  condition {
+    field  = "path-pattern"
+    values = ["/app${each.key}/*"]
+  }
+}
+
+resource "aws_lb_listener_rule" "web_rule" {
+  listener_arn = module.load_balancers["web-lb"].alb_listener_arn
+  priority     = 1
+  action {
+    type             = "forward"
+    target_group_arn = module.target_groups["web-target-group"].target_group_arn
+  }
+  condition {
+    field  = "path-pattern"
+    values = ["/web/*"]
+  }
+}
+
+resource "aws_lb_listener_rule" "db_rule" {
+  listener_arn = module.load_balancers["db-lb"].alb_listener_arn
+  priority     = 2
+  action {
+    type             = "forward"
+    target_group_arn = module.target_groups["db-target-group"].target_group_arn
+  }
+  condition {
+    field  = "path-pattern"
+    values = ["/db/*"]
+  }
 }
