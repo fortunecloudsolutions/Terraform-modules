@@ -66,7 +66,7 @@ variable "route_cidr_block" {
 }
 
 variable "internet_gateway_id" {
-  description = "The ID of the Internet Gateway."
+  description = "The ID of the internet gateway."
   type        = string
 }
 
@@ -90,11 +90,6 @@ variable "instance_type" {
   description = "The type of instance to start."
   type        = string
   default     = "t2.micro"
-}
-
-variable "security_group_ids" {
-  description = "A list of security group IDs to assign to the instances."
-  type        = list(string)
 }
 
 variable "key_name" {
@@ -147,8 +142,8 @@ variable "target_group_names" {
   type        = list(string)
 }
 
-variable "target_port" {
-  description = "The port on which the targets receive traffic."
+variable "target_ports" {
+  description = "Map of target group names to their respective ports."
   type        = map(number)
 }
 
@@ -392,6 +387,16 @@ variable "security_group_descriptions" {
   }))
 }
 
+variable "instance_security_group_ids" {
+  description = "Map of instance types to their respective security group IDs."
+  type        = map(list(string))
+}
+
+variable "alb_security_group_ids" {
+  description = "Map of ALB names to their respective security group IDs."
+  type        = map(list(string))
+}
+
 variable "db_subnet_group_name" {
   description = "The name of the DB subnet group."
   type        = string
@@ -588,17 +593,17 @@ variable "db_max_allocated_storage" {
 }
 
 variable "db_monitoring_role_arn" {
-  description = "The ARN for the IAM role that permits RDS to send enhanced monitoring metrics to CloudWatch Logs."
+  description = "The ARN for the IAM role that permits RDS to send enhanced monitoring metrics to CloudWatch."
   type        = string
 }
 
 variable "db_replicate_source_db" {
-  description = "The ARN of the source DB instance or DB cluster if this DB instance is a read replica."
+  description = "The identifier of the source DB instance if this is a read replica."
   type        = string
 }
 
 variable "db_snapshot_identifier" {
-  description = "The identifier for the DB snapshot."
+  description = "The identifier for the DB snapshot to restore from."
   type        = string
 }
 
@@ -608,11 +613,8 @@ variable "db_timezone" {
 }
 
 variable "db_timeouts" {
-  description = "The timeouts for creating and deleting the DB instance."
-  type        = object({
-    create = string
-    delete = string
-  })
+  description = "The create, update, and delete timeout values."
+  type        = map(string)
 }
 
 variable "kms_description" {
@@ -621,12 +623,12 @@ variable "kms_description" {
 }
 
 variable "kms_key_usage" {
-  description = "The usage of the KMS key."
+  description = "The key usage of the KMS key."
   type        = string
 }
 
 variable "kms_customer_master_key_spec" {
-  description = "The specification of the customer master key."
+  description = "The CMK spec for the KMS key."
   type        = string
 }
 
@@ -636,7 +638,7 @@ variable "kms_policy" {
 }
 
 variable "kms_deletion_window_in_days" {
-  description = "The number of days before the KMS key is deleted."
+  description = "The number of days to wait before deleting the KMS key."
   type        = number
 }
 

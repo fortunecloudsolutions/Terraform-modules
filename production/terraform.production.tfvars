@@ -3,31 +3,31 @@ enable_dns_support = true
 enable_dns_hostnames = true
 instance_tenancy = "default"
 env = "production"
-division_tag = "your_division"
-application_tag = "your_application"
-billing_tag = "your_billing"
+division_tag = "YourDivision"
+application_tag = "YourApplication"
+billing_tag = "YourBilling"
 map_publicip = true
 assign_ipv6_address_on_creation = false
-availability_zones = ["us-east-1a", "us-east-1b"]
+availability_zones = ["us-west-2a", "us-west-2b"]
 route_cidr_block = "0.0.0.0/0"
-internet_gateway_id = "your_igw_id"
-bucket_names = ["bucket1", "bucket2"]
+internet_gateway_id = "igw-0abcdef1234567890"
+bucket_names = ["my-bucket-1", "my-bucket-2"]
 s3_acl = "private"
-ami_id = "ami-0c55b159cbfafe1f0"
+ami_id = "ami-0abcdef1234567890"
 instance_type = "t2.micro"
-security_group_ids = ["sg-0123456789abcdef0"]
-key_name = "your_key_pair"
-alb_names = ["alb1", "alb2"]
+key_name = "my-key"
+alb_names = ["app-lb", "web-lb", "db-lb"]
 alb_internal = false
 alb_idle_timeout = 60
 enable_alb_delete_via_awsapi = false
 alb_ip_address_type = "ipv4"
-access_log_bucket_name = "your_access_log_bucket"
+access_log_bucket_name = "my-access-log-bucket"
 enable_access_logs = false
-target_group_names = ["tg1", "tg2"]
-target_port = {
-  tg1 = 80
-  tg2 = 8080
+target_group_names = ["app-target-group", "web-target-group", "db-target-group"]
+target_ports = {
+  "app-target-group" = 8080
+  "web-target-group" = 80
+  "db-target-group" = 3306
 }
 target_protocol = "HTTP"
 deregistration_delay = 300
@@ -52,7 +52,7 @@ ingress1_tport = 65535
 ingress1_protocol = "tcp"
 ingress1_cidr = "0.0.0.0/0"
 ingress1_action = "allow"
-ingress1_ipv6_cidr = "::/0"
+ingress1_ipv6_cidr = ""
 ingress1_icmp_type = -1
 ingress1_icmp_code = -1
 egress1_rule_no = 100
@@ -61,55 +61,84 @@ egress1_tport = 65535
 egress1_protocol = "tcp"
 egress1_cidr = "0.0.0.0/0"
 egress1_action = "allow"
-egress1_ipv6_cidr = "::/0"
+egress1_ipv6_cidr = ""
 egress1_icmp_type = -1
 egress1_icmp_code = -1
-sg_names = ["sg1", "sg2"]
+sg_names = ["App-Prod-SG", "Web-Prod-SG", "Db-Prod-SG"]
 sg_descriptions = {
-  sg1 = "Security group 1"
-  sg2 = "Security group 2"
+  "App-Prod-SG" = "Application Security Group"
+  "Web-Prod-SG" = "Web Security Group"
+  "Db-Prod-SG" = "Database Security Group"
 }
 security_group_descriptions = {
-  sg1 = {
-    ingress_desc            = "Ingress for sg1"
-    ingress_fport           = 0
-    ingress_tport           = 65535
+  "App-Prod-SG" = {
+    ingress_desc            = "Allow HTTP inbound"
+    ingress_fport           = 80
+    ingress_tport           = 80
     ingress_protocol        = "tcp"
     ingress_cidr            = "0.0.0.0/0"
-    ingress_ipv6_cidr       = "::/0"
+    ingress_ipv6_cidr       = ""
     ingress_prefix_ids      = []
     ingress_security_groups = []
-    egress_desc             = "Egress for sg1"
+    egress_desc             = "Allow all outbound traffic"
     egress_fport            = 0
     egress_tport            = 65535
     egress_protocol         = "tcp"
     egress_cidr             = "0.0.0.0/0"
-    egress_ipv6_cidr        = "::/0"
+    egress_ipv6_cidr        = ""
     egress_prefix_ids       = []
     egress_security_groups  = []
   }
-  sg2 = {
-    ingress_desc            = "Ingress for sg2"
-    ingress_fport           = 0
-    ingress_tport           = 65535
+  "Web-Prod-SG" = {
+    ingress_desc            = "Allow HTTP inbound"
+    ingress_fport           = 80
+    ingress_tport           = 80
     ingress_protocol        = "tcp"
     ingress_cidr            = "0.0.0.0/0"
-    ingress_ipv6_cidr       = "::/0"
+    ingress_ipv6_cidr       = ""
     ingress_prefix_ids      = []
     ingress_security_groups = []
-    egress_desc             = "Egress for sg2"
+    egress_desc             = "Allow all outbound traffic"
     egress_fport            = 0
     egress_tport            = 65535
     egress_protocol         = "tcp"
     egress_cidr             = "0.0.0.0/0"
-    egress_ipv6_cidr        = "::/0"
+    egress_ipv6_cidr        = ""
+    egress_prefix_ids       = []
+    egress_security_groups  = []
+  }
+  "Db-Prod-SG" = {
+    ingress_desc            = "Allow MySQL inbound"
+    ingress_fport           = 3306
+    ingress_tport           = 3306
+    ingress_protocol        = "tcp"
+    ingress_cidr            = "0.0.0.0/0"
+    ingress_ipv6_cidr       = ""
+    ingress_prefix_ids      = []
+    ingress_security_groups = []
+    egress_desc             = "Allow all outbound traffic"
+    egress_fport            = 0
+    egress_tport            = 65535
+    egress_protocol         = "tcp"
+    egress_cidr             = "0.0.0.0/0"
+    egress_ipv6_cidr        = ""
     egress_prefix_ids       = []
     egress_security_groups  = []
   }
 }
+instance_security_group_ids = {
+  "app" = [module.security_groups["App-Prod-SG"].sg_id]
+  "web" = [module.security_groups["Web-Prod-SG"].sg_id]
+  "db"  = [module.security_groups["Db-Prod-SG"].sg_id]
+}
+alb_security_group_ids = {
+  "app-lb" = [module.security_groups["App-Prod-SG"].sg_id]
+  "web-lb" = [module.security_groups["Web-Prod-SG"].sg_id]
+  "db-lb"  = [module.security_groups["Db-Prod-SG"].sg_id]
+}
 db_subnet_group_name = "my-db-subnet-group"
-db_subnet_group_description = "My DB Subnet Group"
-db_identifier = "mydbinstance"
+db_subnet_group_description = "My DB subnet group"
+db_identifier = "my-db-instance"
 db_allow_major_version_upgrade = true
 db_auto_minor_version_upgrade = true
 db_engine = "mysql"
@@ -118,8 +147,8 @@ db_instance_class = "db.t2.micro"
 db_allocated_storage = 20
 db_storage_encrypted = true
 db_parameter_group_name = "default.mysql5.7"
-db_option_group_name = "default:mysql-5-7"
-db_name = "mydatabase"
+db_option_group_name = ""
+db_name = "mydb"
 db_username = "admin"
 db_password = "mypassword"
 db_port = 3306
@@ -131,47 +160,34 @@ db_domain = ""
 db_domain_iam_role_name = ""
 db_multi_az = false
 db_skip_final_snapshot = true
-db_vpc_security_group_id = "sg-0123456789abcdef0"
+db_vpc_security_group_id = "sg-0abcdef1234567890"
 db_backup_retention_period = 7
-db_license_model = "license-included"
+db_license_model = "general-public-license"
 db_apply_immediately = true
-db_availability_zone = "us-east-1a"
-db_backup_window = "03:00-06:00"
+db_availability_zone = "us-west-2a"
+db_backup_window = "03:00-04:00"
 db_ca_cert_identifier = "rds-ca-2019"
 db_delete_automated_backups = true
 db_deletion_protection = false
 db_final_snapshot_identifier = "final-snapshot"
 db_iam_database_authentication_enabled = false
 db_iops = 1000
-db_kms_key_id = "your-kms-key-id"
-db_maintenance_window = "sun:05:00-sun:09:00"
+db_kms_key_id = "arn:aws:kms:us-west-2:123456789012:key/1234abcd-12ab-34cd-56ef-1234567890ab"
+db_maintenance_window = "Mon:04:00-Mon:05:00"
 db_max_allocated_storage = 100
-db_monitoring_role_arn = "arn:aws:iam::123456789012:role/rds-monitoring-role"
+db_monitoring_role_arn = "arn:aws:iam::123456789012:role/emaccess"
 db_replicate_source_db = ""
 db_snapshot_identifier = ""
 db_timezone = "UTC"
 db_timeouts = {
-  create = "2h"
-  delete = "2h"
+  create = "30m"
+  update = "30m"
+  delete = "30m"
 }
-kms_description = "KMS key for RDS"
+kms_description = "KMS key for encryption"
 kms_key_usage = "ENCRYPT_DECRYPT"
 kms_customer_master_key_spec = "SYMMETRIC_DEFAULT"
-kms_policy = <<EOF
-{
-  "Version": "2012-10-17",
-  "Statement": [
-    {
-      "Effect": "Allow",
-      "Principal": {
-        "AWS": "arn:aws:iam::123456789012:root"
-      },
-      "Action": "kms:*",
-      "Resource": "*"
-    }
-  ]
-}
-EOF
+kms_policy = ""
 kms_deletion_window_in_days = 30
 kms_is_enabled = true
 kms_enable_key_rotation = true

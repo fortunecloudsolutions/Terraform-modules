@@ -62,7 +62,7 @@ module "route_table" {
   source = "./Terraform-modules/aws/modules/network/route-table"
   vpc_id = module.vpc.vpc_id
   route = {
-    cidr_block = var.route_cidr_block
+    destination_cidr_block = var.route_cidr_block
     gateway_id = var.internet_gateway_id
   }
   tags = {
@@ -74,8 +74,8 @@ module "route_table" {
 }
 
 resource "aws_route_table_association" "subnet_association" {
-  for_each       = concat(module.subnets_az_a, module.subnets_az_b)
-  subnet_id      = each.value.subnet_id
+  for_each = {for k, v in concat(values(module.subnets_az_a), values(module.subnets_az_b)) : k => v}
+  subnet_id = each.value.subnet_id
   route_table_id = module.route_table.id
 }
 
@@ -149,11 +149,11 @@ data "aws_iam_policy_document" "ec2_policy" {
 
 module "ec2_instances" {
   source = "./Terraform-modules/aws/modules/ec2/ec2-instance"
-  for_each = toset([0, 1, 2])
+  for_each = toset(["app", "web", "db"])
   ami = var.ami_id
   instance_type = var.instance_type
-  subnet_id = module.subnets_az_a[each.key].subnet_id
-  vpc_security_group_ids = var.security_group_ids
+  subnet_id = lookup(module.subnets_az_a, each.key).subnet_id
+  vpc_security_group_ids = lookup(var.instance_security_group_ids, each.key)
   key_name = var.key_name
   availability_zone = element(var.availability_zones, 0)
   iam_instance_profile = {
@@ -172,7 +172,7 @@ module "load_balancers" {
   for_each = toset(var.alb_names)
   alb_name = each.value
   alb_internal = var.alb_internal
-  security_group_ids = var.security_group_ids
+  security_group_ids = lookup(var.alb_security_group_ids, each.key)
   idle_timeout = var.alb_idle_timeout
   enable_alb_delete_via_awsapi = var.enable_alb_delete_via_awsapi
   ip_address_type = var.alb_ip_address_type
@@ -191,7 +191,7 @@ module "target_groups" {
   source = "./Terraform-modules/aws/modules/load-balancer/target-group-alb"
   for_each = toset(var.target_group_names)
   target_group_name = each.value
-  target_port = var.target_port
+  target_port = lookup(var.target_ports, each.value)
   target_protocol = var.target_protocol
   target_vpc_id = module.vpc.vpc_id
   deregistration_delay = var.deregistration_delay
@@ -278,7 +278,7 @@ module "security_groups" {
   source = "./Terraform-modules/aws/modules/network/sg"
   for_each = toset(var.sg_names)
   sg_name = each.value
-  sg_text = var.sg_descriptions[element(index(var.sg_names, each.value), var.sg_descriptions)]
+  sg_text = lookup(var.sg_descriptions, each.value)
   ingress1_desc = var.security_group_descriptions[each.value].ingress_desc
   ingress1_fport = var.security_group_descriptions[each.value].ingress_fport
   ingress1_tport = var.security_group_descriptions[each.value].ingress_tport
@@ -434,41 +434,41 @@ module "app_sg" {
 }
 
 resource "aws_lb_listener_rule" "app_rule" {
-  for_each        = toset(range(10))
-  listener_arn    = module.load_balancers["app-lb"].alb_listener_arn
-  priority        = 10 + each.key
+  for_each = toset(range(10))
+  listener_arn = module.load_balancers["app-lb"].alb_listener_arn
+  priority = 10 + each.key
   action {
-    type             = "forward"
+    type = "forward"
     target_group_arn = module.target_groups["app-target-group"].target_group_arn
   }
   condition {
-    field  = "path-pattern"
+    field = "path-pattern"
     values = ["/app${each.key}/*"]
   }
 }
 
 resource "aws_lb_listener_rule" "web_rule" {
   listener_arn = module.load_balancers["web-lb"].alb_listener_arn
-  priority     = 1
+  priority = 1
   action {
-    type             = "forward"
+    type = "forward"
     target_group_arn = module.target_groups["web-target-group"].target_group_arn
   }
   condition {
-    field  = "path-pattern"
+    field = "path-pattern"
     values = ["/web/*"]
   }
 }
 
 resource "aws_lb_listener_rule" "db_rule" {
   listener_arn = module.load_balancers["db-lb"].alb_listener_arn
-  priority     = 2
+  priority = 2
   action {
-    type             = "forward"
+    type = "forward"
     target_group_arn = module.target_groups["db-target-group"].target_group_arn
   }
   condition {
-    field  = "path-pattern"
+    field = "path-pattern"
     values = ["/db/*"]
   }
 }
