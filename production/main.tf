@@ -1,5 +1,5 @@
 module "vpc" {
-  source = "./Terraform-modules/aws/modules/network/vpc"
+  source = "../aws/modules/network/vpc"
   cidr_vpc = var.vpc_cidr_block
   enable_dns_support = var.enable_dns_support
   enable_dns_hostnames = var.enable_dns_hostnames
@@ -13,8 +13,8 @@ module "vpc" {
 }
 
 module "subnets_az_a" {
-  source = "./Terraform-modules/aws/modules/network/subnet"
-  for_each = var.private_subnet_a
+  source = "../aws/modules/network/subnet"
+  for_each = { for idx, cidr in var.private_subnet_a : idx => cidr }
   vpc_id = module.vpc.vpc_id
   cidr_subnet = each.value
   map_publicip = var.map_publicip
@@ -29,8 +29,8 @@ module "subnets_az_a" {
 }
 
 module "subnets_az_b" {
-  source = "./Terraform-modules/aws/modules/network/subnet"
-  for_each = var.private_subnet_b
+  source = "../aws/modules/network/subnet"
+  for_each = { for idx, cidr in var.private_subnet_b : idx => cidr }
   vpc_id = module.vpc.vpc_id
   cidr_subnet = each.value
   map_publicip = var.map_publicip
@@ -45,7 +45,7 @@ module "subnets_az_b" {
 }
 
 module "route_table" {
-  source = "./Terraform-modules/aws/modules/network/route-table"
+  source = "../aws/modules/network/route-table"
   vpc_id = module.vpc.vpc_id
   route = {
     destination_cidr_block = var.route_destination_cidr_block
@@ -59,13 +59,13 @@ module "route_table" {
 }
 
 resource "aws_route_table_association" "subnet_association" {
-  for_each       = concat(values(module.subnets_az_a), values(module.subnets_az_b))
-  subnet_id      = each.value.subnet_id
+  for_each = merge(module.subnets_az_a, module.subnets_az_b)
+  subnet_id = each.value.subnet_id
   route_table_id = module.route_table.id
 }
 
 module "vpc_endpoints" {
-  source = "./Terraform-modules/aws/modules/network/vpc-endpoint"
+  source = "../aws/modules/network/vpc-endpoint"
   for_each = toset(["dynamodb", "s3"])
   vpc_id = module.vpc.vpc_id
   service_name = "com.amazonaws.${var.aws_region}.${each.key}"
@@ -79,12 +79,12 @@ module "vpc_endpoints" {
 }
 
 module "s3_buckets" {
-  source = "./Terraform-modules/aws/modules/volumes/s3/s3-create-bucket"
+  source = "../aws/modules/volumes/s3/s3-create-bucket"
   for_each = toset(var.bucket_names)
-  bucket = each.key
+  bucket = each.value
   acl = var.s3_acl
   tags = {
-    Name        = "ctc-vis-${var.env}-${each.key}"
+    Name        = "ctc-vis-${var.env}-${each.value}"
     Division    = var.division_tag
     Application = var.application_tag
     Billing     = var.billing_tag
@@ -92,7 +92,7 @@ module "s3_buckets" {
 }
 
 module "iam_role" {
-  source = "./Terraform-modules/aws/modules/iam/iam-role"
+  source = "../aws/modules/iam/iam-role"
   name = "ec2-role-${var.env}"
   role_policy = data.aws_iam_policy_document.assume_role_policy.json
   force_detach_policies = false
@@ -117,7 +117,7 @@ data "aws_iam_policy_document" "assume_role_policy" {
 }
 
 module "iam_policy" {
-  source = "./Terraform-modules/aws/modules/iam/iam-role-policy"
+  source = "../aws/modules/iam/iam-role-policy"
   iam_role = module.iam_role.role_name
   iam_policy = data.aws_iam_policy_document.ec2_policy.json
 }
@@ -133,12 +133,12 @@ data "aws_iam_policy_document" "ec2_policy" {
 }
 
 module "ec2_instances" {
-  source = "./Terraform-modules/aws/modules/ec2/ec2-instance"
-  for_each = toset([0, 1, 2])
+  source = "../aws/modules/ec2/ec2-instance"
+  for_each = toset(["app", "web", "db"])
   ami = var.ami_id
   instance_type = var.instance_type
   subnet_id = module.subnets_az_a[each.key].subnet_id
-  vpc_security_group_ids = lookup(var.security_group_ids, each.key, [])
+  vpc_security_group_ids = var.security_group_ids[each.key]
   key_name = var.key_name
   availability_zone = element(var.availability_zones, 0)
   iam_instance_profile = {
@@ -153,15 +153,15 @@ module "ec2_instances" {
 }
 
 module "load_balancers" {
-  source = "./Terraform-modules/aws/modules/load-balancer/app-load-balancer"
+  source = "../aws/modules/load-balancer/app-load-balancer"
   for_each = toset(var.alb_names)
   alb_name = each.value
   alb_internal = var.alb_internal
-  security_group_ids = lookup(var.alb_security_group_ids, each.value, [])
+  security_group_ids = var.alb_security_group_ids[each.value]
   idle_timeout = var.alb_idle_timeout
   enable_alb_delete_via_awsapi = var.enable_alb_delete_via_awsapi
   ip_address_type = var.alb_ip_address_type
-  attach_alb_subnet_ids = concat(values(module.subnets_az_a), values(module.subnets_az_b))
+  attach_alb_subnet_ids = concat(module.subnets_az_a[*].subnet_id, module.subnets_az_b[*].subnet_id)
   access_log_bucket_name = var.access_log_bucket_name
   enable_access_logs = var.enable_access_logs
   tags = {
@@ -173,10 +173,10 @@ module "load_balancers" {
 }
 
 module "target_groups" {
-  source = "./Terraform-modules/aws/modules/load-balancer/target-group-alb"
+  source = "../aws/modules/load-balancer/target-group-alb"
   for_each = toset(var.target_group_names)
   target_group_name = each.value
-  target_port = lookup(var.target_ports, each.value, 80)
+  target_port = var.target_ports[each.value]
   target_protocol = var.target_protocol
   target_vpc_id = module.vpc.vpc_id
   deregistration_delay = var.deregistration_delay
@@ -204,9 +204,9 @@ module "target_groups" {
 }
 
 module "network_acl" {
-  source = "./Terraform-modules/aws/modules/network/nacl"
+  source = "../aws/modules/network/nacl"
   vpc_id = module.vpc.vpc_id
-  subnet_ids = concat(values(module.subnets_az_a), values(module.subnets_az_b))
+  subnet_ids = concat(module.subnets_az_a[*].subnet_id, module.subnets_az_b[*].subnet_id)
   ingress1_rule_no = var.ingress1_rule_no
   ingress1_fport = var.ingress1_fport
   ingress1_tport = var.ingress1_tport
@@ -234,7 +234,7 @@ module "network_acl" {
 }
 
 module "nacl_rules_ingress" {
-  source = "./Terraform-modules/aws/modules/network/nacl-rule"
+  source = "../aws/modules/network/nacl-rule"
   for_each = toset(range(8))
   nacl_id = module.network_acl.nacl_id
   egress_enable = false
@@ -247,7 +247,7 @@ module "nacl_rules_ingress" {
 }
 
 module "nacl_rules_egress" {
-  source = "./Terraform-modules/aws/modules/network/nacl-rule"
+  source = "../aws/modules/network/nacl-rule"
   for_each = toset(range(8))
   nacl_id = module.network_acl.nacl_id
   egress_enable = true
@@ -260,29 +260,29 @@ module "nacl_rules_egress" {
 }
 
 module "security_groups" {
-  source = "./Terraform-modules/aws/modules/network/sg"
-  for_each = var.sg_names
-  sg_name = each.key
-  sg_text = lookup(var.sg_descriptions, each.key, "")
-  ingress1_desc = lookup(var.security_group_descriptions[each.key], "ingress_desc", "")
-  ingress1_fport = lookup(var.security_group_descriptions[each.key], "ingress_fport", 0)
-  ingress1_tport = lookup(var.security_group_descriptions[each.key], "ingress_tport", 65535)
-  ingress1_protocol = lookup(var.security_group_descriptions[each.key], "ingress_protocol", "tcp")
-  ingress1_cidr = lookup(var.security_group_descriptions[each.key], "ingress_cidr", "0.0.0.0/0")
-  ingress1_ipv6_cidr = lookup(var.security_group_descriptions[each.key], "ingress_ipv6_cidr", "::/0")
-  ingress1_prefix_ids = lookup(var.security_group_descriptions[each.key], "ingress_prefix_ids", [])
-  ingress1_security_groups = lookup(var.security_group_descriptions[each.key], "ingress_security_groups", [])
-  egress1_desc = lookup(var.security_group_descriptions[each.key], "egress_desc", "")
-  egress1_fport = lookup(var.security_group_descriptions[each.key], "egress_fport", 0)
-  egress1_tport = lookup(var.security_group_descriptions[each.key], "egress_tport", 65535)
-  egress1_protocol = lookup(var.security_group_descriptions[each.key], "egress_protocol", "tcp")
-  egress1_cidr = lookup(var.security_group_descriptions[each.key], "egress_cidr", "0.0.0.0/0")
-  egress1_ipv6_cidr = lookup(var.security_group_descriptions[each.key], "egress_ipv6_cidr", "::/0")
-  egress1_prefix_ids = lookup(var.security_group_descriptions[each.key], "egress_prefix_ids", [])
-  egress1_security_groups = lookup(var.security_group_descriptions[each.key], "egress_security_groups", [])
+  source = "../aws/modules/network/sg"
+  for_each = { for idx, name in var.sg_names : name => name }
+  sg_name = each.value
+  sg_text = var.sg_descriptions[each.value]
+  ingress1_desc = var.security_group_descriptions[each.value].ingress_desc
+  ingress1_fport = var.security_group_descriptions[each.value].ingress_fport
+  ingress1_tport = var.security_group_descriptions[each.value].ingress_tport
+  ingress1_protocol = var.security_group_descriptions[each.value].ingress_protocol
+  ingress1_cidr = var.security_group_descriptions[each.value].ingress_cidr
+  ingress1_ipv6_cidr = var.security_group_descriptions[each.value].ingress_ipv6_cidr
+  ingress1_prefix_ids = var.security_group_descriptions[each.value].ingress_prefix_ids
+  ingress1_security_groups = var.security_group_descriptions[each.value].ingress_security_groups
+  egress1_desc = var.security_group_descriptions[each.value].egress_desc
+  egress1_fport = var.security_group_descriptions[each.value].egress_fport
+  egress1_tport = var.security_group_descriptions[each.value].egress_tport
+  egress1_protocol = var.security_group_descriptions[each.value].egress_protocol
+  egress1_cidr = var.security_group_descriptions[each.value].egress_cidr
+  egress1_ipv6_cidr = var.security_group_descriptions[each.value].egress_ipv6_cidr
+  egress1_prefix_ids = var.security_group_descriptions[each.value].egress_prefix_ids
+  egress1_security_groups = var.security_group_descriptions[each.value].egress_security_groups
   vpc_id = module.vpc.vpc_id
   tags = {
-    Name        = "ctc-vis-${var.env}-${each.key}"
+    Name        = "ctc-vis-${var.env}-${each.value}"
     Division    = var.division_tag
     Application = var.application_tag
     Billing     = var.billing_tag
@@ -290,10 +290,10 @@ module "security_groups" {
 }
 
 module "db_subnet_group" {
-  source = "./Terraform-modules/aws/modules/rds/subnet-group"
+  source = "../aws/modules/rds/subnet-group"
   name = var.db_subnet_group_name
   description = var.db_subnet_group_description
-  subnet_ids = concat(values(module.subnets_az_a), values(module.subnets_az_b))
+  subnet_ids = concat(module.subnets_az_a[*].subnet_id, module.subnets_az_b[*].subnet_id)
   tags = {
     Name        = "ctc-vis-${var.env}-db-subnet-group"
     Division    = var.division_tag
@@ -303,7 +303,7 @@ module "db_subnet_group" {
 }
 
 module "db_instance" {
-  source = "./Terraform-modules/aws/modules/rds/db-instance"
+  source = "../aws/modules/rds/db-instance"
   identifier = var.db_identifier
   allow_major_version_upgrade = var.db_allow_major_version_upgrade
   auto_minor_version_upgrade = var.db_auto_minor_version_upgrade
@@ -327,7 +327,7 @@ module "db_instance" {
   domain_iam_role_name = var.db_domain_iam_role_name
   multi_az = var.db_multi_az
   skip_final_snapshot = var.db_skip_final_snapshot
-  vpc_security_group_ids = var.db_vpc_security_group_id
+  vpc_security_group_ids = [var.db_vpc_security_group_id, module.security_groups["App-Prod-SG"].sg_id]
   backup_retention_period = var.db_backup_retention_period
   license_model = var.db_license_model
   tags = {
@@ -356,7 +356,7 @@ module "db_instance" {
 }
 
 module "kms_key" {
-  source = "./Terraform-modules/aws/modules/kms-key"
+  source = "../aws/modules/kms-key"
   description = var.kms_description
   key_usage = var.kms_key_usage
   customer_master_key_spec = var.kms_customer_master_key_spec
@@ -373,7 +373,7 @@ module "kms_key" {
 }
 
 module "web_sg" {
-  source = "./Terraform-modules/aws/modules/network/sg"
+  source = "../aws/modules/network/sg"
   sg_name = "web-dev-sg"
   sg_text = "Security group for web-dev"
   ingress1_desc = "Allow HTTP inbound"
@@ -396,7 +396,7 @@ module "web_sg" {
 }
 
 module "app_sg" {
-  source = "./Terraform-modules/aws/modules/network/sg"
+  source = "../aws/modules/network/sg"
   sg_name = "app-dev-sg"
   sg_text = "Security group for app-dev"
   ingress1_desc = "Allow HTTP inbound"
@@ -419,41 +419,41 @@ module "app_sg" {
 }
 
 resource "aws_lb_listener_rule" "app_rule" {
-  for_each        = toset(range(10))
-  listener_arn    = module.load_balancers["app-lb"].alb_listener_arn
-  priority        = 10 + each.key
+  for_each = toset(range(10))
+  listener_arn = module.load_balancers["app-lb"].alb_listener_arn
+  priority = 10 + each.key
   action {
-    type             = "forward"
+    type = "forward"
     target_group_arn = module.target_groups["app-target-group"].target_group_arn
   }
   condition {
-    field  = "path-pattern"
+    field = "path-pattern"
     values = ["/app${each.key}/*"]
   }
 }
 
 resource "aws_lb_listener_rule" "web_rule" {
   listener_arn = module.load_balancers["web-lb"].alb_listener_arn
-  priority     = 1
+  priority = 1
   action {
-    type             = "forward"
+    type = "forward"
     target_group_arn = module.target_groups["web-target-group"].target_group_arn
   }
   condition {
-    field  = "path-pattern"
+    field = "path-pattern"
     values = ["/web/*"]
   }
 }
 
 resource "aws_lb_listener_rule" "db_rule" {
   listener_arn = module.load_balancers["db-lb"].alb_listener_arn
-  priority     = 2
+  priority = 2
   action {
-    type             = "forward"
+    type = "forward"
     target_group_arn = module.target_groups["db-target-group"].target_group_arn
   }
   condition {
-    field  = "path-pattern"
+    field = "path-pattern"
     values = ["/db/*"]
   }
 }
