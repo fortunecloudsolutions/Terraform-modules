@@ -132,20 +132,57 @@ data "aws_iam_policy_document" "ec2_policy" {
   }
 }
 
-module "ec2_instances" {
+module "app_ec2" {
   source = "../aws/modules/ec2/ec2-instance"
-  for_each = toset(["app", "web", "db"])
   ami = var.ami_id
   instance_type = var.instance_type
-  subnet_id = module.subnets_az_a[each.key].subnet_id
-  vpc_security_group_ids = var.security_group_ids[each.key]
+  subnet_id = module.subnets_az_a["app"].subnet_id
+  vpc_security_group_ids = var.security_group_ids["app"]
   key_name = var.key_name
   availability_zone = element(var.availability_zones, 0)
   iam_instance_profile = {
     name = module.iam_role.role_name
   }
   tags = {
-    Name        = "ctc-vis-${var.env}-ec2-instance-${each.key}"
+    Name        = "ctc-vis-${var.env}-ec2-instance-app"
+    Division    = var.division_tag
+    Application = var.application_tag
+    Billing     = var.billing_tag
+  }
+}
+
+module "web_ec2" {
+  source = "../aws/modules/ec2/ec2-instance"
+  ami = var.ami_id
+  instance_type = var.instance_type
+  subnet_id = module.subnets_az_a["web"].subnet_id
+  vpc_security_group_ids = var.security_group_ids["web"]
+  key_name = var.key_name
+  availability_zone = element(var.availability_zones, 0)
+  iam_instance_profile = {
+    name = module.iam_role.role_name
+  }
+  tags = {
+    Name        = "ctc-vis-${var.env}-ec2-instance-web"
+    Division    = var.division_tag
+    Application = var.application_tag
+    Billing     = var.billing_tag
+  }
+}
+
+module "db_ec2" {
+  source = "../aws/modules/ec2/ec2-instance"
+  ami = var.ami_id
+  instance_type = var.instance_type
+  subnet_id = module.subnets_az_a["db"].subnet_id
+  vpc_security_group_ids = var.security_group_ids["db"]
+  key_name = var.key_name
+  availability_zone = element(var.availability_zones, 0)
+  iam_instance_profile = {
+    name = module.iam_role.role_name
+  }
+  tags = {
+    Name        = "ctc-vis-${var.env}-ec2-instance-db"
     Division    = var.division_tag
     Application = var.application_tag
     Billing     = var.billing_tag
@@ -154,7 +191,7 @@ module "ec2_instances" {
 
 module "load_balancers" {
   source = "../aws/modules/load-balancer/app-load-balancer"
-  for_each = toset(var.alb_names)
+  for_each = { for idx, alb in var.alb_names : alb => alb }
   alb_name = each.value
   alb_internal = var.alb_internal
   security_group_ids = var.alb_security_group_ids[each.value]
@@ -174,7 +211,7 @@ module "load_balancers" {
 
 module "target_groups" {
   source = "../aws/modules/load-balancer/target-group-alb"
-  for_each = toset(var.target_group_names)
+  for_each = { for idx, tg in var.target_group_names : tg => tg }
   target_group_name = each.value
   target_port = var.target_ports[each.value]
   target_protocol = var.target_protocol

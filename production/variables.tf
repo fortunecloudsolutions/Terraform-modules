@@ -35,12 +35,12 @@ variable "assign_ipv6_address_on_creation" {
 
 variable "private_subnet_a" {
   description = "List of private subnet CIDR blocks for availability zone A"
-  type = list(string)
+  type = map(string)
 }
 
 variable "private_subnet_b" {
   description = "List of private subnet CIDR blocks for availability zone B"
-  type = list(string)
+  type = map(string)
 }
 
 variable "route_destination_cidr_block" {
@@ -325,16 +325,16 @@ variable "security_group_descriptions" {
     ingress_fport = number
     ingress_tport = number
     ingress_protocol = string
-    ingress_cidr = string
-    ingress_ipv6_cidr = string
+    ingress_cidr = list(string)
+    ingress_ipv6_cidr = list(string)
     ingress_prefix_ids = list(string)
     ingress_security_groups = list(string)
     egress_desc = string
     egress_fport = number
     egress_tport = number
     egress_protocol = string
-    egress_cidr = string
-    egress_ipv6_cidr = string
+    egress_cidr = list(string)
+    egress_ipv6_cidr = list(string)
     egress_prefix_ids = list(string)
     egress_security_groups = list(string)
   }))

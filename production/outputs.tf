@@ -23,9 +23,19 @@ output "s3_bucket_ids" {
   value       = module.s3_buckets[*].this_s3_bucket_id
 }
 
-output "ec2_instance_ids" {
-  description = "The IDs of the EC2 instances"
-  value       = module.ec2_instances[*].instance_id
+output "app_ec2_instance_id" {
+  description = "The ID of the app EC2 instance"
+  value       = module.app_ec2.instance_id
+}
+
+output "web_ec2_instance_id" {
+  description = "The ID of the web EC2 instance"
+  value       = module.web_ec2.instance_id
+}
+
+output "db_ec2_instance_id" {
+  description = "The ID of the db EC2 instance"
+  value       = module.db_ec2.instance_id
 }
 
 output "alb_arns" {
