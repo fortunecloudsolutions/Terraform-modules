@@ -143,6 +143,16 @@ module "app_ec2" {
   iam_instance_profile = {
     name = module.iam_role.role_name
   }
+  root_block_device = {
+    volume_type = "gp3"
+    volume_size = 100
+    delete_on_termination = true
+    encrypted = true
+    kms_key_id = module.kms_key.kms_key_id
+  }
+  ebs_block_device = []
+  ephemeral_block_device = []
+  associate_public_ip_address = false
   tags = {
     Name        = "ctc-vis-${var.env}-ec2-instance-app"
     Division    = var.division_tag
@@ -162,6 +172,16 @@ module "web_ec2" {
   iam_instance_profile = {
     name = module.iam_role.role_name
   }
+  root_block_device = {
+    volume_type = "gp3"
+    volume_size = 100
+    delete_on_termination = true
+    encrypted = true
+    kms_key_id = module.kms_key.kms_key_id
+  }
+  ebs_block_device = []
+  ephemeral_block_device = []
+  associate_public_ip_address = false
   tags = {
     Name        = "ctc-vis-${var.env}-ec2-instance-web"
     Division    = var.division_tag
@@ -181,6 +201,23 @@ module "db_ec2" {
   iam_instance_profile = {
     name = module.iam_role.role_name
   }
+  root_block_device = {
+    volume_type = "gp3"
+    volume_size = 60
+    delete_on_termination = true
+    encrypted = true
+    kms_key_id = module.kms_key.kms_key_id
+  }
+  ebs_block_device = [{
+    device_name = "/dev/sdf"
+    volume_type = "gp3"
+    volume_size = 1000
+    delete_on_termination = true
+    encrypted = true
+    kms_key_id = module.kms_key.kms_key_id
+  }]
+  ephemeral_block_device = []
+  associate_public_ip_address = false
   tags = {
     Name        = "ctc-vis-${var.env}-ec2-instance-db"
     Division    = var.division_tag
@@ -457,7 +494,7 @@ module "app_sg" {
 
 resource "aws_lb_listener_rule" "app_rule" {
   for_each = toset(range(10))
-  listener_arn = module.load_balancers["app-lb"].alb_listener_arn
+  listener_arn = module.load_balancers["app-alb"].alb_listener_arn
   priority = 10 + each.key
   action {
     type = "forward"
@@ -470,7 +507,7 @@ resource "aws_lb_listener_rule" "app_rule" {
 }
 
 resource "aws_lb_listener_rule" "web_rule" {
-  listener_arn = module.load_balancers["web-lb"].alb_listener_arn
+  listener_arn = module.load_balancers["web-alb"].alb_listener_arn
   priority = 1
   action {
     type = "forward"
@@ -483,7 +520,7 @@ resource "aws_lb_listener_rule" "web_rule" {
 }
 
 resource "aws_lb_listener_rule" "db_rule" {
-  listener_arn = module.load_balancers["db-lb"].alb_listener_arn
+  listener_arn = module.load_balancers["db-alb"].alb_listener_arn
   priority = 2
   action {
     type = "forward"
