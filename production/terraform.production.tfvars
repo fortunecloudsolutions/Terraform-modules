@@ -10,11 +10,13 @@ private_subnet_a = {
   app = "10.81.3.16/28"
   web = "10.81.3.32/28"
   db  = "10.81.3.48/28"
+  maintgwattach = "10.81.3.64/28"
 }
 private_subnet_b = {
   app = "10.81.4.16/28"
   web = "10.81.4.32/28"
   db  = "10.81.4.48/28"
+  maintgwattach = "10.81.4.64/28"
 }
 
 route_destination_cidr_block = "0.0.0.0/0"
@@ -209,3 +211,6 @@ POLICY
 kms_deletion_window_in_days = 30
 kms_is_enabled = true
 kms_enable_key_rotation = true
+
+transit_gateway_id = "tgw-0abcdef1234567890"
+environments = ["dev", "prod"]

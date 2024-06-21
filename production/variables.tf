@@ -554,3 +554,13 @@ variable "kms_enable_key_rotation" {
   description = "Enable key rotation for KMS key"
   type = bool
 }
+
+variable "transit_gateway_id" {
+  description = "ID of the transit gateway"
+  type = string
+}
+
+variable "environments" {
+  description = "List of environments"
+  type = list(string)
+}

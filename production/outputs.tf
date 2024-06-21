@@ -132,3 +132,13 @@ output "kms_key_id" {
   description = "The Amazon Resource Name (ARN) of the key"
   value       = module.kms_key.kms_key_id
 }
+
+output "transit_gateway_id" {
+  description = "The ID of the Transit Gateway"
+  value       = aws_ec2_transit_gateway.this.id
+}
+
+output "transit_gateway_vpc_attachment_ids" {
+  description = "The IDs of the Transit Gateway VPC attachments"
+  value       = aws_ec2_transit_gateway_vpc_attachment.this[*].id
+}
