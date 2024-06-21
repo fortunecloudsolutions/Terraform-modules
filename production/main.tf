@@ -143,13 +143,13 @@ module "app_ec2" {
   iam_instance_profile = {
     name = module.iam_role.role_name
   }
-  root_block_device = {
+  root_block_device = [{
     volume_type = "gp3"
     volume_size = 100
     delete_on_termination = true
     encrypted = true
     kms_key_id = module.kms_key.kms_key_id
-  }
+  }]
   ebs_block_device = []
   ephemeral_block_device = []
   associate_public_ip_address = false
@@ -172,13 +172,13 @@ module "web_ec2" {
   iam_instance_profile = {
     name = module.iam_role.role_name
   }
-  root_block_device = {
+  root_block_device = [{
     volume_type = "gp3"
     volume_size = 100
     delete_on_termination = true
     encrypted = true
     kms_key_id = module.kms_key.kms_key_id
-  }
+  }]
   ebs_block_device = []
   ephemeral_block_device = []
   associate_public_ip_address = false
@@ -201,13 +201,13 @@ module "db_ec2" {
   iam_instance_profile = {
     name = module.iam_role.role_name
   }
-  root_block_device = {
+  root_block_device = [{
     volume_type = "gp3"
     volume_size = 60
     delete_on_termination = true
     encrypted = true
     kms_key_id = module.kms_key.kms_key_id
-  }
+  }]
   ebs_block_device = [{
     device_name = "/dev/sdf"
     volume_type = "gp3"
