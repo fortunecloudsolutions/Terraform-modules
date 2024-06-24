@@ -226,12 +226,11 @@ module "db_ec2" {
   }
 }
 
-module "load_balancers" {
+module "app_load_balancer" {
   source = "../aws/modules/load-balancer/app-load-balancer"
-  for_each = { for idx, alb in var.alb_names : alb => alb }
-  alb_name = each.value
+  alb_name = "ctc-vis-${var.env}-app-alb"
   alb_internal = var.alb_internal
-  security_group_ids = var.alb_security_group_ids[each.value]
+  security_group_ids = var.alb_security_group_ids["app-alb"]
   idle_timeout = var.alb_idle_timeout
   enable_alb_delete_via_awsapi = var.enable_alb_delete_via_awsapi
   ip_address_type = var.alb_ip_address_type
@@ -239,7 +238,45 @@ module "load_balancers" {
   access_log_bucket_name = var.access_log_bucket_name
   enable_access_logs = var.enable_access_logs
   tags = {
-    Name        = "ctc-vis-${var.env}-${each.value}"
+    Name        = "ctc-vis-${var.env}-app-alb"
+    Division    = var.division_tag
+    Application = var.application_tag
+    Billing     = var.billing_tag
+  }
+}
+
+module "web_load_balancer" {
+  source = "../aws/modules/load-balancer/app-load-balancer"
+  alb_name = "ctc-vis-${var.env}-web-alb"
+  alb_internal = var.alb_internal
+  security_group_ids = var.alb_security_group_ids["web-alb"]
+  idle_timeout = var.alb_idle_timeout
+  enable_alb_delete_via_awsapi = var.enable_alb_delete_via_awsapi
+  ip_address_type = var.alb_ip_address_type
+  attach_alb_subnet_ids = concat(module.subnets_az_a[*].subnet_id, module.subnets_az_b[*].subnet_id)
+  access_log_bucket_name = var.access_log_bucket_name
+  enable_access_logs = var.enable_access_logs
+  tags = {
+    Name        = "ctc-vis-${var.env}-web-alb"
+    Division    = var.division_tag
+    Application = var.application_tag
+    Billing     = var.billing_tag
+  }
+}
+
+module "db_load_balancer" {
+  source = "../aws/modules/load-balancer/app-load-balancer"
+  alb_name = "ctc-vis-${var.env}-db-alb"
+  alb_internal = var.alb_internal
+  security_group_ids = var.alb_security_group_ids["db-alb"]
+  idle_timeout = var.alb_idle_timeout
+  enable_alb_delete_via_awsapi = var.enable_alb_delete_via_awsapi
+  ip_address_type = var.alb_ip_address_type
+  attach_alb_subnet_ids = concat(module.subnets_az_a[*].subnet_id, module.subnets_az_b[*].subnet_id)
+  access_log_bucket_name = var.access_log_bucket_name
+  enable_access_logs = var.enable_access_logs
+  tags = {
+    Name        = "ctc-vis-${var.env}-db-alb"
     Division    = var.division_tag
     Application = var.application_tag
     Billing     = var.billing_tag
@@ -493,25 +530,25 @@ module "app_sg" {
 }
 
 resource "aws_lb_listener_rule" "app_rule" {
-  for_each = toset(range(10))
-  listener_arn = module.load_balancers["app-alb"].alb_listener_arn
-  priority = 10 + each.key
+  for_each = toset(var.app_target_groups)
+  listener_arn = module.app_load_balancer.alb_listener_arn
+  priority = each.value.priority
   action {
     type = "forward"
-    target_group_arn = module.target_groups["app-target-group"].target_group_arn
+    target_group_arn = module.target_groups[each.value.name].target_arn
   }
   condition {
     field = "path-pattern"
-    values = ["/app${each.key}/*"]
+    values = ["/app${each.value.index}/*"]
   }
 }
 
 resource "aws_lb_listener_rule" "web_rule" {
-  listener_arn = module.load_balancers["web-alb"].alb_listener_arn
+  listener_arn = module.web_load_balancer.alb_listener_arn
   priority = 1
   action {
     type = "forward"
-    target_group_arn = module.target_groups["web-target-group"].target_group_arn
+    target_group_arn = module.target_groups["ctc-vis-development-web-TG"].target_arn
   }
   condition {
     field = "path-pattern"
@@ -520,11 +557,11 @@ resource "aws_lb_listener_rule" "web_rule" {
 }
 
 resource "aws_lb_listener_rule" "db_rule" {
-  listener_arn = module.load_balancers["db-alb"].alb_listener_arn
+  listener_arn = module.db_load_balancer.alb_listener_arn
   priority = 2
   action {
     type = "forward"
-    target_group_arn = module.target_groups["db-target-group"].target_group_arn
+    target_group_arn = module.target_groups["ctc-vis-development-db-TG"].target_arn
   }
   condition {
     field = "path-pattern"
@@ -542,4 +579,60 @@ resource "aws_ec2_transit_gateway_vpc_attachment" "main" {
     Name        = "ctc-vis-${each.value}-tgw-attachment"
     Environment = each.value
   }
+}
+
+resource "aws_ec2_transit_gateway" "this" {
+  description = "CTC Transit Gateway"
+  dns_support = "enable"
+  vpn_ecmp_support = "enable"
+  default_route_table_association = "disable"
+  default_route_table_propagation = "disable"
+  auto_accept_shared_attachments = "disable"
+  multicast_support = "disable"
+  tags = {
+    Name        = "ctc-vis-${var.env}-transit-gateway"
+    Division    = var.division_tag
+    Application = var.application_tag
+    Billing     = var.billing_tag
+  }
+}
+
+resource "aws_ram_resource_share" "this" {
+  name = "CTC Transit Gateway Share"
+  allow_external_principals = true
+  tags = {
+    Name        = "ctc-vis-${var.env}-ram"
+    Division    = var.division_tag
+    Application = var.application_tag
+    Billing     = var.billing_tag
+  }
+}
+
+resource "aws_ram_principal_association" "this" {
+  principal = var.ram_principal
+  resource_share_arn = aws_ram_resource_share.this.arn
+}
+
+resource "aws_ram_resource_association" "this" {
+  resource_arn = aws_ec2_transit_gateway.this.arn
+  resource_share_arn = aws_ram_resource_share.this.arn
+}
+
+# Internet Gateway
+resource "aws_internet_gateway" "this" {
+  vpc_id = module.vpc.vpc_id
+
+  tags = {
+    Name        = "ctc-vis-${var.env}-internet-gateway"
+    Division    = var.division_tag
+    Application = var.application_tag
+    Billing     = var.billing_tag
+  }
+}
+
+# Route to Internet Gateway
+resource "aws_route" "internet_access" {
+  route_table_id         = module.route_table.id
+  destination_cidr_block = "0.0.0.0/0"
+  gateway_id             = aws_internet_gateway.this.id
 }

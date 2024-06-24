@@ -40,7 +40,7 @@ output "db_ec2_instance_id" {
 
 output "alb_arns" {
   description = "The ARNs of the Application Load Balancers"
-  value       = module.load_balancers[*].alb_arn
+  value       = [module.app_load_balancer.alb_arn, module.web_load_balancer.alb_arn, module.db_load_balancer.alb_arn]
 }
 
 output "target_group_arns" {
@@ -141,4 +141,9 @@ output "transit_gateway_id" {
 output "transit_gateway_vpc_attachment_ids" {
   description = "The IDs of the Transit Gateway VPC attachments"
   value       = aws_ec2_transit_gateway_vpc_attachment.this[*].id
+}
+
+output "internet_gateway_id" {
+  description = "The ID of the Internet Gateway"
+  value       = aws_internet_gateway.this.id
 }

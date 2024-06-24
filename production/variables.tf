@@ -83,11 +83,6 @@ variable "security_group_ids" {
   type = map(list(string))
 }
 
-variable "alb_names" {
-  description = "List of ALB names"
-  type = list(string)
-}
-
 variable "alb_internal" {
   description = "Whether the ALB is internal"
   type = bool
@@ -563,4 +558,18 @@ variable "transit_gateway_id" {
 variable "environments" {
   description = "List of environments"
   type = list(string)
+}
+
+variable "app_target_groups" {
+  description = "List of app target groups with priority and name"
+  type = list(object({
+    priority = number
+    name = string
+    index = number
+  }))
+}
+
+variable "ram_principal" {
+  description = "RAM principal"
+  type = string
 }
