@@ -636,3 +636,95 @@ resource "aws_route" "internet_access" {
   destination_cidr_block = "0.0.0.0/0"
   gateway_id             = aws_internet_gateway.this.id
 }
+
+# Route 53 Hosted Zone
+resource "aws_route53_zone" "main" {
+  name = var.hosted_zone_name
+  comment = "Hosted zone for CTC VIS environment"
+
+  tags = {
+    Name        = "ctc-vis-${var.env}-route53"
+    Division    = var.division_tag
+    Application = var.application_tag
+    Billing     = var.billing_tag
+  }
+}
+
+# Storage Gateway
+resource "aws_storagegateway_gateway" "this" {
+  gateway_name = var.storage_gateway_name
+  gateway_type = "FILE_S3"
+  gateway_timezone = "GMT"
+  gateway_region = var.aws_region
+  tags = {
+    Name        = var.storage_gateway_name
+    Division    = var.division_tag
+    Application = var.application_tag
+    Billing     = var.billing_tag
+  }
+}
+
+resource "aws_storagegateway_smb_file_share" "this" {
+  gateway_arn = aws_storagegateway_gateway.this.arn
+  location_arn = aws_s3_bucket.ctc_vis_production_s3_documents.arn
+  role_arn = aws_iam_role.storage_gateway_role.arn
+  default_storage_class = "S3_STANDARD"
+  object_acl = "private"
+  guess_mime_type_enabled = true
+  authentication = "GuestAccess"
+  access_based_enumeration = false
+  valid_user_list = ["*"]
+  invalid_user_list = []
+  audit_destination_arn = aws_s3_bucket.ctc_vis_accesslog_s3_bucket.arn
+  case_sensitivity = "CaseSensitive"
+  requester_pays = false
+  oplocks_enabled = true
+  kms_encrypted = false
+  tags = {
+    Name        = "ctc-vis-${var.env}-smb-file-share"
+    Division    = var.division_tag
+    Application = var.application_tag
+    Billing     = var.billing_tag
+  }
+}
+
+# CloudFront Distribution
+resource "aws_cloudfront_distribution" "this" {
+  origin {
+    domain_name = aws_s3_bucket.ctc_vis_production_s3_documents.bucket_regional_domain_name
+    origin_id   = "S3-ctc-vis-production-s3-documents"
+
+    s3_origin_config {
+      origin_access_identity = aws_cloudfront_origin_access_identity.this.cloudfront_access_identity_path
+    }
+  }
+
+  default_cache_behavior {
+    target_origin_id       = "S3-ctc-vis-production-s3-documents"
+    viewer_protocol_policy = "allow-all"
+
+    forwarded_values {
+      query_string = false
+
+      cookies {
+        forward = "none"
+      }
+    }
+  }
+
+  enabled             = true
+  is_ipv6_enabled     = true
+  comment             = "CTC VIS CloudFront Distribution"
+  default_root_object = "index.html"
+
+  tags = {
+    Name        = "ctc-vis-${var.env}-cloudfront"
+    Division    = var.division_tag
+    Application = var.application_tag
+    Billing     = var.billing_tag
+  }
+}
+
+resource "aws_cloudfront_origin_access_identity" "this" {
+  comment = "OAI for CTC VIS CloudFront Distribution"
+}

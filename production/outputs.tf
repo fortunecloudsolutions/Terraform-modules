@@ -147,3 +147,28 @@ output "internet_gateway_id" {
   description = "The ID of the Internet Gateway"
   value       = aws_internet_gateway.this.id
 }
+
+output "hosted_zone_id" {
+  description = "The ID of the Route 53 Hosted Zone"
+  value       = aws_route53_zone.main.id
+}
+
+output "storage_gateway_arn" {
+  description = "The ARN of the Storage Gateway"
+  value       = aws_storagegateway_gateway.this.arn
+}
+
+output "smb_file_share_arn" {
+  description = "The ARN of the SMB File Share"
+  value       = aws_storagegateway_smb_file_share.this.arn
+}
+
+output "cloudfront_distribution_id" {
+  description = "The ID of the CloudFront distribution"
+  value       = aws_cloudfront_distribution.this.id
+}
+
+output "cloudfront_distribution_domain_name" {
+  description = "The domain name of the CloudFront distribution"
+  value       = aws_cloudfront_distribution.this.domain_name
+}

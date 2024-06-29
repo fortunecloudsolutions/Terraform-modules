@@ -2,18 +2,18 @@ env = "development"
 aws_region = "us-west-2"
 s3_service_tag = "s3"
 
-#Tags
+# Tags
 division_tag = "MSCD"
 application_tag = "ctc-vis"
 billing_tag = "TBD"
 
-#vpc
+# VPC
 vpc_cidr_block = "10.81.4.0/24"
 enable_dns_support = true
 enable_dns_hostnames = true
 instance_tenancy = "default"
 
-#subnets
+# Subnets
 map_publicip = false
 assign_ipv6_address_on_creation = false
 availability_zones = ["us-west-2a", "us-west-2b"]
@@ -32,16 +32,16 @@ private_subnet_b = {
   maintgwattach  = "10.81.4.160/28"
 }
 
-#routetable
+# Route table
 route_cidr_block = "10.81.4.0/24"
 
-#s3bucket
+# S3 bucket
 ctc_vis_first_s3_bucket = "ctc-vis-development-s3-documents"
 ctc_vis_second_s3_bucket = "ctc-vis-development-s3-quarantine"
 ctc_vis_third_s3_bucket = "ctc-vis-development-s3-staging"
 ctc_vis_accesslog_s3_bucket = "ctc-vis-development-s3-accesslogs"
 
-#securitygroups
+# Security groups
 sg_descriptions = {
   "ctc-vis-development-sg-web" = "Web security group"
   "ctc-vis-development-sg-app" = "App security group"
@@ -91,12 +91,12 @@ kms_deletion_window_in_days = 30
 kms_is_enabled = true
 kms_enable_key_rotation = true
 
-#EC2
+# EC2
 ami_id = "ami-0d98fd1f0c3b1f9a9"
 instance_type = "t3.medium"
 ebs_device_name = "/dev/sdf"
 
-#Loadbalancer
+# Load balancer
 alb_internal = true
 alb_idle_timeout = 1080
 enable_alb_delete_via_awsapi = true
@@ -147,3 +147,10 @@ app_target_groups = [
   { priority = 23, name = "ctc-vis-development-app-TG-60023", index = 60023 },
   { priority = 25, name = "ctc-vis-development-app-TG-60025", index = 60025 },
 ]
+
+# Route 53 Hosted Zone
+hosted_zone_name = "arb-ctcvis-syt.org"
+
+# Storage Gateway
+storage_gateway_name = "Ctc-vis-env-storage-gateway"
+file_share_s3_location = "ctc-vis-production-s3-documents"

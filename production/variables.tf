@@ -573,3 +573,18 @@ variable "ram_principal" {
   description = "RAM principal"
   type = string
 }
+
+variable "hosted_zone_name" {
+  description = "Name of the Route 53 hosted zone"
+  type = string
+}
+
+variable "storage_gateway_name" {
+  description = "Name of the storage gateway"
+  type = string
+}
+
+variable "file_share_s3_location" {
+  description = "S3 location for the file share"
+  type = string
+}
